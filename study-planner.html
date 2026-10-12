@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学习计划表 · 周计划 + 进度自改</title>
+<style>
+:root{
+  --bg:#eef1fb; --card:#ffffff; --ink:#1f2430; --muted:#6b7280;
+  --line:#e8eaf0; --pri:#6366f1; --pri2:#8b5cf6;
+  --class:#e0ecff; --class-ink:#2563eb;
+  --study:#dcf5e6; --study-ink:#15a34a;
+  --rest:#f0f1f4; --rest-ink:#9aa1ad;
+  --today:#fff6e0; --radius:16px;
+}
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  background:linear-gradient(180deg,#e9edfb 0%,#f6f7fb 220px);margin:0;padding:0 16px 56px;color:var(--ink)}
+.wrap{max-width:1060px;margin:0 auto}
+/* hero */
+.hero{display:flex;align-items:center;gap:14px;padding:30px 4px 18px}
+.hero-emoji{font-size:40px;line-height:1;filter:drop-shadow(0 4px 8px rgba(99,102,241,.25))}
+.hero h1{margin:0;font-size:26px;font-weight:800;letter-spacing:.5px;
+  background:linear-gradient(90deg,var(--pri),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:var(--muted);font-size:13.5px;margin-top:5px}
+/* nav */
+.nav{position:sticky;top:0;background:rgba(246,247,251,.85);backdrop-filter:blur(8px);
+  padding:12px 0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tab-btn{border:1px solid transparent;background:#fff;color:var(--ink);padding:9px 18px;border-radius:22px;
+  font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 1px 2px rgba(0,0,0,.05);transition:.15s}
+.tab-btn:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(99,102,241,.18)}
+.tab-btn.active{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(99,102,241,.35)}
+.card{background:var(--card);border-radius:var(--radius);padding:20px 22px;margin:16px 0;box-shadow:0 4px 18px rgba(31,36,48,.06);border:1px solid rgba(232,234,240,.6)}
+h2{margin:0 0 6px;font-size:18px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:12px;line-height:1.6}
+.bar{height:9px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:10px;box-shadow:inset 0 1px 2px rgba(0,0,0,.04)}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));border-radius:6px;transition:width .3s}
+.legend{font-size:13px;color:var(--muted);margin:4px 0 12px;display:flex;gap:14px;flex-wrap:wrap}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.06);vertical-align:-2px;margin-right:5px}
+.sw-class{background:var(--class)}.sw-study{background:var(--study)}.sw-rest{background:var(--rest)}.sw-free{background:#fff}
+.foot{color:#9aa1ad;font-size:12.5px;margin:26px 4px 8px;line-height:1.6}
+a{color:var(--pri);text-decoration:none}
+a:hover{text-decoration:underline}
+/* schedule */
+.sched{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sched th,.sched td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:3px 4px;text-align:center;height:32px;vertical-align:middle;overflow:hidden}
+.sched tr td:last-child,.sched tr th:last-child{border-right:none}
+.sched tr:last-child td{border-bottom:none}
+.sched th{background:#f4f5fb;font-size:12px;font-weight:600;color:#4b5066}
+.sched th.today-h{background:var(--today);color:#b45309}
+.sched td.slot{background:#fafbfc;color:#9aa1ad;white-space:nowrap;text-align:right;padding-right:8px;font-variant-numeric:tabular-nums;font-size:11px}
+.sched td.x{cursor:pointer;transition:filter .12s}
+.sched td.x:hover{filter:brightness(.96)}
+.sched td.today{background:var(--today)}
+.sched td.sel{outline:2px solid var(--pri);outline-offset:-2px;border-radius:6px}
+.cell-class{background:var(--class);color:var(--class-ink);font-weight:600}
+.cell-study{background:var(--study);color:var(--study-ink);font-weight:600}
+.cell-rest{background:var(--rest);color:var(--rest-ink)}
+.cell-x{font-size:11px;line-height:1.25;white-space:normal;word-break:break-all}
+/* editor */
+.editor{background:#fbfbfe;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0}
+.editor #edInfo{font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.editor #edForm{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.editor label{font-size:13px;color:var(--muted);margin-right:2px}
+.editor select,.editor input{font-family:inherit;font-size:13px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.editor select:focus,.editor input:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.btn{border:none;background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;padding:8px 16px;border-radius:22px;cursor:pointer;font-family:inherit;font-size:13px;box-shadow:0 3px 10px rgba(99,102,241,.3);transition:.15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:#fff;color:var(--pri);border:1px solid var(--pri);box-shadow:none}
+.btn.ghost:hover{background:#f3f1ff}
+/* courses */
+table.cr{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cr th{background:#f4f5fb;text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);font-size:13px;color:#4b5066}
+.cr td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+.cr tr:last-child td{border-bottom:none}
+.cr input[type=number]{width:64px;font-family:inherit;font-size:13px;padding:5px 7px;border:1px solid var(--line);border-radius:8px}
+.cr input[type=number]:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.cr .pct{color:var(--pri);font-weight:700}
+.addrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.addrow input,.addrow select{font-family:inherit;font-size:13px;padding:6px 9px;border:1px solid var(--line);border-radius:8px}
+.addrow input:focus,.addrow select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:6px}
+.ov-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 2px 10px rgba(31,36,48,.05)}
+.ov-head{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;margin-bottom:8px}
+.ov-pct{color:var(--pri);font-weight:800}
+.ov-stats{color:var(--muted);font-size:12.5px;margin-top:6px}
+.tag{display:inline-block;background:#f3f1ff;border-radius:10px;padding:4px 10px;font-size:12px;color:#4b5066;margin:3px 4px 3px 0}
+@media(max-width:680px){.hero h1{font-size:22px}.card{padding:16px}.sched{font-size:11px}.cell-x{font-size:10px}}
+</style></head><body><div class="wrap">
+
+<header class="hero">
+  <div class="hero-emoji">🗓️</div>
+  <div>
+    <h1>学习计划表</h1>
+    <div class="sub">周计划排课 · 空闲安排 · 课程进度自改 ｜ 数据自动存本机浏览器（建议偶尔导出备份）</div>
+  </div>
+</header>
+
+<div class="nav">
+<button class="tab-btn active" data-tab="tab-overview" onclick="showTab('tab-overview')">📊 总览</button>
+<button class="tab-btn" data-tab="tab-week" onclick="showTab('tab-week')">📅 周计划 / 课表</button>
+<button class="tab-btn" data-tab="tab-courses" onclick="showTab('tab-courses')">📚 课程进度</button>
+</div>
+
+<!-- 总览 -->
+<section class="tab-page" id="tab-overview">
+  <div class="card">
+    <h2>本周概览</h2>
+    <div class="meta" id="ovMeta"></div>
+    <div class="ov-grid" id="ovCourses"></div>
+  </div>
+  <div class="card">
+    <h2>今日安排（<span id="ovTodayName"></span>）</h2>
+    <div id="ovToday" class="meta"></div>
+  </div>
+  <div class="card">
+    <h2>数据备份</h2>
+    <div class="meta">导出为 JSON 文件存到本地，或导入之前导出的文件（换设备/清缓存前建议导出）。</div>
+    <button class="btn" id="btnExport">⬇️ 导出备份</button>
+    <button class="btn ghost" id="btnImport">⬆️ 导入备份</button>
+    <input type="file" id="fileImport" accept="application/json" style="display:none">
+  </div>
+</section>
+
+<!-- 周计划 / 课表 -->
+<section class="tab-page" id="tab-week" style="display:none">
+  <div class="card">
+    <h2>周计划表</h2>
+    <div class="meta">先点格子选中，再用下方面板安排：<b>上课</b>（填你的课表）/<b>学习</b>（安排某门网课或教材）/<b>休息</b>。空白格子就是你的空闲时间，可以安排学习。</div>
+    <div class="legend">
+      <span><span class="sw sw-class"></span>上课（课表固定）</span>
+      <span><span class="sw sw-study"></span>学习安排</span>
+      <span><span class="sw sw-rest"></span>休息/其他</span>
+      <span><span class="sw sw-free"></span>空闲（未安排）</span>
+      <span style="color:#b45309">🟨 底色 = 今天</span>
+    </div>
+    <div class="editor" id="editor">
+      <div id="edInfo">👆 点击上方表格里的任意格子来安排内容</div>
+      <div id="edForm" style="display:none">
+        <label>类型</label>
+        <select id="edType">
+          <option value="class">📘 上课（课表固定）</option>
+          <option value="study">📗 学习（网课/教材）</option>
+          <option value="rest">😴 休息/其他</option>
+        </select>
+        <span id="edCourseWrap"><label>课程</label><select id="edCourse"></select></span>
+        <label>备注</label><input id="edNote" style="width:150px" placeholder="如：P12–P15 / 第3章">
+        <button class="btn" id="edSave">保存</button>
+        <button class="btn ghost" id="edClear">清除</button>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="sched" id="sched"></table>
+    </div>
+  </div>
+</section>
+
+<!-- 课程进度 -->
+<section class="tab-page" id="tab-courses" style="display:none">
+  <div class="card">
+    <h2>课程 / 教材进度</h2>
+    <div class="meta">直接在「已看 / 总数」里改数字，进度条自动算；也可增删课程。💡 已按你现有学习进度表预填了 6 门课。</div>
+    <table class="cr">
+      <tr><th style="width:30px">#</th><th>名称</th><th style="width:80px">类型</th><th style="width:150px">已看 / 总数</th><th style="width:180px">进度</th><th>链接</th><th style="width:60px"></th></tr>
+      <tbody id="crBody"></tbody>
+    </table>
+    <div class="addrow">
+      <input id="addName" placeholder="新课名称，如：C++ Primer">
+      <select id="addType"><option>网课</option><option>教材</option></select>
+      <input id="addTotal" type="number" min="0" placeholder="总集数/章数" style="width:120px">
+      <input id="addLink" placeholder="链接（可选）" style="width:200px">
+      <button class="btn" id="addBtn">＋ 添加课程</button>
+    </div>
+  </div>
+</section>
+
+<div class="foot">本页为可编辑版学习计划，独立于你原来的「B站课程学习进度表」。所有改动仅存于本机浏览器 localStorage，不上传任何服务器。</div>
+</div>
+
+<script>
+/* ---------- 数据 ---------- */
+const DAYS=['周一','周二','周三','周四','周五','周六','周日'];
+const START=7, END=22; // 小时，07:00–22:00
+function slotLabel(h){return (h<10?'0'+h:h)+':00';}
+function cellKey(di,si){return 'd'+di+'_s'+si;}
+function parseKey(k){const m=k.match(/d(\d+)_s(\d+)/);return {di:+m[1],si:+m[2]};}
+
+const DEFAULT_COURSES=[
+  {name:'理论力学',icon:'⚙️',type:'网课',link:'https://www.bilibili.com/video/BV1xJ411s78q/',watched:22,total:101},
+  {name:'模拟电子技术基础',icon:'🔌',type:'网课',link:'https://www.bilibili.com/video/BV1tuXaYrELq/',watched:8,total:166},
+  {name:'考研数学·高数',icon:'📐',type:'网课',link:'https://www.bilibili.com/video/BV16BjHz9EUJ/',watched:11,total:34},
+  {name:'概率论与数理统计',icon:'🎲',type:'网课',link:'https://www.bilibili.com/video/BV16BjHz9EUJ/',watched:0,total:10},
+  {name:'清风数学建模',icon:'🌬',type:'网课',link:'https://space.bilibili.com/52614961',watched:0,total:543},
+  {name:'数据结构与算法基础',icon:'💻',type:'网课',link:'https://www.bilibili.com/video/BV1nJ411V7bd/',watched:0,total:173}
+];
+
+/* 默认课表（第7周 10/12–10/18，来自截图）
+   节1→8:00  节2→10:00  节3→14:00  节4→16:00，可在表格里点格子自行调整 */
+const DEFAULT_GRID={
+  d0_s8 :{type:'class',note:'概率与数理统计@理综楼415'},
+  d0_s10:{type:'class',note:'光学@理综楼208'},
+  d0_s16:{type:'class',note:'科技摄影与物理影像@董明珠楼213'},
+  d1_s10:{type:'class',note:'理论力学@理综楼305'},
+  d2_s10:{type:'class',note:'科技英语文献阅读与翻译@理综楼401'},
+  d2_s16:{type:'class',note:'体育(3)·篮球@校区篮球场'},
+  d3_s8 :{type:'class',note:'光学@理综楼208'},
+  d3_s10:{type:'class',note:'概率与数理统计@理综楼415'},
+  d4_s8 :{type:'class',note:'理论力学@理综楼305'},
+  d4_s14:{type:'class',note:'形势与政策(3)@理综楼215'}
+};
+
+let courses=[], grid={}, selected=null;
+
+function load(){
+  try{
+    courses=JSON.parse(localStorage.getItem('sp_courses'));
+    grid=JSON.parse(localStorage.getItem('sp_grid'));
+  }catch(e){}
+  if(!Array.isArray(courses)||!courses.length){
+    courses=DEFAULT_COURSES.map((c,i)=>Object.assign({id:'c'+i},c));
+    saveCourses();
+  }
+  if(!grid||!Object.keys(grid).length){
+    grid=JSON.parse(JSON.stringify(DEFAULT_GRID)); // 首次使用时预填课表
+  }
+  courses.forEach((c,i)=>{if(!c.id)c.id='c'+i;});
+}
+function saveCourses(){try{localStorage.setItem('sp_courses',JSON.stringify(courses));}catch(e){}}
+function saveGrid(){try{localStorage.setItem('sp_grid',JSON.stringify(grid));}catch(e){}}
+function courseById(id){return courses.find(c=>c.id===id);}
+function todayIdx(){const d=new Date().getDay();return d===0?6:d-1;}
+
+/* ---------- 周计划表格 ---------- */
+function renderGrid(){
+  const t=document.getElementById('sched');
+  let h='<tr><th style="width:54px"></th>';
+  DAYS.forEach((d,i)=>{h+='<th'+(i===todayIdx()?' class="today-h"':'')+'>'+d+'</th>';});
+  h+='</tr>';
+  for(let si=START;si<END;si++){
+    h+='<tr><td class="slot">'+slotLabel(si)+'</td>';
+    for(let di=0;di<7;di++){
+      const k=cellKey(di,si), c=grid[k];
+      let cls='x', txt='';
+      if(c){
+        if(c.type==='class'){cls+=' cell-class';txt=c.note||'上课';}
+        else if(c.type==='study'){cls+=' cell-study';const co=courseById(c.course);txt=(co?co.icon+'':'📗')+(c.note?c.note:'');}
+        else if(c.type==='rest'){cls+=' cell-rest';txt=c.note||'休息';}
+      }
+      if(di===todayIdx())cls+=' today';
+      if(k===selected)cls+=' sel';
+      h+='<td class="'+cls+'" data-k="'+k+'"><div class="cell-x">'+txt+'</div></td>';
+    }
+    h+='</tr>';
+  }
+  t.innerHTML=h;
+  t.querySelectorAll('td.x').forEach(td=>{
+    td.onclick=()=>selectCell(td.dataset.k,td);
+  });
+}
+
+function selectCell(k,el){
+  selected=k;
+  document.querySelectorAll('.sched td.sel').forEach(e=>e.classList.remove('sel'));
+  if(el)el.classList.add('sel');
+  const c=grid[k]||{type:'study',course:null,note:''};
+  const p=parseKey(k);
+  document.getElementById('edInfo').textContent='👉 已选中：'+DAYS[p.di]+' '+slotLabel(p.si);
+  document.getElementById('edForm').style.display='flex';
+  document.getElementById('edType').value=c.type||'study';
+  document.getElementById('edNote').value=c.note||'';
+  fillCourseSelect();
+  document.getElementById('edCourse').value=c.course||'';
+  toggleCourseWrap();
+}
+function toggleCourseWrap(){
+  document.getElementById('edCourseWrap').style.display=
+    document.getElementById('edType').value==='study'?'':'none';
+}
+function fillCourseSelect(){
+  const s=document.getElementById('edCourse');
+  s.innerHTML=courses.map(c=>'<option value="'+c.id+'">'+c.icon+' '+c.name+'</option>').join('');
+}
+function saveCell(){
+  if(!selected)return;
+  const type=document.getElementById('edType').value;
+  const note=document.getElementById('edNote').value.trim();
+  const course=document.getElementById('edCourse').value||null;
+  if(type==='study'&&!course){alert('学习类型请先添加并选择一门课程（见「课程进度」页）');return;}
+  grid[selected]={type,course:type==='study'?course:null,note};
+  saveGrid();renderGrid();renderOverview();
+}
+function clearCell(){
+  if(!selected)return;
+  delete grid[selected];
+  saveGrid();renderGrid();renderOverview();
+}
+
+/* ---------- 课程进度 ---------- */
+function renderCourses(){
+  const b=document.getElementById('crBody');
+  b.innerHTML=courses.map((c,i)=>{
+    const pct=c.total>0?Math.round(c.watched/c.total*100):0;
+    const link=c.link?'<a href="'+c.link+'" target="_blank">打开</a>':'—';
+    return '<tr>'+
+      '<td class="num">'+(i+1)+'</td>'+
+      '<td>'+c.icon+' '+escapeHtml(c.name)+'</td>'+
+      '<td>'+c.type+'</td>'+
+      '<td><input type="number" min="0" value="'+c.watched+'" data-f="watched" data-id="'+c.id+'"> / '+
+      '<input type="number" min="0" value="'+c.total+'" data-f="total" data-id="'+c.id+'"></td>'+
+      '<td><div class="bar"><div style="width:'+pct+'%"></div></div><span class="pct">'+pct+'%</span></td>'+
+      '<td>'+link+'</td>'+
+      '<td><button class="btn ghost" data-del="'+c.id+'">删</button></td>'+
+    '</tr>';
+  }).join('');
+  b.querySelectorAll('input[data-f]').forEach(inp=>{
+    inp.oninput=()=>{
+      const c=courseById(inp.dataset.id);if(!c)return;
+      c[inp.dataset.f]=Math.max(0,parseInt(inp.value||'0',10));
+      saveCourses();renderCourses();renderOverview();
+    };
+  });
+  b.querySelectorAll('button[data-del]').forEach(btn=>{
+    btn.onclick=()=>{
+      if(!confirm('确定删除该课程？'))return;
+      courses=courses.filter(c=>c.id!==btn.dataset.del);
+      saveCourses();fillCourseSelect();renderCourses();renderOverview();
+    };
+  });
+}
+function addCourse(){
+  const name=document.getElementById('addName').value.trim();
+  if(!name){alert('请输入课程名称');return;}
+  const total=parseInt(document.getElementById('addTotal').value||'0',10)||0;
+  const c={id:'c'+Date.now(),name,icon:'📚',type:document.getElementById('addType').value,
+           link:document.getElementById('addLink').value.trim(),watched:0,total};
+  courses.push(c);saveCourses();fillCourseSelect();renderCourses();renderOverview();
+  document.getElementById('addName').value='';
+  document.getElementById('addTotal').value='';
+  document.getElementById('addLink').value='';
+}
+
+/* ---------- 总览 ---------- */
+function renderOverview(){
+  const hours={};let total=0;
+  for(const k in grid){const c=grid[k];if(c.type==='study'&&c.course){hours[c.course]=(hours[c.course]||0)+1;total++;}}
+  document.getElementById('ovMeta').textContent='本周计划学习总时长：'+total+' 小时（每格=1小时）';
+  const box=document.getElementById('ovCourses');
+  box.innerHTML=courses.map(c=>{
+    const pct=c.total>0?Math.round(c.watched/c.total*100):0;
+    const h=hours[c.id]||0;
+    return '<div class="ov-card"><div class="ov-head"><b>'+c.icon+' '+escapeHtml(c.name)+'</b>'+
+      '<span class="ov-pct">'+pct+'%</span></div>'+
+      '<div class="bar"><div style="width:'+pct+'%"></div></div>'+
+      '<div class="ov-stats">已看 '+c.watched+' / '+c.total+(h>0?' · 本周安排 <b>'+h+'h</b>':'')+'</div></div>';
+  }).join('');
+  const ti=todayIdx();
+  const items=[];
+  for(let si=START;si<END;si++){
+    const c=grid[cellKey(ti,si)];
+    if(c){
+      let label='';
+      if(c.type==='class')label='📘 上课'+(c.note?'：'+c.note:'');
+      else if(c.type==='study'){const co=courseById(c.course);label='📗 学习：'+(co?co.name:'已删课程')+(c.note?'（'+c.note+'）':'');}
+      else label='😴 休息'+(c.note?'：'+c.note:'');
+      items.push(slotLabel(si)+' '+label);
+    }
+  }
+  document.getElementById('ovTodayName').textContent=DAYS[ti];
+  document.getElementById('ovToday').innerHTML=items.length?items.map(t=>'<span class="tag">'+t+'</span>').join(''):'今天还没有安排，去「周计划」点格子加一下吧～';
+}
+
+/* ---------- 导入导出 ---------- */
+function exportData(){
+  const data={courses,grid,ts:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='study-planner-backup.json';
+  a.click();URL.revokeObjectURL(a.href);
+}
+function importData(file){
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      if(Array.isArray(d.courses)){courses=d.courses;courses.forEach((c,i)=>{if(!c.id)c.id='c'+i;});}
+      if(d.grid&&typeof d.grid==='object')grid=d.grid;
+      saveCourses();saveGrid();fillCourseSelect();renderAll();
+      alert('导入成功！');
+    }catch(e){alert('文件格式不对，导入失败');}
+  };
+  r.readAsText(file);
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+
+/* ---------- 初始化 ---------- */
+function showTab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  document.querySelectorAll('.tab-page').forEach(p=>p.style.display=p.id===id?'':'none');
+  window.scrollTo(0,0);
+}
+function renderAll(){renderGrid();renderCourses();renderOverview();}
+
+load();
+fillCourseSelect();
+renderAll();
+document.getElementById('edType').onchange=toggleCourseWrap;
+document.getElementById('edSave').onclick=saveCell;
+document.getElementById('edClear').onclick=clearCell;
+document.getElementById('addBtn').onclick=addCourse;
+document.getElementById('btnExport').onclick=exportData;
+document.getElementById('btnImport').onclick=()=>document.getElementById('fileImport').click();
+document.getElementById('fileImport').onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value='';};
+</script>
+</body></html>
