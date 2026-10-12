@@ -137,7 +137,7 @@ table.cr{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;b
   <div class="card">
     <h2>周计划表</h2>
     <div class="banner" id="schedUpdate" style="display:none">
-      📌 课表已更新（晚辅导改为 周一~周四 19:00–21:00），<b>点此应用新版</b>（仅更新「上课」格，不影响你安排的学习）
+      📌 课表已更新（晚辅导合并为 周一~周四 19:00–21:00 连续一段），<b>点此应用新版</b>（仅更新「上课」格，不影响你安排的学习）
       <button class="btn" id="btnApplySched">应用更新</button>
       <button class="btn ghost" id="btnDismissSched">暂不</button>
     </div>
@@ -216,11 +216,11 @@ const DEFAULT_COURSES=[
   {name:'数据结构与算法基础',icon:'💻',type:'网课',link:'https://www.bilibili.com/video/BV1nJ411V7bd/',watched:0,total:173}
 ];
 
-const SCHED_VER=4; // 默认课表版本，改动默认课表后+1，以便提示老用户更新
+const SCHED_VER=5; // 默认课表版本，改动默认课表后+1，以便提示老用户更新
 /* 默认课表（第7周 10/12–10/18，来自截图）
    作息：每大节=两小节(50+10+50)，大节间隔20分钟
-   节1 08:00–09:50 | 节2 10:10–12:00 | 节3 14:00–15:50 | 节4 16:10–18:00 | 晚辅导 周一~周四 19:00–21:00
-   可在表格里点格子自行调整 */
+   节1 08:00–09:50 | 节2 10:10–12:00 | 节3 14:00–15:50 | 节4 16:10–18:00 | 晚辅导 周一~周四 19:00–21:00（连续一段）
+   课程/晚辅导只存起点格，渲染时按时间段自动合并成连续块。可在表格里点格子自行调整 */
 const DEFAULT_GRID={
   d0_s8 :{type:'class',note:'概率与数理统计·08:00–09:50@理综楼415'},
   d0_s10:{type:'class',note:'光学·10:10–12:00@理综楼208'},
@@ -232,11 +232,11 @@ const DEFAULT_GRID={
   d3_s10:{type:'class',note:'概率与数理统计·10:10–12:00@理综楼415'},
   d4_s8 :{type:'class',note:'理论力学·08:00–09:50@理综楼305'},
   d4_s14:{type:'class',note:'形势与政策(3)·14:00–15:50@理综楼215'},
-  /* 晚辅导 19:00–21:00（仅周一~周四） */
-  d0_s19:{type:'class',note:'晚辅导·19:00–21:00'},d0_s20:{type:'class',note:'晚辅导·19:00–21:00'},
-  d1_s19:{type:'class',note:'晚辅导·19:00–21:00'},d1_s20:{type:'class',note:'晚辅导·19:00–21:00'},
-  d2_s19:{type:'class',note:'晚辅导·19:00–21:00'},d2_s20:{type:'class',note:'晚辅导·19:00–21:00'},
-  d3_s19:{type:'class',note:'晚辅导·19:00–21:00'},d3_s20:{type:'class',note:'晚辅导·19:00–21:00'}
+  /* 晚辅导 19:00–21:00（仅周一~周四，存起点格，自动合并成连续一段） */
+  d0_s19:{type:'class',note:'晚辅导·19:00–21:00'},
+  d1_s19:{type:'class',note:'晚辅导·19:00–21:00'},
+  d2_s19:{type:'class',note:'晚辅导·19:00–21:00'},
+  d3_s19:{type:'class',note:'晚辅导·19:00–21:00'}
 };
 
 let courses=[], grid={}, selected=null;
