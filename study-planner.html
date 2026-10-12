@@ -265,24 +265,52 @@ function courseById(id){return courses.find(c=>c.id===id);}
 function todayIdx(){const d=new Date().getDay();return d===0?6:d-1;}
 
 /* ---------- 周计划表格 ---------- */
+function classSpan(c){
+  if(!c||c.type!=='class')return 1;
+  const m=(c.note||'').match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
+  if(!m)return 1;
+  const s=(+m[1])*60+(+m[2]), e=(+m[3])*60+(+m[4]);
+  return Math.max(1,Math.ceil((e-s)/60));
+}
 function renderGrid(){
   const t=document.getElementById('sched');
+  const skip={};
+  for(let di=0;di<7;di++){
+    skip[di]=new Set();
+    for(let si=START;si<END;si++){
+      const c=grid[cellKey(di,si)];
+      if(c&&c.type==='class'){
+        const r=classSpan(c);
+        for(let j=1;j<r;j++){
+          const nk=cellKey(di,si+j);
+          if(!grid[nk])skip[di].add(si+j);
+          else break;
+        }
+      }
+    }
+  }
   let h='<tr><th style="width:54px"></th>';
   DAYS.forEach((d,i)=>{h+='<th'+(i===todayIdx()?' class="today-h"':'')+'>'+d+'</th>';});
   h+='</tr>';
   for(let si=START;si<END;si++){
     h+='<tr><td class="slot">'+slotLabel(si)+'</td>';
     for(let di=0;di<7;di++){
+      if(skip[di].has(si))continue;
       const k=cellKey(di,si), c=grid[k];
-      let cls='x', txt='';
+      let cls='x', txt='', rowspan='';
       if(c){
-        if(c.type==='class'){cls+=' cell-class';txt=c.note||'上课';}
+        if(c.type==='class'){
+          cls+=' cell-class';txt=c.note||'上课';
+          const r=classSpan(c);let act=1;
+          for(let j=1;j<r;j++){const nk=cellKey(di,si+j);if(!grid[nk])act++;else break;}
+          if(act>1)rowspan=' rowspan="'+act+'"';
+        }
         else if(c.type==='study'){cls+=' cell-study';const co=courseById(c.course);txt=(co?co.icon+'':'📗')+(c.note?c.note:'');}
         else if(c.type==='rest'){cls+=' cell-rest';txt=c.note||'休息';}
       }
       if(di===todayIdx())cls+=' today';
       if(k===selected)cls+=' sel';
-      h+='<td class="'+cls+'" data-k="'+k+'"><div class="cell-x">'+txt+'</div></td>';
+      h+='<td class="'+cls+'" data-k="'+k+'"'+rowspan+'><div class="cell-x">'+txt+'</div></td>';
     }
     h+='</tr>';
   }
