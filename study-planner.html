@@ -95,6 +95,16 @@ table.cr{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;b
 .ov-pct{color:var(--pri);font-weight:800}
 .ov-stats{color:var(--muted);font-size:12.5px;margin-top:6px}
 .tag{display:inline-block;background:#f3f1ff;border-radius:10px;padding:4px 10px;font-size:12px;color:#4b5066;margin:3px 4px 3px 0}
+/* 今日安排时间线 */
+.tl{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.tl-item{display:flex;gap:12px;align-items:flex-start;padding:10px 13px;border-radius:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--line);box-shadow:0 2px 8px rgba(31,36,48,.04)}
+.tl-item.class{border-left-color:#6366f1}
+.tl-item.study{border-left-color:#10b981}
+.tl-item.rest{border-left-color:#94a3b8}
+.tl-time{font-weight:700;font-size:13px;color:#4b5066;min-width:96px;white-space:nowrap;padding-top:1px}
+.tl-body{font-size:14px;color:#2b2f3a;line-height:1.5}
+.tl-body .sub{color:var(--muted);font-size:12.5px}
+.tl-empty{color:var(--muted);font-size:14px;padding:8px 2px}
 @media(max-width:680px){.hero h1{font-size:22px}.card{padding:16px}.sched{font-size:11px}.cell-x{font-size:10px}}
 </style></head><body><div class="wrap">
 
@@ -469,16 +479,25 @@ function renderOverview(){
   const items=[];
   for(let si=START;si<END;si++){
     const c=grid[cellKey(ti,si)];
-    if(c){
-      let label='';
-      if(c.type==='class')label='📘 上课'+(c.note?'：'+c.note:'');
-      else if(c.type==='study'){const co=courseById(c.course);label='📗 学习：'+(co?co.name:'已删课程')+(c.note?'（'+c.note+'）':'');}
-      else label='😴 休息'+(c.note?'：'+c.note:'');
-      items.push(slotLabel(si)+' '+label);
+    if(!c)continue;
+    const note=c.note||'';
+    const tm=note.match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
+    if(c.type==='class'){
+      const timeStr=tm?tm[1]+':'+tm[2]+'–'+tm[3]+':'+tm[4]:slotLabel(si);
+      const text=tm?note.replace(tm[0],'').replace(/·@/g,'@').replace(/^[·\s]+/,'').replace(/[·\s]+$/,''):note;
+      items.push({cls:'class',time:timeStr,icon:'📘',body:escapeHtml(text||'上课')});
+    }else if(c.type==='study'){
+      const co=courseById(c.course);
+      const name=co?co.name:'已删课程';
+      items.push({cls:'study',time:slotLabel(si),icon:'📗',body:escapeHtml(name)+(note?' <span class="sub">· '+escapeHtml(note)+'</span>':'')});
+    }else{
+      items.push({cls:'rest',time:slotLabel(si),icon:'😴',body:escapeHtml(note||'休息')});
     }
   }
   document.getElementById('ovTodayName').textContent=DAYS[ti];
-  document.getElementById('ovToday').innerHTML=items.length?items.map(t=>'<span class="tag">'+t+'</span>').join(''):'今天还没有安排，去「周计划」点格子加一下吧～';
+  document.getElementById('ovToday').innerHTML=items.length?
+    '<div class="tl">'+items.map(t=>'<div class="tl-item '+t.cls+'"><div class="tl-time">'+t.time+'</div><div class="tl-body">'+t.icon+' '+t.body+'</div></div>').join('')+'</div>':
+    '<div class="tl-empty">今天还没有安排，去「📅 周计划」点格子加一下吧～</div>';
 }
 
 /* ---------- 导入导出 ---------- */
