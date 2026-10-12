@@ -81,6 +81,8 @@ table.cr{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;b
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
 .toolbar .btn.ghost{font-size:12.5px;padding:7px 13px}
 .toolbar .btn.ghost:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.banner{background:linear-gradient(90deg,#eef2ff,#f5f3ff);border:1px solid #c7d2fe;border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:13.5px;color:#4338ca;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner .btn{padding:6px 14px;font-size:12.5px}
 /* 课程/教材目录可编辑 */
 .cr input.ci-name{width:140px}
 .cr input.ci-link{width:170px}
@@ -134,6 +136,11 @@ table.cr{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;b
 <section class="tab-page" id="tab-week" style="display:none">
   <div class="card">
     <h2>周计划表</h2>
+    <div class="banner" id="schedUpdate" style="display:none">
+      📌 课表已更新（节次时间修正 + 每天晚辅导），<b>点此应用新版</b>（仅更新「上课」格，不影响你安排的学习）
+      <button class="btn" id="btnApplySched">应用更新</button>
+      <button class="btn ghost" id="btnDismissSched">暂不</button>
+    </div>
     <div class="meta">先点格子选中，再用下方面板安排：<b>上课</b>（填你的课表）/<b>学习</b>（安排某门网课或教材）/<b>休息</b>。空白格子就是你的空闲时间，可以安排学习。</div>
     <div class="legend">
       <span><span class="sw sw-class"></span>上课（课表固定）</span>
@@ -209,6 +216,7 @@ const DEFAULT_COURSES=[
   {name:'数据结构与算法基础',icon:'💻',type:'网课',link:'https://www.bilibili.com/video/BV1nJ411V7bd/',watched:0,total:173}
 ];
 
+const SCHED_VER=3; // 默认课表版本，改动默认课表后+1，以便提示老用户更新
 /* 默认课表（第7周 10/12–10/18，来自截图）
    作息：每大节=两小节(50+10+50)，大节间隔20分钟
    节1 08:00–09:50 | 节2 10:10–12:00 | 节3 14:00–15:50 | 节4 16:10–18:00 | 晚辅导 每天18:00–21:00
@@ -247,6 +255,7 @@ function load(){
   }
   if(!grid||!Object.keys(grid).length){
     grid=JSON.parse(JSON.stringify(DEFAULT_GRID)); // 首次使用时预填课表
+    try{localStorage.setItem('sp_sched_ver',String(SCHED_VER));}catch(e){}
   }
   courses.forEach((c,i)=>{if(!c.id)c.id='c'+i;});
 }
@@ -342,7 +351,20 @@ function restoreGridBackup(){
 function restoreDefaultGrid(){
   if(!confirm('确定恢复为默认课表吗？\n你手动改过的内容会被覆盖（已备份的可从「♻️ 恢复课表备份」找回）'))return;
   grid=JSON.parse(JSON.stringify(DEFAULT_GRID));
-  saveGrid();renderGrid();renderOverview();
+  saveGrid();markSchedVer();renderGrid();renderOverview();
+}
+/* 仅更新「上课」格为最新默认（保留你安排的学习/休息），用于老用户应用课表更新 */
+function applySchedUpdate(){
+  for(const k in grid){ if(grid[k]&&grid[k].type==='class') delete grid[k]; }
+  for(const k in DEFAULT_GRID){ grid[k]=JSON.parse(JSON.stringify(DEFAULT_GRID[k])); }
+  saveGrid();markSchedVer();renderGrid();renderOverview();
+  document.getElementById('schedUpdate').style.display='none';
+}
+function dismissSched(){ markSchedVer(); document.getElementById('schedUpdate').style.display='none'; }
+function markSchedVer(){ try{localStorage.setItem('sp_sched_ver',String(SCHED_VER));}catch(e){} }
+function checkSchedUpdate(){
+  let v=null; try{v=localStorage.getItem('sp_sched_ver');}catch(e){}
+  if(v!==String(SCHED_VER)){ document.getElementById('schedUpdate').style.display='flex'; }
 }
 
 /* ---------- 课程进度 / 教材目录（可编辑） ---------- */
@@ -470,6 +492,7 @@ function renderAll(){renderGrid();renderCourses();renderOverview();}
 load();
 fillCourseSelect();
 renderAll();
+checkSchedUpdate();
 document.getElementById('edType').onchange=toggleCourseWrap;
 document.getElementById('edSave').onclick=saveCell;
 document.getElementById('edClear').onclick=clearCell;
@@ -477,6 +500,8 @@ document.getElementById('btnBackupGrid').onclick=backupGrid;
 document.getElementById('btnRestoreGrid').onclick=restoreGridBackup;
 document.getElementById('btnUndoDel').onclick=undoDelete;
 document.getElementById('btnDefaultGrid').onclick=restoreDefaultGrid;
+document.getElementById('btnApplySched').onclick=applySchedUpdate;
+document.getElementById('btnDismissSched').onclick=dismissSched;
 document.getElementById('addBtn').onclick=addCourse;
 document.getElementById('btnExport').onclick=exportData;
 document.getElementById('btnImport').onclick=()=>document.getElementById('fileImport').click();
