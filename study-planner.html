@@ -142,7 +142,7 @@ table.cr{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;b
       <span><span class="sw sw-free"></span>空闲（未安排）</span>
       <span style="color:#b45309">🟨 底色 = 今天</span>
     </div>
-    <div class="meta" style="margin:0 0 10px">节次对应时间：节1 08:00 · 节2 09:00 · 节3 10:00 · 节4 11:00 · 节5 14:00 · 节6 15:00 · 节7 16:00 · 节8 17:00（点格子可改）</div>
+    <div class="meta" style="margin:0 0 10px">作息（每大节=两小节 50+10+50，大节间隔 20 分钟）：节1 08:00–09:50 · 节2 10:10–12:00 · 节3 14:00–15:50 · 节4 16:10–18:00 · 晚辅导 每天 18:00–21:00（点格子可改）</div>
     <div class="toolbar">
       <button class="btn ghost" id="btnBackupGrid">💾 备份课表</button>
       <button class="btn ghost" id="btnRestoreGrid">♻️ 恢复课表备份</button>
@@ -210,19 +210,28 @@ const DEFAULT_COURSES=[
 ];
 
 /* 默认课表（第7周 10/12–10/18，来自截图）
-   节次→时间：节1 08:00 / 节2 09:00 / 节3 10:00 / 节4 11:00 / 节5 14:00 / 节6 15:00 / 节7 16:00 / 节8 17:00
+   作息：每大节=两小节(50+10+50)，大节间隔20分钟
+   节1 08:00–09:50 | 节2 10:10–12:00 | 节3 14:00–15:50 | 节4 16:10–18:00 | 晚辅导 每天18:00–21:00
    可在表格里点格子自行调整 */
 const DEFAULT_GRID={
-  d0_s8 :{type:'class',note:'概率与数理统计@理综楼415'},
-  d0_s9 :{type:'class',note:'光学@理综楼208'},
-  d0_s11:{type:'class',note:'科技摄影与物理影像@董明珠楼213'},
-  d1_s9 :{type:'class',note:'理论力学@理综楼305'},
-  d2_s9 :{type:'class',note:'科技英语文献阅读与翻译@理综楼401'},
-  d2_s11:{type:'class',note:'体育(3)·篮球@校区篮球场'},
-  d3_s8 :{type:'class',note:'光学@理综楼208'},
-  d3_s9 :{type:'class',note:'概率与数理统计@理综楼415'},
-  d4_s8 :{type:'class',note:'理论力学@理综楼305'},
-  d4_s10:{type:'class',note:'形势与政策(3)@理综楼215'}
+  d0_s8 :{type:'class',note:'概率与数理统计·08:00–09:50@理综楼415'},
+  d0_s10:{type:'class',note:'光学·10:10–12:00@理综楼208'},
+  d0_s16:{type:'class',note:'科技摄影与物理影像·16:10–18:00@董明珠楼213'},
+  d1_s10:{type:'class',note:'理论力学·10:10–12:00@理综楼305'},
+  d2_s10:{type:'class',note:'科技英语文献阅读与翻译·10:10–12:00@理综楼401'},
+  d2_s16:{type:'class',note:'体育(3)·篮球·16:10–18:00@校区篮球场'},
+  d3_s8 :{type:'class',note:'光学·08:00–09:50@理综楼208'},
+  d3_s10:{type:'class',note:'概率与数理统计·10:10–12:00@理综楼415'},
+  d4_s8 :{type:'class',note:'理论力学·08:00–09:50@理综楼305'},
+  d4_s14:{type:'class',note:'形势与政策(3)·14:00–15:50@理综楼215'},
+  /* 每天晚辅导 18:00–21:00 */
+  d0_s18:{type:'class',note:'晚辅导·18:00–21:00'},d0_s19:{type:'class',note:'晚辅导·18:00–21:00'},d0_s20:{type:'class',note:'晚辅导·18:00–21:00'},
+  d1_s18:{type:'class',note:'晚辅导·18:00–21:00'},d1_s19:{type:'class',note:'晚辅导·18:00–21:00'},d1_s20:{type:'class',note:'晚辅导·18:00–21:00'},
+  d2_s18:{type:'class',note:'晚辅导·18:00–21:00'},d2_s19:{type:'class',note:'晚辅导·18:00–21:00'},d2_s20:{type:'class',note:'晚辅导·18:00–21:00'},
+  d3_s18:{type:'class',note:'晚辅导·18:00–21:00'},d3_s19:{type:'class',note:'晚辅导·18:00–21:00'},d3_s20:{type:'class',note:'晚辅导·18:00–21:00'},
+  d4_s18:{type:'class',note:'晚辅导·18:00–21:00'},d4_s19:{type:'class',note:'晚辅导·18:00–21:00'},d4_s20:{type:'class',note:'晚辅导·18:00–21:00'},
+  d5_s18:{type:'class',note:'晚辅导·18:00–21:00'},d5_s19:{type:'class',note:'晚辅导·18:00–21:00'},d5_s20:{type:'class',note:'晚辅导·18:00–21:00'},
+  d6_s18:{type:'class',note:'晚辅导·18:00–21:00'},d6_s19:{type:'class',note:'晚辅导·18:00–21:00'},d6_s20:{type:'class',note:'晚辅导·18:00–21:00'}
 };
 
 let courses=[], grid={}, selected=null;
