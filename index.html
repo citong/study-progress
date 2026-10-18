@@ -45,6 +45,17 @@ a{color:#0969da;text-decoration:none}
 .subj{white-space:nowrap;color:#0969da;font-weight:bold}
 .plan-rest td{color:#8b949e;background:#fafbfc}
 .plan-rest td.status{color:#8b949e}
+.daily-input{display:flex;gap:8px;align-items:center;margin:4px 0 12px}
+.daily-input input{border:1px solid #d0d3d8;border-radius:16px;padding:6px 12px;font-size:13px;width:170px;font-family:inherit}
+.d-btn{border:1px solid #2ea44f;background:#2ea44f;color:#fff;padding:6px 14px;border-radius:16px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.d-btn:hover{background:#2c974b}
+.daily-history{display:flex;flex-direction:column;gap:6px}
+.daily-row{display:flex;align-items:center;gap:10px;font-size:13px}
+.daily-row .d-date{color:#57606a;width:86px;white-space:nowrap}
+.daily-row .d-bar{flex:1;height:10px;background:#e5e6eb;border-radius:5px;overflow:hidden}
+.daily-row .d-bar>div{height:100%;background:#2ea44f}
+.daily-row .d-min{color:#1f2329;width:84px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.daily-empty{color:#8b949e;font-size:12.5px}
 </style></head><body><div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
 <div class="sub">共 6 门课程 · 更新日期：2026-10-18</div>
@@ -145,6 +156,13 @@ a{color:#0969da;text-decoration:none}
 <table><tr><th>时段</th><th>科目</th><th>任务</th><th>时长</th><th>状态</th></tr>
 <tr class="plan-task" data-tvid="gaishu:P37"><td class="tm">10:30–11:58</td><td class="subj">概率论</td><td>P37 一维连续变量（1.25×）</td><td class="dur">1:28</td><td class="status">未完成</td></tr><tr class="plan-rest"><td class="tm">11:58–13:20</td><td class="subj">—</td><td>午饭 + 休息</td><td class="dur">1:22</td><td class="status">—</td></tr><tr class="plan-task" data-tvid="gaishu:P38"><td class="tm">13:20–15:13</td><td class="subj">概率论</td><td>P38 二维随机变量（1.25×）</td><td class="dur">1:53</td><td class="status">未完成</td></tr><tr class="plan-rest"><td class="tm">15:13–15:33</td><td class="subj">—</td><td>休息</td><td class="dur">0:20</td><td class="status">—</td></tr><tr class="plan-task" data-tvid="python:BV12VXRYTEQh:1"><td class="tm">15:33–15:56</td><td class="subj">蓝桥杯</td><td>课时2 算法入门</td><td class="dur">0:23</td><td class="status">未完成</td></tr><tr class="plan-task" data-tvid="python:BV18c9iY4Eyu:1"><td class="tm">15:56–16:18</td><td class="subj">蓝桥杯</td><td>课时3 贪心&amp;排序</td><td class="dur">0:22</td><td class="status">未完成</td></tr><tr class="plan-task" data-tvid="modian:9"><td class="tm">16:18–17:08</td><td class="subj">模电</td><td>P9 三极管结构</td><td class="dur">0:50</td><td class="status">未完成</td></tr><tr class="plan-rest"><td class="tm">17:08–18:18</td><td class="subj">—</td><td>晚饭 + 休息</td><td class="dur">1:10</td><td class="status">—</td></tr><tr class="plan-task" data-tvid="modian:11"><td class="tm">18:18–19:15</td><td class="subj">模电</td><td>P11 特性曲线二</td><td class="dur">0:57</td><td class="status">未完成</td></tr><tr class="plan-task" data-tvid="python:BV1yM9pY5EaW:1"><td class="tm">19:15–19:45</td><td class="subj">蓝桥杯</td><td>课时4 哈希&amp;暴力&amp;前缀和</td><td class="dur">0:30</td><td class="status">未完成</td></tr><tr class="plan-task" data-tvid="python:BV14ARKYqEb1:1"><td class="tm">19:45–20:14</td><td class="subj">蓝桥杯</td><td>课时5（上）二分查找</td><td class="dur">0:29</td><td class="status">未完成</td></tr><tr class="plan-task" data-tvid="python:BV1U99QYKEj2:1"><td class="tm">20:14–20:40</td><td class="subj">蓝桥杯</td><td>课时5（下）二分答案</td><td class="dur">0:26</td><td class="status">未完成</td></tr><tr class="plan-rest"><td class="tm">20:40–21:00</td><td class="subj">—</td><td>休息</td><td class="dur">0:20</td><td class="status">—</td></tr><tr class="plan-task" data-tvid="modian:10"><td class="tm">21:00–21:26</td><td class="subj">模电</td><td>P10 特性曲线一</td><td class="dur">0:26</td><td class="status">未完成</td></tr><tr class="plan-rest"><td class="tm">21:26–21:30</td><td class="subj">—</td><td>收尾 / 自由</td><td class="dur">0:04</td><td class="status">—</td></tr></table>
 </div>
+<div class="card" id="daily-log">
+<h2>📈 每日学习记录</h2>
+<div class="meta">在下面填今天净学习的分钟数、点「记录今日」，会保存在本浏览器并同步到 GitHub；以后每天打开都能在下方看到最近几天的记录。</div>
+<div class="stats"><span>今日（2026-10-18）：<b id="daily-today">未记录</b></span><span>近 7 天合计：<b id="daily-week">—</b></span></div>
+<div class="daily-input"><input id="daily-min" type="number" min="1" max="1440" placeholder="今天学习了(分钟)"><button class="d-btn" id="daily-save">记录今日</button></div>
+<div id="daily-history" class="daily-history"></div>
+</div>
 <div class="foot">数据来源：B站合集接口（时长以B站为准）。理论力学采用任延宇本人账号合集（BV1xJ411s78q，101集），若看的是哈工大官方合集（BV1qV411X7Yp，102集）告诉我即可切换。李天意《考研数学精讲课》在同一合集（BV16BjHz9EUJ）内已拆成「高数（P1–P34）」和「概统（P35–P44）」两个独立页签，线代部分（P45–P55）不显示。数据结构（王卓·C/C++）已按你的 Python 组路线移除，替换为 TsingPig《蓝桥杯Python冲刺课》（课时1–10 + 刷题指南），更贴合蓝桥杯 Python 组。清风数学建模部分已移除，替换为蔡履中《光学（第三版）》课本目录（7章+附录，含每章习题与观察思考及讨论题，共58项），按页码逐节打卡、进度按已读页数 / 全书464页 计。更新进度：直接点击网页里的课程行即可勾选 / 取消「已看」；点顶部「连接GitHub自动同步」后，每次改动会自动提交到本仓库，跨设备/清缓存都不丢。</div>
 </div>
 
@@ -192,6 +210,27 @@ function recompute(){
   });
   var ptasks=document.querySelectorAll('.plan-task[data-tvid]');
   if(ptasks.length){ var pdone=0; ptasks.forEach(function(el){ if(el.classList.contains('done')) pdone++; }); var pe=document.getElementById('plan-done'); if(pe) pe.textContent=pdone; var pb=document.getElementById('plan-bar'); if(pb) pb.style.width=(ptasks.length?pdone/ptasks.length*100:0).toFixed(1)+'%'; }
+}
+function dkey(d){ return 'daily:'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fmtMin(m){ m=Math.round(m||0); var h=Math.floor(m/60),mm=m%60; return h?(h+' 小时'+(mm?' '+mm+' 分':'')):(m+' 分钟'); }
+function renderDaily(){
+  var tk=dkey(new Date()); var tmin=state[tk]||0;
+  var te=document.getElementById('daily-today'); if(te) te.textContent=tmin?fmtMin(tmin):'未记录';
+  var di=document.getElementById('daily-min'); if(di && document.activeElement!==di && tmin) di.value=tmin;
+  var logs=[]; Object.keys(state).forEach(function(k){ if(k.indexOf('daily:')===0){ var m=+state[k]; if(m>0) logs.push({d:k.slice(6),m:m}); } });
+  logs.sort(function(a,b){ return a.d<b.d?1:-1; });
+  var week=logs.filter(function(x){ var dt=new Date(x.d+'T00:00:00').getTime(); return (Date.now()-dt)<=7.5*86400000; });
+  var wsum=week.reduce(function(s,x){return s+x.m;},0);
+  var we=document.getElementById('daily-week'); if(we) we.textContent=wsum?fmtMin(wsum):'—';
+  var box=document.getElementById('daily-history'); if(!box) return;
+  if(!logs.length){ box.innerHTML='<div class="daily-empty">还没有记录，今天学完就记一笔～</div>'; return; }
+  var mx=Math.max.apply(null,logs.map(function(x){return x.m;}));
+  box.innerHTML=logs.slice(0,7).map(function(x){ var pct=mx?Math.max(5,x.m/mx*100):0; return '<div class="daily-row"><span class="d-date">'+x.d+'</span><span class="d-bar"><div style="width:'+pct.toFixed(0)+'%"></div></span><span class="d-min">'+fmtMin(x.m)+'</span></div>'; }).join('');
+}
+function recordDaily(){
+  var el=document.getElementById('daily-min'); if(!el) return;
+  var v=parseInt(el.value,10); if(!v||v<=0){ setStatus('error','请输入今天学习的分钟数'); return; }
+  state[dkey(new Date())]=v; sv(state); renderDaily(); schedulePush(); setStatus(TOKEN?'saved':'local');
 }
 var rows=[], state={};
 function applyTask(el,done){ el.classList.toggle('done',done); var st=el.querySelector('.status'); if(st) st.innerHTML = done ? '✅ 已完成' : '未完成'; }
@@ -271,7 +310,7 @@ function loadCloud(){
     return ghGetState();
   }).then(function(g){
     if(g.state && Object.keys(g.state).length){ state=g.state; sv(state); }
-    lastSha=g.sha; applyAll(); recompute();
+    lastSha=g.sha; applyAll(); recompute(); renderDaily();
     setStatus(TOKEN?'ready':'readonly');
   }).catch(function(e){ setStatus(TOKEN?'error':'readonly', String(e&&e.message||e)); });
 }
@@ -318,6 +357,9 @@ function injectToolbar(){
     });
   });
   recompute();
+  renderDaily();
+  var dsave=document.getElementById('daily-save');
+  if(dsave) dsave.addEventListener('click',recordDaily);
   injectToolbar();
   setStatus('local');
   loadCloud();
