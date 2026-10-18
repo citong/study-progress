@@ -166,7 +166,7 @@ a{color:#0969da;text-decoration:none}
 <div class="card" id="daily-log">
 <h2>📈 每日学习记录</h2>
 <div class="meta">勾选课程/计划任务的「已完成」会按课程时长自动记入今日（概率论按 1.25 折算，取消会扣回）；也能在下方「添加额外学习」手动补记学了什么、多久（点 × 可删）。数据存本浏览器并同步 GitHub，之后每天打开都能看到最近几天的记录。</div>
-<div class="stats"><span>今日（2026-10-18）：<b id="daily-today">未记录</b></span><span>近 7 天合计：<b id="daily-week">—</b></span></div>
+<div class="stats"><span>📺 课程自动 <b id="daily-auto">0</b></span><span>✏️ 额外学习 <b id="daily-extra-sum">0</b></span><span>🧮 今日合计 <b id="daily-total">0 分钟</b></span><span>近 7 天合计 <b id="daily-week">—</b></span></div>
 <div class="daily-input"><input id="daily-min" type="number" min="1" max="1440" placeholder="覆盖今日(分钟)"><button class="d-btn" id="daily-save">记录/覆盖今日</button></div>
 <div class="extra-add"><input id="extra-what" type="text" placeholder="额外学了什么(如：线代3.1)"><input id="extra-min" type="number" min="1" max="1440" placeholder="分钟"><button class="d-btn" id="extra-add">添加</button></div>
 <div id="daily-extra" class="daily-extra"></div>
@@ -228,7 +228,9 @@ function dayTotal(dk){ return (state['daily:'+dk]||0)+sumExtra(dk); }
 function renderDaily(){
   var tks=dkey(new Date()); var dk=tks.slice(6);
   var auto=state[tks]||0; var extra=state['extra:'+dk]||[]; var total=auto+sumExtra(dk);
-  var te=document.getElementById('daily-today'); if(te) te.textContent=total?fmtMin(total):'未记录';
+  var ea=document.getElementById('daily-auto'); if(ea) ea.textContent=auto?fmtMin(auto):'0';
+  var ee=document.getElementById('daily-extra-sum'); if(ee) ee.textContent=sumExtra(dk)?fmtMin(sumExtra(dk)):'0';
+  var tt=document.getElementById('daily-total'); if(tt) tt.textContent=total?fmtMin(total):'0 分钟';
   var di=document.getElementById('daily-min'); if(di && document.activeElement!==di && auto) di.value=Math.round(auto);
   var eb=document.getElementById('daily-extra');
   if(eb){ eb.innerHTML = extra.length ? extra.map(function(x,i){ return '<div class="extra-row"><span class="e-del" data-i="'+i+'">×</span><span class="e-txt">'+escapeHtml(x.t)+'</span><span class="e-min">'+fmtMin(x.m)+'</span></div>'; }).join('') : ''; }
