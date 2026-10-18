@@ -158,9 +158,9 @@ a{color:#0969da;text-decoration:none}
 </div>
 <div class="card" id="daily-log">
 <h2>📈 每日学习记录</h2>
-<div class="meta">在下面填今天净学习的分钟数、点「记录今日」，会保存在本浏览器并同步到 GitHub；以后每天打开都能在下方看到最近几天的记录。</div>
+<div class="meta">勾选上方课程/计划任务的「已完成」时，会按课程时长自动累计到今日（概率论按 1.25 倍速折算，取消勾选会扣回）；也可在下面手动填分钟、点「记录/覆盖今日」覆盖。数据存本浏览器并同步 GitHub，之后每天打开都能看到最近几天的记录。</div>
 <div class="stats"><span>今日（2026-10-18）：<b id="daily-today">未记录</b></span><span>近 7 天合计：<b id="daily-week">—</b></span></div>
-<div class="daily-input"><input id="daily-min" type="number" min="1" max="1440" placeholder="今天学习了(分钟)"><button class="d-btn" id="daily-save">记录今日</button></div>
+<div class="daily-input"><input id="daily-min" type="number" min="1" max="1440" placeholder="今天学习了(分钟)"><button class="d-btn" id="daily-save">记录/覆盖今日</button></div>
 <div id="daily-history" class="daily-history"></div>
 </div>
 <div class="foot">数据来源：B站合集接口（时长以B站为准）。理论力学采用任延宇本人账号合集（BV1xJ411s78q，101集），若看的是哈工大官方合集（BV1qV411X7Yp，102集）告诉我即可切换。李天意《考研数学精讲课》在同一合集（BV16BjHz9EUJ）内已拆成「高数（P1–P34）」和「概统（P35–P44）」两个独立页签，线代部分（P45–P55）不显示。数据结构（王卓·C/C++）已按你的 Python 组路线移除，替换为 TsingPig《蓝桥杯Python冲刺课》（课时1–10 + 刷题指南），更贴合蓝桥杯 Python 组。清风数学建模部分已移除，替换为蔡履中《光学（第三版）》课本目录（7章+附录，含每章习题与观察思考及讨论题，共58项），按页码逐节打卡、进度按已读页数 / 全书464页 计。更新进度：直接点击网页里的课程行即可勾选 / 取消「已看」；点顶部「连接GitHub自动同步」后，每次改动会自动提交到本仓库，跨设备/清缓存都不丢。</div>
@@ -234,7 +234,8 @@ function recordDaily(){
 }
 var rows=[], state={};
 function applyTask(el,done){ el.classList.toggle('done',done); var st=el.querySelector('.status'); if(st) st.innerHTML = done ? '✅ 已完成' : '未完成'; }
-function toggleVid(v){ var cur=!state[v]; state[v]=cur; sv(state); rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr,cur); }); document.querySelectorAll('.plan-task[data-tvid="'+v+'"]').forEach(function(el){ applyTask(el,cur); }); recompute(); schedulePush(); }
+function addDaily(deltaMin){ var tk=dkey(new Date()); state[tk]=Math.max(0,(state[tk]||0)+deltaMin); sv(state); }
+function toggleVid(v){ var cur=!state[v]; state[v]=cur; sv(state); rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr,cur); }); document.querySelectorAll('.plan-task[data-tvid="'+v+'"]').forEach(function(el){ applyTask(el,cur); }); recompute(); var tr=document.querySelector('tr[data-vid="'+v+'"]'); if(tr){ var sec=tr.closest('section[data-key]'); var mode=sec?(sec.dataset.mode||'dur'):'dur'; var dur=+tr.dataset.dur||0; if(mode!=='pages'&&dur>0){ var sp=(v.indexOf('gaishu:')===0)?1.25:1; addDaily(cur?(dur/60/sp):-(dur/60/sp)); } } renderDaily(); schedulePush(); }
 function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; if(Object.prototype.hasOwnProperty.call(state,v)) applyRow(tr,!!state[v]); }); document.querySelectorAll('.plan-task[data-tvid]').forEach(function(el){ var v=el.dataset.tvid; applyTask(el,!!state[v]); }); }
 function b64e(s){var b=new TextEncoder().encode(s),o='';for(var i=0;i<b.length;i++)o+=String.fromCharCode(b[i]);return btoa(o);}
 function b64d(s){var bin=atob(s),b=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return new TextDecoder().decode(b);}
