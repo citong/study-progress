@@ -297,9 +297,11 @@ function setStatus(kind,detail){
     saved:['✅ 已自动保存到 GitHub','#1a7f37'],
     ready:['☁️ 已连接，改动会自动保存到 GitHub','#1a7f37'],
     readonly:['☁️ 已载入云端进度（只读，未连接）','#57606a'],
-    error:['⚠️ 同步失败'+(detail?('：'+detail):''),'#cf222e']
+    error:['⚠️ 同步失败','#cf222e']
   };
-  var m=map[kind]||map.local; el.textContent=m[0]; el.style.color=m[1];
+  var m=map[kind]||map.local;
+  el.textContent = m[0] + (detail ? '（'+detail+'）' : '');
+  el.style.color=m[1];
 }
 function ghGetState(){
   return api('/repos/'+OWNER+'/'+REPO+'/contents/'+PPATH+'?ref='+BRANCH).then(function(res){
@@ -312,10 +314,11 @@ function ghGetState(){
 }
 var pushing=false, pushTimer=null, lastSha=null;
 function schedulePush(){ if(!TOKEN) return; if(pushTimer) clearTimeout(pushTimer); pushTimer=setTimeout(pushProgress,2500); }
-function pushProgress(){
+function pushProgress(retry){
   if(!TOKEN) return;
   if(pushing){ if(pushTimer) clearTimeout(pushTimer); pushTimer=setTimeout(pushProgress,600); return; }
   pushing=true; setStatus('saving');
+  var before=JSON.stringify(state);
   ghGetState().then(function(g){
     lastSha=g.sha;
     var payload={updated:new Date().toISOString(), v:state};
@@ -323,10 +326,30 @@ function pushProgress(){
     if(lastSha) body.sha=lastSha;
     return api('/repos/'+OWNER+'/'+REPO+'/contents/'+PPATH,'PUT',body);
   }).then(function(res){
+    if(res.ok){
+      pushing=false;
+      if(res.data&&res.data.content) lastSha=res.data.content.sha;
+      setStatus('saved', new Date().toTimeString().slice(0,5));
+      if(JSON.stringify(state)!==before){ schedulePush(); }
+      return;
+    }
+    var msg=(res.data&&res.data.message)||('HTTP '+res.status);
+    if(res.status===409 && (retry||0)<2){ pushing=false; setTimeout(function(){ pushProgress((retry||0)+1); },800); return; }
     pushing=false;
-    if(res.ok){ if(res.data&&res.data.content) lastSha=res.data.content.sha; setStatus('saved'); }
-    else setStatus('error',(res.data&&res.data.message)||('HTTP '+res.status));
-  }).catch(function(e){ pushing=false; setStatus('error',String(e&&e.message||e)); });
+    setStatus('error',explainPush(res.status,msg));
+  }).catch(function(e){
+    pushing=false;
+    if((retry||0)<1){ setTimeout(function(){ pushProgress((retry||0)+1); },1500); return; }
+    setStatus('error','网络异常，请稍后再点「立即保存」');
+  });
+}
+function explainPush(code,msg){
+  if(code===401) return 'Token 失效或已过期，点「断开」后重新连接';
+  if(code===403) return 'Token 没有写入权限或被限流（Contents 需设为 Read and write）';
+  if(code===404) return '找不到仓库文件（Token 是否授权了 citong/study-progress）';
+  if(code===409) return '云端刚被别的设备改过，重试仍冲突，请点「⬆️ 立即保存」';
+  if(code===422) return '提交内容被拒绝，请刷新页面后重试';
+  return msg;
 }
 function connect(){
   var t=prompt('粘贴你的 GitHub Token（建议用 fine-grained token，仅授予本仓库 Contents 读写）。\n\nToken 只保存在你当前浏览器，不会写进网页代码。');
