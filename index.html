@@ -54,6 +54,14 @@ a{color:#0969da;text-decoration:none}
 .daily-row .d-bar>div{height:100%;background:#2ea44f}
 .daily-row .d-min{color:#1f2329;width:84px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .daily-empty{color:#8b949e;font-size:12.5px}
+.daily-list{margin:2px 0 10px}
+.dl-head{font-size:12.5px;color:#8b949e;margin:2px 0 6px}
+.dl-item{display:flex;align-items:center;gap:10px;font-size:13px;background:#f0fbf4;border:1px solid #d6f0e0;border-radius:6px;padding:6px 10px;margin-bottom:5px}
+.dl-sub{color:#1a7f37;font-weight:bold;white-space:nowrap}
+.dl-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dl-dur{color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums}
+.hist-row{display:flex;gap:10px;font-size:12.5px;color:#8b949e;margin-top:3px}
+.hist-row .h-date{width:52px;white-space:nowrap}
 .extra-add{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
 .extra-add input[type=text]{border:1px solid #d0d3d8;border-radius:16px;padding:6px 12px;font-size:13px;flex:1;min-width:150px;font-family:inherit}
 .daily-extra{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
@@ -168,10 +176,11 @@ a{color:#0969da;text-decoration:none}
 </div></section>
 <div class="card" id="daily-log">
 <h2>📈 每日学习记录</h2>
-<div class="meta">在「添加额外学习」里手动补记今天学了什么、多久（点 × 可删）；数据存本浏览器并同步 GitHub，之后每天打开都能看到最近几天的记录。</div>
-<div class="stats"><span>🧮 今日合计 <b id="daily-total">0 分钟</b></span><span>近 7 天合计 <b id="daily-week">—</b></span></div>
+<div class="meta">每次勾选 / 取消课程，都会把当天的最新状态记录一次；第二天再改动时，自动和上一次记录对比，把「新看完」的课程（课程名 + 时长）列在下面。自己额外学的内容也可以在下方手动补记。</div>
+<div class="stats"><span>📺 今日新看完 <b id="daily-new">0</b> 节</span><span>⏱ 课程时长 <b id="daily-dur">0</b></span><span>✏️ 额外学习 <b id="daily-extra-sum">0</b></span><span>🧮 今日合计 <b id="daily-total">0 分钟</b></span></div>
 <div class="extra-add"><input id="extra-what" type="text" placeholder="额外学了什么(如：线代3.1)"><input id="extra-min" type="number" min="1" max="1440" placeholder="分钟"><button class="d-btn" id="extra-add">添加</button></div>
 <div id="daily-extra" class="daily-extra"></div>
+<div id="daily-list" class="daily-list"></div>
 <div id="daily-history" class="daily-history"></div>
 </div>
 <div class="foot">数据来源：B站合集接口（时长以B站为准）。理论力学采用任延宇本人账号合集（BV1xJ411s78q，101集），若看的是哈工大官方合集（BV1qV411X7Yp，102集）告诉我即可切换。李天意《考研数学精讲课》在同一合集（BV16BjHz9EUJ）内已拆成「高数（P1–P34）」和「概统（P35–P44）」两个独立页签，线代部分（P45–P55）不显示。数据结构（王卓·C/C++）已按你的 Python 组路线移除，替换为 TsingPig《蓝桥杯Python冲刺课》（课时1–10 + 刷题指南），更贴合蓝桥杯 Python 组。清风数学建模部分已移除，替换为蔡履中《光学（第三版）》课本目录（7章+附录，含每章习题与观察思考及讨论题，共58项），按页码逐节打卡、进度按已读页数 / 全书464页 计。更新进度：直接点击网页里的课程行即可勾选 / 取消「已看」；点顶部「连接GitHub自动同步」后，每次改动会自动提交到本仓库，跨设备/清缓存都不丢。</div>
@@ -244,21 +253,60 @@ function dkey(d){ return 'daily:'+d.getFullYear()+'-'+String(d.getMonth()+1).pad
 function fmtMin(m){ m=Math.round(m||0); var h=Math.floor(m/60),mm=m%60; return h?(h+' 小时'+(mm?' '+mm+' 分':'')):(m+' 分钟'); }
 function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
 function sumExtra(dk){ return (state['extra:'+dk]||[]).reduce(function(s,x){return s+(+x.m||0);},0); }
+var META={};
+function buildMeta(){
+  rows.forEach(function(tr){
+    var td=tr.children, sec=tr.closest?tr.closest('section[data-key]'):null;
+    var h2=sec?sec.querySelector('h2'):null;
+    META[tr.dataset.vid]={c:h2?h2.textContent.trim():'', t:td[1]?td[1].textContent.trim():'', d:(+tr.dataset.dur)||0, m:(sec?(sec.dataset.mode||'dur'):'dur')};
+  });
+}
+function doneVids(){ var a=[]; rows.forEach(function(tr){ if(tr.classList.contains('done')) a.push(tr.dataset.vid); }); return a; }
+function snapDates(){ return Object.keys(state).filter(function(k){return k.indexOf('snap:')===0;}).map(function(k){return k.slice(5);}).sort(); }
+function snapSet(d){ var o={}; (state['snap:'+d]||[]).forEach(function(v){o[v]=1;}); return o; }
+function snapToday(){
+  var dk=dkey(new Date()).slice(6);
+  state['snap:'+dk]=doneVids();
+  var ds=snapDates();
+  if(ds.length>7){ ds.slice(0,ds.length-7).forEach(function(d){ delete state['snap:'+d]; }); }
+}
+function prevSnapDate(dk){ var a=snapDates().filter(function(x){return x<dk;}); return a.length?a[a.length-1]:null; }
 function renderDaily(){
   var dk=dkey(new Date()).slice(6);
-  var extra=state['extra:'+dk]||[]; var total=sumExtra(dk);
-  var tt=document.getElementById('daily-total'); if(tt) tt.textContent=total?fmtMin(total):'0 分钟';
+  var prev=prevSnapDate(dk);
+  var base=snapSet(prev||'');
+  var news=prev ? doneVids().filter(function(v){return !base[v];}) : [];
+  var mins=0;
+  var items=news.map(function(v){
+    var m=META[v]||{c:'',t:v,d:0,m:'dur'};
+    if(m.m!=='pages') mins += m.d/60;
+    var durTxt = m.m==='pages' ? (m.d+' 页') : fmt(m.d);
+    return '<div class="dl-item"><span class="dl-sub">'+escapeHtml(m.c)+'</span><span class="dl-title" title="'+escapeHtml(m.t)+'">'+escapeHtml(m.t)+'</span><span class="dl-dur">'+durTxt+'</span></div>';
+  }).join('');
+  var extra=state['extra:'+dk]||[];
+  var exm=sumExtra(dk);
+  var setTxt=function(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; };
+  setTxt('daily-new',news.length);
+  setTxt('daily-dur',mins?fmtMin(mins):'0');
+  setTxt('daily-extra-sum',exm?fmtMin(exm):'0');
+  setTxt('daily-total',(mins+exm)?fmtMin(mins+exm):'0 分钟');
   var eb=document.getElementById('daily-extra');
   if(eb){ eb.innerHTML = extra.length ? extra.map(function(x,i){ return '<div class="extra-row"><span class="e-del" data-i="'+i+'">×</span><span class="e-txt">'+escapeHtml(x.t)+'</span><span class="e-min">'+fmtMin(x.m)+'</span></div>'; }).join('') : ''; }
-  var logs=[]; Object.keys(state).forEach(function(k){ if(k.indexOf('daily:')===0){ var m=+state[k]; if(m>0) logs.push({d:k.slice(6),m:m}); } });
-  logs.sort(function(a,b){ return a.d<b.d?1:-1; });
-  var week=logs.filter(function(x){ var dt=new Date(x.d+'T00:00:00').getTime(); return (Date.now()-dt)<=7.5*86400000; });
-  var wsum=week.reduce(function(s,x){return s+x.m;},0);
-  var we=document.getElementById('daily-week'); if(we) we.textContent=wsum?fmtMin(wsum):'—';
-  var box=document.getElementById('daily-history'); if(!box) return;
-  if(!logs.length){ box.innerHTML='<div class="daily-empty">还没有记录，在「添加额外学习」补记后会出现在这里～</div>'; return; }
-  var mx=Math.max.apply(null,logs.map(function(x){return x.m;}));
-  box.innerHTML=logs.slice(0,7).map(function(x){ var pct=mx?Math.max(5,x.m/mx*100):0; return '<div class="daily-row"><span class="d-date">'+x.d+'</span><span class="d-bar"><div style="width:'+pct.toFixed(0)+'%"></div></span><span class="d-min">'+fmtMin(x.m)+'</span></div>'; }).join('');
+  var lb=document.getElementById('daily-list');
+  if(lb){
+    if(!prev){ lb.innerHTML='<div class="daily-empty">这是第一天的记录。之后再改动时，会自动拿上一次的记录做对比，把新看完的课程列在这里。</div>'; }
+    else if(!items){ lb.innerHTML='<div class="daily-empty">今天还没有新看完的课程（对比 '+prev+' 的记录）。勾选一节后会自动出现在这里。</div>'; }
+    else { lb.innerHTML='<div class="dl-head">对比 '+prev+' 的记录，今天新看完：</div>'+items; }
+  }
+  var hb=document.getElementById('daily-history'); if(!hb) return;
+  var all=snapDates();
+  if(all.length<2){ hb.innerHTML=''; return; }
+  hb.innerHTML=all.slice(-7).map(function(d){
+    var i=all.indexOf(d); var p=i>0?all[i-1]:null; var pb=snapSet(p||'');
+    var arr=(state['snap:'+d]||[]).filter(function(v){return !pb[v];});
+    var mm=0; arr.forEach(function(v){ var m=META[v]; if(m&&m.m!=='pages') mm+=m.d/60; });
+    return '<div class="hist-row"><span class="h-date">'+d.slice(5)+'</span><span>新看完 '+arr.length+' 节'+(mm?' · '+fmtMin(mm):'')+'</span></div>';
+  }).join('');
 }
 function addExtra(){
   var w=document.getElementById('extra-what'), m=document.getElementById('extra-min'); if(!w||!m) return;
@@ -266,15 +314,14 @@ function addExtra(){
   if(!t){ setStatus('error','请填写额外学了什么'); return; }
   if(!v||v<=0){ setStatus('error','请填写分钟数'); return; }
   var dk=dkey(new Date()).slice(6); var a=state['extra:'+dk]||[]; a.push({t:t,m:v}); state['extra:'+dk]=a;
-  commitDaily(); sv(state); w.value=''; m.value=''; renderDaily(); schedulePush(); setStatus(TOKEN?'saved':'local');
+  sv(state); w.value=''; m.value=''; renderDaily(); schedulePush(); setStatus(TOKEN?'saved':'local');
 }
 function delExtra(i){
   var dk=dkey(new Date()).slice(6); var a=state['extra:'+dk]||[]; a.splice(i,1); state['extra:'+dk]=a;
-  commitDaily(); sv(state); renderDaily(); schedulePush();
+  sv(state); renderDaily(); schedulePush();
 }
 var rows=[], state={};
-function commitDaily(){ var dk=dkey(new Date()).slice(6); var t=sumExtra(dk); if(t>0){ state['daily:'+dk]=t; } else { delete state['daily:'+dk]; } }
-function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } sv(state); rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); schedulePush(); }
+function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); snapToday(); sv(state); renderDaily(); schedulePush(); }
 function toggleVid(v){ setStat(v, state[v]===true ? false : true); }
 function toggleSkip(v){ setStat(v, state[v]==='skip' ? false : 'skip'); }
 function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(tr, Object.prototype.hasOwnProperty.call(state,v) ? state[v] : false); }); }
@@ -375,7 +422,7 @@ function loadCloud(){
     return ghGetState();
   }).then(function(g){
     if(g.state && Object.keys(g.state).length){ state=g.state; sv(state); }
-    lastSha=g.sha; applyAll(); recompute(); renderDaily();
+    lastSha=g.sha; applyAll(); recompute(); snapToday(); sv(state); renderDaily();
     setStatus(TOKEN?'ready':'readonly');
   }).catch(function(e){ setStatus(TOKEN?'error':'readonly', String(e&&e.message||e)); });
 }
@@ -407,6 +454,8 @@ function injectToolbar(){
   rows=Array.prototype.slice.call(document.querySelectorAll('tr[data-vid]'));
   state=ls();
   if(!state){ state={}; rows.forEach(function(tr){ state[tr.dataset.vid]=tr.classList.contains('done'); }); sv(state); }
+  Object.keys(state||{}).forEach(function(k){ if(k.indexOf('daily:')===0) delete state[k]; });
+  buildMeta();
   applyAll();
   rows.forEach(function(tr){
     var v=tr.dataset.vid;
@@ -418,6 +467,8 @@ function injectToolbar(){
     });
   });
   recompute();
+  snapToday();
+  sv(state);
   renderDaily();
   var eadd=document.getElementById('extra-add');
   if(eadd) eadd.addEventListener('click',addExtra);
