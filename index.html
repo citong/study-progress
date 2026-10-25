@@ -69,105 +69,61 @@ a{color:#0969da;text-decoration:none}
 .extra-row .e-del{color:#cf222e;cursor:pointer;font-weight:bold;width:16px;text-align:center}
 .extra-row .e-txt{flex:1;color:#1f2329}
 .extra-row .e-min{color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums}
-.dd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(226px,1fr));gap:10px;margin-top:10px}
-.dd-tile{border:1px solid #e5e6eb;border-radius:10px;padding:10px 12px;cursor:pointer;background:#fff;transition:box-shadow .15s,border-color .15s}
-.dd-tile:hover{box-shadow:0 3px 10px rgba(0,0,0,.1);border-color:#2ea44f}
-.dd-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13.5px}
-.dd-days{font-size:12.5px;font-weight:bold;color:#cf222e;white-space:nowrap}
-.dd-days.free{color:#8b949e;font-weight:normal}
-.dd-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#8b949e;margin:4px 0 6px}
-.dd-tile .bar{height:6px;margin-bottom:0;border-radius:3px}
-.dd-sub{color:#b0b6bd;font-size:11.5px;margin-top:6px}
+.ov-dl{font-size:12px;color:#cf222e;margin-top:7px;padding-top:6px;border-top:1px dashed #eceef1;font-variant-numeric:tabular-nums}
+.ov-dl.free{color:#8b949e}
 .dd-badge{font-size:12px;font-weight:normal;color:#cf222e;margin-left:10px;white-space:nowrap}
 </style></head><body><div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
-<div class="sub">共 7 门课程 · 更新日期：2026-10-25</div>
+<div class="sub">共 7 门课程 · 更新日期：2026-10-25<br><span id="dd-sum-a">🎯 数竞前（11/14）还剩 20 天 · 待学 49:51:39</span> · <span id="dd-sum-b">🗓 元旦前（1/1）还剩 68 天 · 待学 106:11:18 + 464 页</span></div>
 <div class="nav">
 <button class="tab-btn active" data-tab="tab-overview" onclick="showTab('tab-overview')">📊 总览</button>
 <button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·蔡履中</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button>
 </div>
 <section class="tab-page" id="tab-overview">
 <div class="legend"><span class="sw"></span>绿色 = 已看完 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄色 = 暂不学（该节从需学时长/节数中扣除，进度条上标黄） · 无色 = 尚未观看 · <b>点击任意一行切换「已看 / 未看」；点行尾 ⏸ 可标记「暂不学」</b> · 点击卡片或顶部标签切换课程</div>
-<div class="card" id="deadline-card">
-<h2>⏳ 截止倒计时</h2>
-<div class="meta">高数、概统、数竞速成 → <b>2026-11-14 前（大学生数学竞赛初赛）</b>看完；理论力学、模电、光学 → <b>2027-01-01 前</b>看完；蓝桥杯 Python 无时间限制。剩余天数按打开页面当天自动计算，每次改动进度也会同步重算「待学时长 / 每天需学」。</div>
-<div class="stats"><span>🎯 数竞前：<b id="dd-days-a">还剩 20 天</b></span><span>待学 <b id="dd-rem-a">—</b></span><span>均摊 <b id="dd-pace-a">—</b></span></div>
-<div class="stats"><span>🗓 元旦前：<b id="dd-days-b">还剩 68 天</b></span><span>待学 <b id="dd-rem-b">—</b></span><span>均摊 <b id="dd-pace-b">—</b></span></div>
-<div class="dd-grid">
-<div class="dd-tile" data-key="lilun" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-lilun')">
-<div class="dd-top"><b>⚙️ 理论力学</b><span class="dd-days">还剩 68 天</span></div>
-<div class="dd-line"><span class="dd-rem">待学 16:47:39</span><span class="dd-pace">每天 14:50</span></div>
-<div class="bar"><div data-ddbar style="width:21.9%"></div></div>
-<div class="dd-sub">2027-01-01 前</div>
-</div><div class="dd-tile" data-key="modian" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-modian')">
-<div class="dd-top"><b>🔌 模电</b><span class="dd-days">还剩 68 天</span></div>
-<div class="dd-line"><span class="dd-rem">待学 89:23:39</span><span class="dd-pace">每天 1:18:53</span></div>
-<div class="bar"><div data-ddbar style="width:3.4%"></div></div>
-<div class="dd-sub">2027-01-01 前</div>
-</div><div class="dd-tile" data-key="gaoshu" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-gaoshu')">
-<div class="dd-top"><b>📐 高数·李天意</b><span class="dd-days">还剩 20 天</span></div>
-<div class="dd-line"><span class="dd-rem">待学 29:43:59</span><span class="dd-pace">每天 1:29:12</span></div>
-<div class="bar"><div data-ddbar style="width:26.7%"></div></div>
-<div class="dd-sub">2026-11-14 前（大学生数学竞赛初赛）</div>
-</div><div class="dd-tile" data-key="gaishu" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-gaishu')">
-<div class="dd-top"><b>🎲 概统·李天意</b><span class="dd-days">还剩 20 天</span></div>
-<div class="dd-line"><span class="dd-rem">待学 12:37:33</span><span class="dd-pace">每天 37:53</span></div>
-<div class="bar"><div data-ddbar style="width:0.0%"></div></div>
-<div class="dd-sub">2026-11-14 前（大学生数学竞赛初赛）</div>
-</div><div class="dd-tile" data-key="cmc" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-cmc')">
-<div class="dd-top"><b>🏆 数竞速成</b><span class="dd-days">还剩 20 天</span></div>
-<div class="dd-line"><span class="dd-rem">待学 7:30:07</span><span class="dd-pace">每天 22:31</span></div>
-<div class="bar"><div data-ddbar style="width:0.0%"></div></div>
-<div class="dd-sub">2026-11-14 前（大学生数学竞赛初赛）</div>
-</div><div class="dd-tile" data-key="optics" data-dl="2027-01-01" data-mode="pages" onclick="showTab('tab-optics')">
-<div class="dd-top"><b>📖 光学·蔡履中</b><span class="dd-days">还剩 68 天</span></div>
-<div class="dd-line"><span class="dd-rem">464 页待读</span><span class="dd-pace">每天 7 页</span></div>
-<div class="bar"><div data-ddbar style="width:0.0%"></div></div>
-<div class="dd-sub">2027-01-01 前</div>
-</div><div class="dd-tile" data-key="python" data-dl="" data-mode="dur" onclick="showTab('tab-python')">
-<div class="dd-top"><b>🐍 蓝桥杯Python</b><span class="dd-days">无期限</span></div>
-<div class="dd-line"><span class="dd-rem">待学 5:06:33</span><span class="dd-pace">不限时间</span></div>
-<div class="bar"><div data-ddbar style="width:7.3%"></div></div>
-<div class="dd-sub">无时间限制</div>
-</div>
-</div>
-</div>
 <div class="ov-grid">
-<div class="ov-card" data-key="lilun" onclick="showTab('tab-lilun')">
+<div class="ov-card" data-key="lilun" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-lilun')">
 <div class="ov-head"><b>⚙️ 理论力学</b><span class="ov-pct">21.9%</span></div>
 <div class="ov-meta">理论力学（物理类）</div>
 <div class="bar"><div data-bar style="width:21.9%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">22/101 集 · 已看 4:42:27 / 总 21:30:06</div>
-</div><div class="ov-card" data-key="modian" onclick="showTab('tab-modian')">
+<div class="ov-dl" data-ovdl="lilun">⏳ 01/01 前 · 还剩 68 天 · 待学 16:47:39 · 每天 14:50</div>
+</div><div class="ov-card" data-key="modian" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-modian')">
 <div class="ov-head"><b>🔌 模电</b><span class="ov-pct">3.4%</span></div>
 <div class="ov-meta">模拟电子技术基础</div>
 <div class="bar"><div data-bar style="width:3.4%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">8/166 集 · 已看 3:10:21 / 总 92:34:00</div>
-</div><div class="ov-card" data-key="gaoshu" onclick="showTab('tab-gaoshu')">
+<div class="ov-dl" data-ovdl="modian">⏳ 01/01 前 · 还剩 68 天 · 待学 89:23:39 · 每天 1:18:53</div>
+</div><div class="ov-card" data-key="gaoshu" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-gaoshu')">
 <div class="ov-head"><b>📐 高数·李天意</b><span class="ov-pct">26.7%</span></div>
 <div class="ov-meta">考研数学精讲课（高等数学部分）</div>
 <div class="bar"><div data-bar style="width:26.7%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">11/34 集 · 已看 10:49:31 / 总 40:33:30</div>
-</div><div class="ov-card" data-key="gaishu" onclick="showTab('tab-gaishu')">
+<div class="ov-dl" data-ovdl="gaoshu">⏳ 11/14 前 · 还剩 20 天 · 待学 29:43:59 · 每天 1:29:12</div>
+</div><div class="ov-card" data-key="gaishu" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-gaishu')">
 <div class="ov-head"><b>🎲 概统·李天意</b><span class="ov-pct">0.0%</span></div>
 <div class="ov-meta">概率论与数理统计（李天意）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/10 集 · 已看 0:00 / 总 12:37:33</div>
-</div><div class="ov-card" data-key="cmc" onclick="showTab('tab-cmc')">
+<div class="ov-dl" data-ovdl="gaishu">⏳ 11/14 前 · 还剩 20 天 · 待学 12:37:33 · 每天 37:53</div>
+</div><div class="ov-card" data-key="cmc" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-cmc')">
 <div class="ov-head"><b>🏆 数竞速成</b><span class="ov-pct">0.0%</span></div>
 <div class="ov-meta">大学生数学竞赛（非数学A类）速成课</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/10 集 · 已看 0:00 / 总 7:30:07</div>
-</div><div class="ov-card" data-key="optics" onclick="showTab('tab-optics')">
+<div class="ov-dl" data-ovdl="cmc">⏳ 11/14 前 · 还剩 20 天 · 待学 7:30:07 · 每天 22:31</div>
+</div><div class="ov-card" data-key="optics" data-dl="2027-01-01" data-mode="pages" onclick="showTab('tab-optics')">
 <div class="ov-head"><b>📖 光学·蔡履中</b><span class="ov-pct">0.0%</span></div>
 <div class="ov-meta">光学（蔡履中 第三版）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/58 节 · 已看 0 / 464 页</div>
-</div><div class="ov-card" data-key="python" onclick="showTab('tab-python')">
+<div class="ov-dl" data-ovdl="optics">⏳ 01/01 前 · 还剩 68 天 · 464 页待读 · 每天 7 页</div>
+</div><div class="ov-card" data-key="python" data-dl="" data-mode="dur" onclick="showTab('tab-python')">
 <div class="ov-head"><b>🐍 蓝桥杯Python</b><span class="ov-pct">7.3%</span></div>
 <div class="ov-meta">蓝桥杯Python冲刺课（TsingPig）</div>
 <div class="bar"><div data-bar style="width:7.3%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">1/13 集 · 已看 24:05 / 总 5:30:38</div>
+<div class="ov-dl free">⏳ 无时间限制 · 待学 5:06:33</div>
 </div>
 </div>
 </section>
@@ -288,37 +244,35 @@ function secRemain(key){
 }
 function renderDeadlines(){
   var gA={m:0,p:0}, gB={m:0,p:0};
-  document.querySelectorAll('.dd-tile[data-key]').forEach(function(tile){
-    var key=tile.dataset.key, dl=tile.dataset.dl||'', st=secRemain(key);
+  document.querySelectorAll('.ov-card[data-key]').forEach(function(card){
+    var key=card.dataset.key, dl=card.dataset.dl||'', st=secRemain(key);
     var n=ddDaysLeft(dl);
-    var de=tile.querySelector('.dd-days');
-    if(de){ de.textContent=ddText(n); de.className='dd-days'+(dl?'':' free'); }
-    var bp=tile.querySelector('[data-ddbar]');
-    if(st&&bp) bp.style.width=(st.valid? st.done/st.valid*100 : 0).toFixed(1)+'%';
-    var re=tile.querySelector('.dd-rem'), pa=tile.querySelector('.dd-pace');
-    if(re&&st) re.textContent = st.pages ? (st.rem+' 页待读') : ('待学 '+fmt(st.rem));
-    if(pa&&st){
-      if(!dl) pa.textContent='不限时间';
-      else if(!st.rem) pa.textContent='已完成 ✅';
-      else if(n>0) pa.textContent = st.pages ? ('每天 '+Math.ceil(st.rem/n)+' 页') : ('每天 '+fmt(Math.round(st.rem/n)));
-      else pa.textContent='已超期';
-    }
     var bd=document.querySelector('[data-ddbadge="'+key+'"]');
     if(bd) bd.textContent='⏳ '+ddText(n);
-    if(dl==='2026-11-14'){ if(st&&st.pages) gA.p+=st.rem; else if(st) gA.m+=st.rem; }
-    if(dl==='2027-01-01'){ if(st&&st.pages) gB.p+=st.rem; else if(st) gB.m+=st.rem; }
-  });
-  [['a','2026-11-14',gA],['b','2027-01-01',gB]].forEach(function(x){
-    var n=ddDaysLeft(x[1]), g=x[2];
-    var dEl=document.getElementById('dd-days-'+x[0]); if(dEl) dEl.textContent=ddText(n);
-    var rEl=document.getElementById('dd-rem-'+x[0]);
-    if(rEl) rEl.textContent=(g.m? fmt(g.m) : '0')+(g.p? ((g.m?' + ':'')+g.p+' 页') : '');
-    var pEl=document.getElementById('dd-pace-'+x[0]);
-    if(pEl){
-      if(!g.m && !g.p) pEl.textContent='已完成 ✅';
-      else if(n>0) pEl.textContent=(g.m? fmt(Math.round(g.m/n))+'/天':'')+(g.p? ((g.m?' + ':'')+Math.ceil(g.p/n)+' 页/天') : '');
-      else pEl.textContent='已超期';
+    if(!st) return;
+    var remTxt = st.pages ? (st.rem+' 页待读') : ('待学 '+fmt(st.rem));
+    var paceTxt;
+    if(!dl) paceTxt='不限时间';
+    else if(!st.rem) paceTxt='已完成 ✅';
+    else if(n>0) paceTxt = st.pages ? ('每天 '+Math.ceil(st.rem/n)+' 页') : ('每天 '+fmt(Math.round(st.rem/n)));
+    else paceTxt='已超期';
+    var el=card.querySelector('[data-ovdl]');
+    if(el){
+      el.textContent = dl
+        ? ('⏳ '+dl.slice(5).replace('-','/')+' 前 · '+ddText(n)+' · '+remTxt+' · '+paceTxt)
+        : ('⏳ 无时间限制 · '+remTxt);
+      el.className = 'ov-dl' + (dl?'':' free');
     }
+    if(dl==='2026-11-14'){ if(st.pages) gA.p+=st.rem; else gA.m+=st.rem; }
+    if(dl==='2027-01-01'){ if(st.pages) gB.p+=st.rem; else gB.m+=st.rem; }
+  });
+  [['a','2026-11-14',gA,'🎯 数竞前（11/14）'],['b','2027-01-01',gB,'🗓 元旦前（1/1）']].forEach(function(x){
+    var n=ddDaysLeft(x[1]), g=x[2], el=document.getElementById('dd-sum-'+x[0]);
+    if(!el) return;
+    var parts=[];
+    if(g.m) parts.push(fmt(g.m));
+    if(g.p) parts.push(g.p+' 页');
+    el.textContent = x[3] + ' ' + ((!g.m && !g.p) ? '已完成 ✅' : (ddText(n)+' · 待学 '+(parts.join(' + ')||'0')));
   });
 }
 function recompute(){
