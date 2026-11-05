@@ -271,6 +271,21 @@ function secRemain(key){
   });
   return {pages:(sec.dataset.mode==='pages'), done:done, rem:rem, valid:done+rem};
 }
+function sortOverview(){
+  var grid=document.querySelector('.ov-grid'); if(!grid) return;
+  var cards=Array.prototype.slice.call(grid.querySelectorAll('.ov-card'));
+  cards.forEach(function(c){
+    var el=c.querySelector('.ov-pct');
+    c._p=el?parseFloat(el.textContent)||0:0;
+    c._d=c.classList.contains('complete');
+  });
+  cards.sort(function(a,b){
+    if(a._d!==b._d) return a._d?1:-1;
+    if(a._d&&b._d) return 0;
+    return b._p-a._p;
+  });
+  cards.forEach(function(c){ grid.appendChild(c); });
+}
 function renderDeadlines(){
   var gA={m:0,p:0}, gB={m:0,p:0};
   document.querySelectorAll('.ov-card[data-key]').forEach(function(card){
@@ -355,6 +370,7 @@ function recompute(){
     }
   });
   renderDeadlines();
+  sortOverview();
 }
 function dkey(d){ return 'daily:'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function fmtMin(m){ m=Math.round(m||0); var h=Math.floor(m/60),mm=m%60; return h?(h+' 小时'+(mm?' '+mm+' 分':'')):(m+' 分钟'); }
