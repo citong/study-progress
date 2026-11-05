@@ -72,6 +72,13 @@ a{color:#0969da;text-decoration:none}
 .extra-row .e-txt{flex:1;color:#1f2329}
 .extra-row .e-min{color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums}
 .ov-dl{font-size:12px;color:#cf222e;margin-top:7px;padding-top:6px;border-top:1px dashed #eceef1;font-variant-numeric:tabular-nums}
+.ov-card.complete{background:linear-gradient(160deg,#fffdf3,#fff 60%);border-color:#e9c76a;box-shadow:0 2px 10px rgba(212,160,23,.15)}
+.ov-card.complete:hover{border-color:#d9a92f;box-shadow:0 4px 16px rgba(212,160,23,.26)}
+.ov-card.complete .ov-head b{color:#8a6100}
+.ov-card.complete .ov-pct{color:#b8860b}
+.ov-card.complete .ov-pct::before{content:'🏅 '}
+.ov-card.complete .bar>div[data-bar]{background:linear-gradient(90deg,#f6c445,#d99a12)}
+.ov-dl.doneall{color:#8a6100;border-top-color:#f3e2b6}
 .ov-dl.free{color:#8b949e}
 .dd-badge{font-size:12px;font-weight:normal;color:#cf222e;margin-left:10px;white-space:nowrap}
 </style></head><body><div class="wrap">
@@ -279,10 +286,15 @@ function renderDeadlines(){
     else paceTxt='已超期';
     var el=card.querySelector('[data-ovdl]');
     if(el){
-      el.textContent = dl
-        ? ('⏳ '+dl.slice(5).replace('-','/')+' 前 · '+ddText(n)+' · '+remTxt+' · '+paceTxt)
-        : ('⏳ 无时间限制 · '+remTxt);
-      el.className = 'ov-dl' + (dl?'':' free');
+      if(st.valid && !st.rem){
+        el.textContent = dl ? ('✅ '+dl.slice(5).replace('-','/')+' 前已全部学完') : ('✅ 全部学完 · '+(st.pages?(st.done+' 页'):fmt(st.done)));
+        el.className='ov-dl doneall';
+      }else{
+        el.textContent = dl
+          ? ('⏳ '+dl.slice(5).replace('-','/')+' 前 · '+ddText(n)+' · '+remTxt+' · '+paceTxt)
+          : ('⏳ 无时间限制 · '+remTxt);
+        el.className = 'ov-dl' + (dl?'':' free');
+      }
     }
     if(dl==='2026-11-14'){ if(st.pages) gA.p+=st.rem; else gA.m+=st.rem; }
     if(dl==='2027-01-01'){ if(st.pages) gB.p+=st.rem; else gB.m+=st.rem; }
@@ -322,12 +334,19 @@ function recompute(){
     sec.querySelectorAll('[data-barskip]').forEach(function(b){b.style.width=sPct.toFixed(1)+'%';});
     var ov=document.querySelector('.ov-card[data-key="'+k+'"]');
     if(ov){
+      var isDone = (valid>0 && pct>=99.95);
+      ov.classList.toggle('complete', isDone);
       var op=ov.querySelector('.ov-pct'); if(op) op.textContent=pct.toFixed(1)+'%';
       var os=ov.querySelector('.ov-stats');
       if(os){
-        var base = mode==='pages'
-          ? (w+'/'+valid+' 节 · 已看 '+wsec+' / '+vsec+' 页')
-          : (tsec ? (w+'/'+valid+' 集 · 已看 '+fmt(wsec)+' / 需学 '+fmt(vsec)) : (w+'/'+valid+' 节'));
+        var base;
+        if(isDone){
+          base = w+'/'+valid+(mode==='pages'?' 节 · ':' 集 · ')+'已看 '+fmt(wsec);
+        }else{
+          base = mode==='pages'
+            ? (w+'/'+valid+' 节 · 已看 '+wsec+' / '+vsec+' 页')
+            : (tsec ? (w+'/'+valid+' 集 · 已看 '+fmt(wsec)+' / 需学 '+fmt(vsec)) : (w+'/'+valid+' 节'));
+        }
         os.textContent = base + (sk ? ' · ⏸ 跳过 '+sk : '');
       }
       var ob=ov.querySelector('[data-bar]'); if(ob) ob.style.width=dPct.toFixed(1)+'%';
