@@ -79,6 +79,29 @@ a{color:#0969da;text-decoration:none}
 .ov-card.complete .ov-pct::before{content:'🏅 '}
 .ov-card.complete .bar>div[data-bar]{background:linear-gradient(90deg,#f6c445,#d99a12)}
 .ov-dl.doneall{color:#8a6100;border-top-color:#f3e2b6}
+/* 时间安排 */
+.tl{position:relative;margin:16px 0 2px;padding-left:24px}
+.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:#e8eaed}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-item:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-23px;top:5px;width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid #c9cdd4;box-sizing:border-box}
+.tl-date{font-size:12.5px;color:#8b949e;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+.tl-body{background:#fafbfc;border:1px solid #eceef1;border-radius:8px;padding:11px 14px;margin-top:6px}
+.tl-body b{font-size:14px}
+.tl-body ul{margin:7px 0 0;padding-left:18px}
+.tl-body li{font-size:13px;line-height:1.78;color:#3d444d;margin-bottom:2px}
+.tl-body li:last-child{margin-bottom:0}
+.tl-item.now .tl-dot{background:#2ea44f;border-color:#2ea44f;box-shadow:0 0 0 4px rgba(46,164,79,.15)}
+.tl-item.now .tl-body{background:#f4fbf6;border-color:#b7e0c2}
+.tl-item.now .tl-date{color:#1a7f37;font-weight:bold}
+.tl-item.done .tl-dot{background:#c9cdd4;border-color:#c9cdd4}
+.tl-item.done .tl-body{opacity:.7}
+.tl-tag{display:inline-block;margin-left:6px;padding:0 7px;border-radius:9px;font-size:11.5px;line-height:18px;vertical-align:1px}
+.tl-tag.g{background:#e8f5ec;color:#1a7f37;border:1px solid #b7e0c2}
+.tl-tag.y{background:#fff8e6;color:#8a6100;border:1px solid #f0dfae}
+.tl-tag.r{background:#fff0f0;color:#b42318;border:1px solid #f5c2c0}
+.tl-now{margin-left:8px;font-size:12px;font-weight:normal;color:#1a7f37}
+
 .ov-dl.free{color:#8b949e}
 .dd-badge{font-size:12px;font-weight:normal;color:#cf222e;margin-left:10px;white-space:nowrap}
 </style></head><body><div class="wrap">
@@ -221,6 +244,81 @@ a{color:#0969da;text-decoration:none}
 <div id="daily-extra" class="daily-extra"></div>
 <div id="daily-list" class="daily-list"></div>
 <div id="daily-history" class="daily-history"></div>
+</div>
+<div class="card" id="timeline">
+<h2>📅 我的时间安排<span class="tl-now" id="tlNow"></span></h2>
+<div class="meta">2026/11/05 → 2027/01 中 · 五个阶段 · 节点：数竞 <b>11/14</b> · 六级 <b>12/14</b> · 元旦 <b>1/1</b> · 期末 <b>1 月中</b></div>
+<div class="tl">
+
+<div class="tl-item" data-from="2026-11-05" data-to="2026-11-14">
+<div class="tl-dot"></div>
+<div class="tl-date">11/05 – 11/14 · 10 天</div>
+<div class="tl-body">
+<b>冲刺数竞，收尾高数</b>
+<ul>
+<li>高数只剩 4 集 <b>2:39:01</b>（P14 / P15 / P20 / P26），11/14 前必须清零，考完不再碰高数</li>
+<li>数竞：整套真题掐时间做 + 错题回看，11/14 上午 9:00–11:30 考试</li>
+<li>模电、光学：每天各 30 分钟，跟着课走，不追进度，当换脑子</li>
+<li>六级：这段先不动，考完数竞再开</li>
+</ul>
+</div>
+</div>
+
+<div class="tl-item" data-from="2026-11-15" data-to="2026-11-30">
+<div class="tl-dot"></div>
+<div class="tl-date">11/15 – 11/30 · 16 天</div>
+<div class="tl-body">
+<b>六级起步 + 概率论清完</b><span class="tl-tag y">概率论 47 分钟/天</span>
+<ul>
+<li>概率论 10 集 <b>12:37:33</b> 全部学完，平均每天 <b>47 分钟</b>，月底前收口</li>
+<li>六级每天 1–1.5 小时：单词 + 听力 + 一篇作文，盯 12/14</li>
+<li>模电、光学每天各 40 分钟，从「随手看」变成「有进度」</li>
+</ul>
+</div>
+</div>
+
+<div class="tl-item" data-from="2026-12-01" data-to="2026-12-14">
+<div class="tl-dot"></div>
+<div class="tl-date">12/01 – 12/14 · 14 天</div>
+<div class="tl-body">
+<b>主攻英语 + 理论力学</b><span class="tl-tag y">每天约 1:52</span>
+<ul>
+<li>理力速成 34 集 <b>9:17:53</b>：前 4 天先刷完，把框架和题型立起来</li>
+<li>理力精讲剩余 79 集 <b>16:47:39</b>：每天约 1.5 小时，顺着速成的框架往里填推导</li>
+<li>六级进入冲刺，12/14 考试</li>
+<li>模电、光学每天各 30 分钟，只保手感不去推进度</li>
+</ul>
+</div>
+</div>
+
+<div class="tl-item" data-from="2026-12-15" data-to="2026-12-31">
+<div class="tl-dot"></div>
+<div class="tl-date">12/15 – 12/31 · 17 天</div>
+<div class="tl-body">
+<b>通完模电、光学，概率论复查，理力续推</b><span class="tl-tag r">每天约 8:03 · 全程最重</span>
+<ul>
+<li>模电剩 127 集 <b>89:23:39</b> + 光学剩 51 集 <b>47:32:30</b>，合计 <b>136.9 小时</b>，折合每天 8 小时</li>
+<li>硬账摆在这：要么 11 月起每天先挤 1 小时提前消化，要么用行尾 <b>⏸</b> 把不考章节标掉、砍小分母</li>
+<li>概率论第二轮复习，每天 30 分钟</li>
+<li>理力保持手感，每天 20–30 分钟看一集精讲</li>
+</ul>
+</div>
+</div>
+
+<div class="tl-item" data-from="2027-01-01" data-to="2027-01-15">
+<div class="tl-dot"></div>
+<div class="tl-date">01/01 – 01/15 · 15 天</div>
+<div class="tl-body">
+<b>四门总复习，准备考试</b>
+<ul>
+<li>概率论 / 理论力学 / 模电 / 光学 轮转复习，按考试日期倒排优先级</li>
+<li>以真题和课后题为主，不再看新课</li>
+<li>考前两三天只留错题本和公式表，重看一遍就够</li>
+</ul>
+</div>
+</div>
+
+</div>
 </div>
 <div class="foot">数据来源：B站合集接口（时长以B站为准）。理论力学采用任延宇本人账号合集（BV1xJ411s78q，101集），若看的是哈工大官方合集（BV1qV411X7Yp，102集）告诉我即可切换。李天意《考研数学精讲课》在同一合集（BV16BjHz9EUJ）内已拆成「高数（P1–P34）」和「概统（P35–P44）」两个独立页签，线代部分（P45–P55）不显示。数据结构（王卓·C/C++）已按你的 Python 组路线移除，替换为 TsingPig《蓝桥杯Python冲刺课》（课时1–10 + 刷题指南），更贴合蓝桥杯 Python 组。清风数学建模部分已移除，替换为钟锡华《光学》（北京大学，BV1Sy4y1n7z5，61 讲 / 约 47.5 小时）课堂实录，按分P打卡、进度按时长计；分组标题后标注了对应的蔡履中《光学》第三版章节，方便对着考试范围看。更新进度：直接点击网页里的课程行即可勾选 / 取消「已看」；点顶部「连接GitHub自动同步」后，每次改动会自动提交到本仓库，跨设备/清缓存都不丢。</div>
 </div>
@@ -600,6 +698,24 @@ function injectToolbar(){
   injectToolbar();
   setStatus('local');
   loadCloud();
+})();
+</script>
+<script>
+(function(){
+  var items=document.querySelectorAll('.tl-item'), cur=null, idx=0;
+  var now=new Date(); now.setHours(0,0,0,0);
+  items.forEach(function(it,i){
+    var f=new Date(it.dataset.from+'T00:00:00'), t=new Date(it.dataset.to+'T23:59:59');
+    if(now>t){ it.classList.add('done'); }
+    else if(now>=f && !cur){ cur=it; idx=i+1; }
+  });
+  if(cur){
+    cur.classList.add('now');
+    var b=cur.querySelector('.tl-body b');
+    if(b && !b.nextElementSibling){ var sp=document.createElement('span'); sp.className='tl-tag g'; sp.textContent='当前阶段'; b.parentNode.insertBefore(sp, b.nextSibling); }
+  }
+  var el=document.getElementById('tlNow');
+  if(el) el.textContent = cur ? ('现在在：第 '+idx+' 阶段') : '';
 })();
 </script>
 </body></html>
