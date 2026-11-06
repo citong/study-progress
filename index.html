@@ -358,10 +358,12 @@ function showTab(id){
   document.querySelectorAll('.tab-page').forEach(function(p){p.style.display=p.id===id?'':'none';});
   window.scrollTo(0,0);
 }
-var LS='study_prog_v1', TK='study_prog_gh_token';
+var LS='study_prog_v1', TK='study_prog_gh_token', LT='study_prog_local_ts';
+var dirty=false; /* 本地是否有还没推到云端的改动 */
 function ls(){try{return JSON.parse(localStorage.getItem(LS));}catch(e){return null;}}
-function sv(s){try{localStorage.setItem(LS,JSON.stringify(s));}catch(e){}}
+function sv(s){try{localStorage.setItem(LS,JSON.stringify(s));localStorage.setItem(LT,new Date().toISOString());}catch(e){}}
 function getToken(){try{return localStorage.getItem(TK)||'';}catch(e){return '';}}
+function tsGet(){try{return localStorage.getItem(LT)||'';}catch(e){return '';}}
 var OWNER=(location.hostname.split('.')[0]||'').toLowerCase();
 var _seg=location.pathname.split('/').filter(Boolean);
 var REPO=_seg[0]||(OWNER+'.github.io');
@@ -563,14 +565,14 @@ function addExtra(){
   if(!t){ setStatus('error','请填写额外学了什么'); return; }
   if(!v||v<=0){ setStatus('error','请填写分钟数'); return; }
   var dk=dkey(new Date()).slice(6); var a=state['extra:'+dk]||[]; a.push({t:t,m:v}); state['extra:'+dk]=a;
-  sv(state); w.value=''; m.value=''; renderDaily(); schedulePush(); setStatus(TOKEN?'saved':'local');
+  sv(state); dirty=true; w.value=''; m.value=''; renderDaily(); schedulePush(); setStatus(TOKEN?'saved':'localnewer');
 }
 function delExtra(i){
   var dk=dkey(new Date()).slice(6); var a=state['extra:'+dk]||[]; a.splice(i,1); state['extra:'+dk]=a;
-  sv(state); renderDaily(); schedulePush();
+  sv(state); dirty=true; renderDaily(); schedulePush();
 }
 var rows=[], state={};
-function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); snapToday(); sv(state); renderDaily(); schedulePush(); }
+function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); snapToday(); sv(state); dirty=true; renderDaily(); schedulePush(); }
 function toggleVid(v){ setStat(v, state[v]===true ? false : true); }
 function toggleSkip(v){ setStat(v, state[v]==='skip' ? false : 'skip'); }
 function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(tr, Object.prototype.hasOwnProperty.call(state,v) ? state[v] : false); }); }
@@ -593,11 +595,24 @@ function setStatus(kind,detail){
     saved:['✅ 已自动保存到 GitHub','#1a7f37'],
     ready:['☁️ 已连接，改动会自动保存到 GitHub','#1a7f37'],
     readonly:['☁️ 已载入云端进度（只读，未连接）','#57606a'],
+    readfail:['⚠️ 读不到云端进度，当前是本地缓存（点右上角刷新重试）','#bf8700'],
+    localnewer:['⚠️ 本地有未上传的改动，云端还是旧的','#bf8700'],
     error:['⚠️ 同步失败','#cf222e']
   };
   var m=map[kind]||map.local;
   el.textContent = m[0] + (detail ? '（'+detail+'）' : '');
   el.style.color=m[1];
+}
+function rawUrl(){ return 'https://raw.githubusercontent.com/'+OWNER+'/'+REPO+'/'+BRANCH+'/'+PPATH; }
+/* 读云端进度：走 raw 通道，不受 api.github.com 的 60 次/小时未认证限流影响 */
+function fetchCloud(){
+  return fetch(rawUrl()+'?t='+Date.now(),{cache:'no-store'}).then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.text();
+  }).then(function(txt){
+    var obj=null; try{obj=JSON.parse(txt);}catch(e){}
+    return {state:(obj&&obj.v)||{}, updated:(obj&&obj.updated)||''};
+  });
 }
 function ghGetState(){
   return api('/repos/'+OWNER+'/'+REPO+'/contents/'+PPATH+'?ref='+BRANCH).then(function(res){
@@ -626,7 +641,7 @@ function pushProgress(retry){
       pushing=false;
       if(res.data&&res.data.content) lastSha=res.data.content.sha;
       setStatus('saved', new Date().toTimeString().slice(0,5));
-      if(JSON.stringify(state)!==before){ schedulePush(); }
+      if(JSON.stringify(state)!==before){ dirty=true; schedulePush(); } else { dirty=false; }
       return;
     }
     var msg=(res.data&&res.data.message)||('HTTP '+res.status);
@@ -666,14 +681,22 @@ function disconnect(){
 }
 function loadCloud(){
   setStatus('loading');
-  return api('/repos/'+OWNER+'/'+REPO).then(function(res){
-    if(res.ok && res.data && res.data.default_branch) BRANCH=res.data.default_branch;
-    return ghGetState();
-  }).then(function(g){
-    if(g.state && Object.keys(g.state).length){ state=g.state; sv(state); }
-    lastSha=g.sha; applyAll(); recompute(); snapToday(); sv(state); renderDaily();
-    setStatus(TOKEN?'ready':'readonly');
-  }).catch(function(e){ setStatus(TOKEN?'error':'readonly', String(e&&e.message||e)); });
+  return fetchCloud().then(function(g){
+    var hasCloud = g.state && Object.keys(g.state).length;
+    if(hasCloud && !dirty){
+      state=g.state; sv(state); dirty=false;
+      applyAll(); recompute(); snapToday(); renderDaily();
+      setStatus(TOKEN?'ready':'readonly');
+    } else if(hasCloud && dirty){
+      /* 本地有没推上去的改动，别被云端旧数据盖掉 */
+      if(TOKEN){ schedulePush(); setStatus('ready','本地改动待上传'); }
+      else setStatus('localnewer');
+    } else {
+      setStatus(TOKEN?'ready':'local');
+    }
+  }).catch(function(e){
+    setStatus(TOKEN?'error':'readfail', String(e&&e.message||e));
+  });
 }
 function refreshToolbar(){
   var c=document.getElementById('gh-connect'), p=document.getElementById('gh-push'), d=document.getElementById('gh-clear');
