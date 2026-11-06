@@ -594,25 +594,61 @@ function setStatus(kind,detail){
     saving:['⬆️ 正在保存到 GitHub…','#0969da'],
     saved:['✅ 已自动保存到 GitHub','#1a7f37'],
     ready:['☁️ 已连接，改动会自动保存到 GitHub','#1a7f37'],
-    readonly:['☁️ 已载入云端进度（只读，未连接）','#57606a'],
+    readonly:['☁️ 已载入云端进度 · 只读（本机未连接 GitHub，改动不会保存）','#57606a'],
     readfail:['⚠️ 读不到云端进度，当前是本地缓存（点右上角刷新重试）','#bf8700'],
     localnewer:['⚠️ 本地有未上传的改动，云端还是旧的','#bf8700'],
     error:['⚠️ 同步失败','#cf222e']
   };
   var m=map[kind]||map.local;
-  el.textContent = m[0] + (detail ? '（'+detail+'）' : '');
+  el.textContent = m[0] + (detail ? ' · '+detail : '');
   el.style.color=m[1];
 }
 function rawUrl(){ return 'https://raw.githubusercontent.com/'+OWNER+'/'+REPO+'/'+BRANCH+'/'+PPATH; }
-/* 读云端进度：走 raw 通道，不受 api.github.com 的 60 次/小时未认证限流影响 */
+function fmtCloudTime(iso){
+  if(!iso) return '';
+  var d=new Date(iso); if(isNaN(d.getTime())) return '';
+  function p(n){return (n<10?'0':'')+n;}
+  return p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+function banner(msg){
+  var b=document.getElementById('cloud-alert');
+  if(!b){
+    b=document.createElement('div'); b.id='cloud-alert'; b.className='cloud-alert';
+    var bar=document.querySelector('.ghbar');
+    if(bar && bar.parentNode) bar.parentNode.insertBefore(b, bar.nextSibling);
+    else { var w=document.querySelector('.wrap'); if(w) w.insertBefore(b, w.firstChild); }
+  }
+  b.textContent=msg;
+}
+function clearBanner(){ var b=document.getElementById('cloud-alert'); if(b&&b.parentNode) b.parentNode.removeChild(b); }
+/* 读云端进度：两条通道同时试，取「数据时间」更新的那份
+   ① 同域名的 GitHub Pages（国内能打开网页就一定能读到）
+   ② raw.githubusercontent.com（更新最快，但国内部分网络会被墙）
+   都不走 api.github.com，避开每小时 60 次的未认证限流 */
 function fetchCloud(){
-  return fetch(rawUrl()+'?t='+Date.now(),{cache:'no-store'}).then(function(r){
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    return r.text();
-  }).then(function(txt){
-    var obj=null; try{obj=JSON.parse(txt);}catch(e){}
-    return {state:(obj&&obj.v)||{}, updated:(obj&&obj.updated)||''};
-  });
+  var ts=Date.now();
+  var pagesUrl;
+  try{ pagesUrl=new URL('progress.json?t='+ts, location.href).href; }catch(e){ pagesUrl=null; }
+  var urls=[];
+  if(pagesUrl && location.protocol!=='file:') urls.push(['pages',pagesUrl]);
+  urls.push(['raw',rawUrl()+'?t='+ts]);
+  function one(pair){
+    return fetch(pair[1],{cache:'no-store'}).then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.text();
+    }).then(function(txt){
+      var o=null; try{o=JSON.parse(txt);}catch(e){}
+      if(!o||!o.v) throw new Error('格式不对');
+      return {state:o.v||{}, updated:o.updated||'', src:pair[0]};
+    });
+  }
+  return Promise.all(urls.map(function(u){ return one(u).catch(function(){ return null; }); }))
+    .then(function(arr){
+      var ok=arr.filter(Boolean);
+      if(!ok.length) throw new Error('两个通道都读取失败');
+      ok.sort(function(a,b){ return String(b.updated).localeCompare(String(a.updated)); });
+      return ok[0];
+    });
 }
 function ghGetState(){
   return api('/repos/'+OWNER+'/'+REPO+'/contents/'+PPATH+'?ref='+BRANCH).then(function(res){
@@ -683,19 +719,22 @@ function loadCloud(){
   setStatus('loading');
   return fetchCloud().then(function(g){
     var hasCloud = g.state && Object.keys(g.state).length;
+    var when = fmtCloudTime(g.updated);
     if(hasCloud && !dirty){
       state=g.state; sv(state); dirty=false;
       applyAll(); recompute(); snapToday(); renderDaily();
-      setStatus(TOKEN?'ready':'readonly');
+      clearBanner();
+      setStatus(TOKEN?'ready':'readonly', when?('数据时间 '+when+(g.src==='raw'?'':' · 缓存')):'');
     } else if(hasCloud && dirty){
-      /* 本地有没推上去的改动，别被云端旧数据盖掉 */
       if(TOKEN){ schedulePush(); setStatus('ready','本地改动待上传'); }
-      else setStatus('localnewer');
+      else { setStatus('localnewer'); banner('⚠️ 这台设备上有还没上传的进度改动。云端数据时间是 '+when+'，如果你希望它和别的设备一致，请点右上角「连接 GitHub 自动同步」。'); }
     } else {
       setStatus(TOKEN?'ready':'local');
     }
   }).catch(function(e){
-    setStatus(TOKEN?'error':'readfail', String(e&&e.message||e));
+    var msg=String((e&&e.message)||e);
+    setStatus(TOKEN?'error':'readfail', msg);
+    banner('⚠️ 读不到云端进度（'+msg+'）。下面显示的是网页自带的初始状态，不是你的真实进度，别照着它判断。刷新页面或按 Ctrl+F5 重试。');
   });
 }
 function refreshToolbar(){
@@ -708,7 +747,8 @@ function injectToolbar(){
   var css='.ghbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #e5e6eb;border-radius:10px;padding:10px 14px;margin:0 0 12px;font-size:13px}'
     +'.gh-status{font-weight:bold}'
     +'.gh-btn{border:1px solid #d0d3d8;background:#fff;color:#1f2329;padding:6px 12px;border-radius:16px;font-size:12.5px;cursor:pointer;font-family:inherit}'
-    +'.gh-btn:hover{border-color:#2ea44f;color:#2ea44f}';
+    +'.gh-btn:hover{border-color:#2ea44f;color:#2ea44f}'
+    +'.cloud-alert{background:#fff8e5;border:1px solid #f0c36d;color:#8a5300;border-radius:10px;padding:10px 14px;margin:0 0 12px;font-size:13px;line-height:1.65}';
   var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
   var bar=document.createElement('div'); bar.className='ghbar';
   bar.innerHTML='<span class="gh-status" id="gh-status"></span>'
