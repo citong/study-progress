@@ -734,7 +734,11 @@ function loadCloud(){
   }).catch(function(e){
     var msg=String((e&&e.message)||e);
     setStatus(TOKEN?'error':'readfail', msg);
-    banner('⚠️ 读不到云端进度（'+msg+'）。下面显示的是网页自带的初始状态，不是你的真实进度，别照着它判断。刷新页面或按 Ctrl+F5 重试。');
+    if(location.protocol==='file:'){
+      banner('⚠️ 你是直接双击打开本地文件的（地址栏是 file:// 开头），这种方式读不到云端进度，下面显示的是网页自带的快照，不是真实进度。请改用 https://citong.github.io/study-progress/ 打开。');
+    } else {
+      banner('⚠️ 读不到云端进度（'+msg+'）。下面显示的是网页自带的初始状态，不是你的真实进度，别照着它判断。刷新页面或按 Ctrl+F5 重试。');
+    }
   });
 }
 function refreshToolbar(){
