@@ -80,6 +80,8 @@ a{color:#0969da;text-decoration:none}
 .ov-card.complete .bar>div[data-bar]{background:linear-gradient(90deg,#f6c445,#d99a12)}
 .ov-dl.doneall{color:#8a6100;border-top-color:#f3e2b6}
 /* 时间安排 */
+.tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
+.tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
 .tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:#e8eaed}
 .tl-item{position:relative;margin-bottom:18px}
@@ -120,12 +122,28 @@ a{color:#0969da;text-decoration:none}
 
 .ov-dl.free{color:#8b949e}
 .dd-badge{font-size:12px;font-weight:normal;color:#cf222e;margin-left:10px;white-space:nowrap}
+/* ---------- 时间预算卡 ---------- */
+.bgt-line{font-size:14px;color:#1f2329;margin:6px 0 4px;line-height:1.7}
+.bgt-line b{color:#0969da}
+.bgt-ctrl{font-size:13px;color:#57606a;margin:8px 0}
+.bgt-ctrl input{width:66px;padding:5px 8px;border:1px solid #d0d3d8;border-radius:14px;font-family:inherit;font-size:13px;text-align:center}
+.bgt-ctrl input:focus{outline:none;border-color:#2ea44f;box-shadow:0 0 0 3px rgba(46,164,79,.12)}
+.bgt-verdict{font-size:13.5px;padding:9px 12px;border-radius:8px;margin:8px 0 10px;line-height:1.65}
+.bgt-verdict.ok{background:#e9f7ee;border:1px solid #b7e4c7;color:#1a7f37}
+.bgt-verdict.warn{background:#fff8e1;border:1px solid #f0d98c;color:#8a5a00}
+.bgt-verdict.bad{background:#fff0f0;border:1px solid #f5c2c0;color:#cf222e}
+table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
+.bgt-tab th{background:#eef0f3;text-align:left;padding:7px 10px;border-bottom:2px solid #d0d3d8;font-size:12.5px;position:static}
+.bgt-tab td{padding:6px 10px;border-bottom:1px solid #eceef1}
+.bgt-tab td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bgt-bar{height:7px;background:#e5e6eb;border-radius:4px;overflow:hidden;margin-top:4px}
+.bgt-bar>div{height:100%;background:#2ea44f}
 </style></head><body><div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
-<div class="sub">共 8 门课程 · 更新日期：2026-11-01<br><span id="dd-sum-a">🎯 数竞前（11/14）还剩 13 天 · 待学 49:51:39</span> · <span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
+<div class="sub">共 8 门课程 · 更新日期：2026-11-13<br><span id="dd-sum-a">🎯 数竞前（11/14）还剩 13 天 · 待学 49:51:39</span> · <span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
 <div class="nav">
 <button class="tab-btn active" data-tab="tab-overview" onclick="showTab('tab-overview')">📊 总览</button>
-<button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-llsc" onclick="showTab('tab-llsc')">⚡ 理力速成</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·钟锡华</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button>
+<button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-llsc" onclick="showTab('tab-llsc')">⚡ 理力速成</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·钟锡华</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button><a class="tab-btn" href="study-planner.html" style="text-decoration:none;display:inline-flex;align-items:center">🗓 周计划表</a>
 </div>
 <section class="tab-page" id="tab-overview">
 <div class="legend"><span class="sw"></span>绿色 = 已看完 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄色 = 暂不学（该节从需学时长/节数中扣除，进度条上标黄） · 无色 = 尚未观看 · <b>点击任意一行切换「已看 / 未看」；点行尾 ⏸ 可标记「暂不学」</b> · 点击卡片或顶部标签切换课程</div>
@@ -148,13 +166,13 @@ a{color:#0969da;text-decoration:none}
 <div class="bar"><div data-bar style="width:3.4%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">8/166 集 · 已看 3:10:21 / 总 92:34:00</div>
 <div class="ov-dl" data-ovdl="modian">⏳ 01/01 前 · 还剩 61 天 · 待学 89:23:39 · 每天 1:27:56</div>
-</div><div class="ov-card" data-key="gaoshu" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-gaoshu')">
+</div><div class="ov-card" data-key="gaoshu" data-dl="" data-mode="dur" onclick="showTab('tab-gaoshu')">
 <div class="ov-head"><b>📐 高数·李天意</b><span class="ov-pct">26.7%</span></div>
 <div class="ov-meta">考研数学精讲课（高等数学部分）</div>
 <div class="bar"><div data-bar style="width:26.7%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">11/34 集 · 已看 10:49:31 / 总 40:33:30</div>
 <div class="ov-dl" data-ovdl="gaoshu">⏳ 11/14 前 · 还剩 13 天 · 待学 29:43:59 · 每天 2:17:14</div>
-</div><div class="ov-card" data-key="gaishu" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-gaishu')">
+</div><div class="ov-card" data-key="gaishu" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-gaishu')">
 <div class="ov-head"><b>🎲 概统·李天意</b><span class="ov-pct">0.0%</span></div>
 <div class="ov-meta">概率论与数理统计（李天意）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
@@ -179,6 +197,16 @@ a{color:#0969da;text-decoration:none}
 <div class="ov-stats">1/13 集 · 已看 24:05 / 总 5:30:38</div>
 <div class="ov-dl free">⏳ 无时间限制 · 待学 5:06:33</div>
 </div>
+
+</div>
+
+<div class="card bgt">
+<h2>⏱ 时间预算<span class="dd-badge" style="color:#8b949e">已扣除周末家教 2 个下午（9 h/周）</span></h2>
+<div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 本学期五门待学 <b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
+<div class="bgt-ctrl">你每周实际能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="18"> 小时（扣掉上课、作业、家教之后）</div>
+<div id="bgt-verdict" class="bgt-verdict"></div>
+<table class="bgt-tab"><thead><tr><th>课程</th><th class="n">待学</th><th class="n">需 h/周</th><th style="width:34%">占可用时间</th></tr></thead><tbody id="bgt-tab-body"></tbody></table>
+<div class="meta" style="margin:8px 0 0">只统计学期课（模电、光学、理论力学、理力速成、概统）；考研高数、蓝桥杯、数竞不计入。</div>
 </div>
 </section>
 <section class="tab-page" id="tab-lilun" data-key="lilun" style="display:none">
@@ -263,7 +291,8 @@ a{color:#0969da;text-decoration:none}
 </div>
 <div class="card" id="timeline">
 <h2>📅 我的时间安排<span class="tl-now" id="tlNow"></span></h2>
-<div class="meta">2026/11/06 → 2027/01 中 · 五个阶段 · <b>12/14 前要刷完的网课共 162 小时</b>（按 B 站实际进度逐集累加），摊到 39 天平均 <b>4:10/天</b>；11 月上半月要同时赶 <b>11/14 数竞</b> 和 <b>11/15 概率论期中</b>，看课提到 <b>3:30/天</b>（1.5 倍速实际 2:20）；11 月下半月课最密 <b>5:10/天</b>；12 月上旬 <b>3:30/天</b> 收尾 · 节点：数竞 <b>11/14</b> · 概率论期中 <b>11/15</b> · 六级 <b>12/14</b> · 期末 <b>1 月中</b>（考试顺序待定，1 月按「谁先考先攻谁」的模板走）</div>
+<div class="meta">2026/11/16 → 2027/01 中 · 五个阶段 · <b>家教已计入</b>（每周六、日 13:30–18:00，合计 9 h/周）· 11/13 前收掉概统 8:24；<b>11/16–12/14 还要刷 149 小时</b>（模电 76:28、光学 47:32、理力 16:47、速成 9:17），摊到 30 天是 <b>4:58/天</b>，而这 30 天里有 4.1 个周末被家教吃掉 <b>37 小时</b> · 节点：数竞 <b>11/14</b> · 概率论期中 <b>11/15</b> · 六级 <b>12/14</b> · 期末 <b>1 月中</b>（考试顺序待定，1 月按「谁先考先攻谁」的模板走）</div>
+<div class="tl-tutor"><b>👨‍🏫 家教校准</b>　每周六、日 13:30–18:00 是硬占用，<b>9 h/周</b>。11/16→12/14 共 4.1 周，累计少 <b>37 h</b>；算到 12/31 少 <b>50 h</b>。折算成日均，下面三段的总容量从 8:40 / 9:00 / 8:30 降到 <b>7:33 / 7:43 / 7:26</b>。<br>想保住 12/14 的收口，两个减法任选一个（也可以各取一半）：<b>①</b> 光学砍掉 16 讲标「考纲外」的，省 <b>12.3 h</b>；<b>②</b> 收口顺延到 <b>12/18</b>，多 4 天约 <b>32 h</b>。两条都做，收口能提前到 12/10。</div>
 <div class="tl">
 
 <div class="tl-item" data-from="2026-11-06" data-to="2026-11-14">
@@ -292,7 +321,7 @@ a{color:#0969da;text-decoration:none}
 <span class="key"><i>光学</i>2:10</span>
 </div>
 <div class="tl-extra">1.5 倍速实际 <b>3:27</b>、2 倍速 <b>2:35</b>；看课外 <b>六级 2:30 + 作业/看 PPT 1:30 + 习题 1:00</b> ≈ 全天 8:40。这 16 天是全程课最密的一段</div>
-<div class="tl-note">11/15 概率论期中，考完这门就暂时放下（12/15 起再二轮），这里不再占时间；到 11/30 为止：模电刷到 <b>57:45 / 76:48</b>、光学 <b>43:40 / 47:32</b>，各留一截（模电 19 小时、光学 4 小时）到 12 月上旬收尾</div>
+<div class="tl-note">11/15 概率论期中，考完这门就暂时放下（12/15 起再二轮），这里不再占时间；到 11/30 为止：模电刷到 <b>57:45 / 76:28</b>、光学 <b>34:40 / 47:32</b>（从 0 起，2:10 × 16 天），留模电 18:43、光学 12:52 到 12 月上旬收尾</div>
 </div>
 </div>
 
@@ -300,15 +329,15 @@ a{color:#0969da;text-decoration:none}
 <div class="tl-dot"></div>
 <div class="tl-date">12/01 – 12/14 · 14 天</div>
 <div class="tl-body">
-<b>理力两套课 + 模电光学收尾，12/14 全部刷完</b><span class="tl-tag y">看课 3:30/天</span>
+<b>理力两套课 + 模电光学收尾，12/14 全部刷完</b><span class="tl-tag y">看课 4:10/天</span>
 <div class="tl-load">
 <span class="key"><i>理力精讲</i>1:12</span>
 <span class="key"><i>理力速成</i>0:40</span>
 <span><i>模电</i>1:22</span>
-<span><i>光学</i>0:17</span>
+<span><i>光学</i>0:56</span>
 </div>
-<div class="tl-extra">1.5 倍速实际 <b>2:20</b>；看课外 <b>六级冲刺 3:00 + 理力习题 1:30 + 模电光学课本 1:00</b> ≈ 全天 9:00。看课和 11 月上半月一样重，但科目换成了理力为主</div>
-<div class="tl-note">光学只剩 <b>3:52</b>（5 集），每 3 天 1 集，<b>12/12</b> 收口后时间转模电；模电 <b>19:03</b>、速成 <b>9:18</b>、精讲 <b>16:47</b> 都在 <b>12/13–12/14</b> 收尾 —— <b>12/14 晚上起一门新课都不剩</b>；12/14 白天六级考试，考完当晚就转纯做题</div>
+<div class="tl-extra">1.5 倍速实际 <b>2:20</b>；看课外 <b>六级冲刺 3:00 + 理力习题 1:30 + 模电光学课本 1:00</b> ≈ 全天 9:30。看课和 11 月上半月一样重，但科目换成了理力为主</div>
+<div class="tl-note">光学只剩 <b>12:52</b>（16 讲），每天 55 分，<b>12/13</b> 收口后时间转模电；模电 <b>18:43</b>、速成 <b>9:17</b>、精讲 <b>16:47</b> 都在 <b>12/13–12/14</b> 收尾 —— <b>12/14 晚上起一门新课都不剩</b>；12/14 白天六级考试，考完当晚就转纯做题</div>
 </div>
 </div>
 
@@ -452,6 +481,45 @@ function renderDeadlines(){
     el.textContent = x[3] + ' ' + ((!g.m && !g.p) ? '已完成 ✅' : (ddText(n)+' · 待学 '+(parts.join(' + ')||'0')));
   });
 }
+var BGT=[['modian','🔌 模电'],['optics','📖 光学'],['lilun','⚙️ 理论力学'],['llsc','⚡ 理力速成'],['gaishu','🎲 概统']];
+function hm(sec){ sec=Math.max(0,Math.round(sec||0)); var h=Math.floor(sec/3600), m=Math.round(sec%3600/60); if(m===60){h++;m=0;} return h+':'+String(m).padStart(2,'0'); }
+function bgtAvail(){
+  var e=document.getElementById('bgt-avail'); var v=parseFloat(e&&e.value);
+  if(!v||v<1||v>60) v=18; return v;
+}
+function renderBudget(){
+  var tb=document.getElementById('bgt-tab-body'); if(!tb) return;
+  var days=ddDaysLeft('2027-01-01'); if(days===null) days=0;
+  var weeks=Math.max(days/7,1/7), avail=bgtAvail();
+  var data=[], total=0;
+  BGT.forEach(function(x){
+    var st=secRemain(x[0]); if(!st) return;
+    var h=st.rem/3600; total+=h; data.push({n:x[1],h:h});
+  });
+  var needWeek=total/weeks;
+  data.sort(function(a,b){return b.h-a.h;});
+  tb.innerHTML=data.map(function(d){
+    var pw=d.h/weeks, pct=avail>0?Math.min(100,pw/avail*100):0;
+    return '<tr><td>'+d.n+'</td><td class="n">'+hm(Math.round(d.h*3600))+'</td><td class="n">'+pw.toFixed(1)+'</td>'
+      +'<td><div class="bgt-bar"><div style="width:'+pct.toFixed(0)+'%"></div></div>'
+      +'<span style="font-size:11.5px;color:#8b949e">占 '+(avail>0?(pw/avail*100).toFixed(0):0)+'%</span></td></tr>';
+  }).join('');
+  var e0=document.getElementById('bgt-days'); if(e0) e0.textContent=days;
+  e0=document.getElementById('bgt-need'); if(e0) e0.textContent=hm(Math.round(total*3600));
+  e0=document.getElementById('bgt-perw'); if(e0) e0.textContent=needWeek.toFixed(1)+' h';
+  var v=document.getElementById('bgt-verdict'); if(!v) return;
+  var gap=needWeek-avail;
+  if(gap<=0){
+    v.className='bgt-verdict ok';
+    v.innerHTML='✅ <b>可行</b>：每周需要 '+needWeek.toFixed(1)+' h，你能给 '+avail+' h，还剩 '+(-gap).toFixed(1)+' h 缓冲。这个节奏元旦前五门都能收掉。';
+  }else if(gap<=3.5){
+    v.className='bgt-verdict warn';
+    v.innerHTML='⚠️ <b>紧，但做得完</b>：每周还差 '+gap.toFixed(1)+' h。两条路——把光学里标「考纲外」的那部分划掉，或者周六上午再补 3 小时。任选一条就能抹平。';
+  }else{
+    v.className='bgt-verdict bad';
+    v.innerHTML='🔴 <b>超载 '+gap.toFixed(1)+' h/周</b>：按现在的可用时间，元旦前只能完成约 '+Math.round(avail/needWeek*100)+'%。必须减量，按下面这张表的顺序取舍，先保前两门。';
+  }
+}
 function recompute(){
   document.querySelectorAll('section[data-key]').forEach(function(sec){
     var mode=sec.dataset.mode||'dur';
@@ -499,6 +567,7 @@ function recompute(){
   });
   renderDeadlines();
   sortOverview();
+  renderBudget();
 }
 function dkey(d){ return 'daily:'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function fmtMin(m){ m=Math.round(m||0); var h=Math.floor(m/60),mm=m%60; return h?(h+' 小时'+(mm?' '+mm+' 分':'')):(m+' 分钟'); }
@@ -791,6 +860,11 @@ function injectToolbar(){
   var ebox=document.getElementById('daily-extra');
   if(ebox) ebox.addEventListener('click',function(e){ var t=e.target; if(t&&t.classList&&t.classList.contains('e-del')){ delExtra(+t.dataset.i); } });
   injectToolbar();
+  var bga=document.getElementById('bgt-avail');
+  if(bga){
+    try{ var v0=localStorage.getItem('bgt_avail'); if(v0) bga.value=v0; }catch(e){}
+    bga.addEventListener('input',function(){ try{localStorage.setItem('bgt_avail',bga.value);}catch(e){} renderBudget(); });
+  }
   setStatus('local');
   loadCloud();
 })();
