@@ -224,9 +224,9 @@ function parseKey(k){const m=k.match(/d(\d+)_s(\d+)/);return {di:+m[1],si:+m[2]}
 
 const DEFAULT_COURSES=[
   {name:'理论力学',icon:'⚙️',type:'网课',link:'https://www.bilibili.com/video/BV1xJ411s78q/',watched:22,total:101},
-  {name:'模拟电子技术基础',icon:'🔌',type:'网课',link:'https://www.bilibili.com/video/BV1tuXaYrELq/',watched:8,total:166},
-  {name:'考研数学·高数',icon:'📐',type:'网课',link:'https://www.bilibili.com/video/BV16BjHz9EUJ/',watched:11,total:34},
-  {name:'概率论与数理统计',icon:'🎲',type:'网课',link:'https://www.bilibili.com/video/BV16BjHz9EUJ/',watched:0,total:10},
+  {name:'模拟电子技术基础',icon:'🔌',type:'网课',link:'https://www.bilibili.com/video/BV1tuXaYrELq/',watched:32,total:166},
+  {name:'考研数学·高数',icon:'📐',type:'网课',link:'https://www.bilibili.com/video/BV16BjHz9EUJ/',watched:30,total:34},
+  {name:'概率论与数理统计',icon:'🎲',type:'网课',link:'https://www.bilibili.com/video/BV16BjHz9EUJ/',watched:3,total:10},
   {name:'清风数学建模',icon:'🌬',type:'网课',link:'https://space.bilibili.com/52614961',watched:0,total:543},
   {name:'数据结构与算法基础',icon:'💻',type:'网课',link:'https://www.bilibili.com/video/BV1nJ411V7bd/',watched:0,total:173},
   {name:'光学（钟锡华）',icon:'📖',type:'网课',link:'https://www.bilibili.com/video/BV1Sy4y1n7z5/',watched:0,total:61}
@@ -281,6 +281,9 @@ if(!localStorage.getItem(MIG)){
     courses.push({id:'c_optics',icon:'📖',name:'光学（钟锡华）',type:'网课',link:'https://www.bilibili.com/video/BV1Sy4y1n7z5/',watched:0,total:61});
     saveCourses();
   }
+  var SYNC={'模拟电子技术基础':32,'考研数学·高数':30,'概率论与数理统计':3};
+  courses.forEach(function(c){ if(SYNC[c.name]!=null) c.watched=SYNC[c.name]; });
+  saveCourses();
   [5,6].forEach(function(di){
     for(var si=14;si<18;si++){ delete grid[cellKey(di,si)]; }
     grid[cellKey(di,13)]={type:'tutor',course:null,note:'家教·13:30–18:00'};
