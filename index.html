@@ -202,11 +202,11 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 
 <div class="card bgt">
 <h2>⏱ 时间预算<span class="dd-badge" style="color:#8b949e">已扣除周末家教 2 个下午（9 h/周）</span></h2>
-<div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 本学期五门待学 <b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
-<div class="bgt-ctrl">你每周实际能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="22"> 小时（扣掉上课、作业、家教之后，按「每天多看 35 分钟」放宽）</div>
+<div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 五门总投入（1.5 倍速看课 + 等量做题）<b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
+<div class="bgt-ctrl">你每周实际能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="30"> 小时（扣掉上课、作业、家教之后；看课∶做题按 1∶1 配）</div>
 <div id="bgt-verdict" class="bgt-verdict"></div>
-<table class="bgt-tab"><thead><tr><th>课程</th><th class="n">待学</th><th class="n">需 h/周</th><th style="width:34%">占可用时间</th></tr></thead><tbody id="bgt-tab-body"></tbody></table>
-<div class="meta" style="margin:8px 0 0">只统计学期课（模电、光学、理论力学、理力速成、概统）；考研高数、蓝桥杯、数竞不计入。<br>待学时长按<b>原始视频时长</b>算，1.5 倍速实际只花约 2/3，所以「需 h/周」是偏保守的上界。</div>
+<table class="bgt-tab"><thead><tr><th>课程</th><th class="n">视频</th><th class="n">投入 h/周</th><th style="width:34%">占可用时间</th></tr></thead><tbody id="bgt-tab-body"></tbody></table>
+<div class="meta" style="margin:8px 0 0">只统计学期课（模电、光学、理论力学、理力速成、概统）；考研高数、蓝桥杯、数竞不计入。<br>「视频」是原始时长，「投入 h/周」= 视频 ÷ 1.5（实际看课）+ 同样的<b>做题</b>时间，即<b>看课∶做题 = 1∶1</b>；六级、作业另算。</div>
 </div>
 </section>
 <section class="tab-page" id="tab-lilun" data-key="lilun" style="display:none">
@@ -291,8 +291,8 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 </div>
 <div class="card" id="timeline">
 <h2>📅 我的时间安排<span class="tl-now" id="tlNow"></span></h2>
-<div class="meta">2026/11/16 → 2027/01 中 · 五个阶段 · <b>家教已计入</b>（每周六、日 13:30–18:00，合计 9 h/周）· 11/13 前收掉概统 8:24；<b>11/16–12/14 还要刷 137 小时</b>（模电 63:20、光学 47:32、理力 16:47、速成 9:17），摊到 30 天是 <b>4:34/天</b>，而这 30 天里有 4.1 个周末被家教吃掉 <b>37 小时</b> · 节点：数竞 <b>11/14</b> · 概率论期中 <b>11/15</b> · 六级 <b>12/14</b> · 期末 <b>1 月中</b>（考试顺序待定，1 月按「谁先考先攻谁」的模板走）</div>
-<div class="tl-tutor"><b>👨‍🏫 家教校准</b>　每周六、日 13:30–18:00 是硬占用，<b>9 h/周</b>。11/16→12/14 共 4.1 周，累计少 <b>37 h</b>；算到 12/31 少 <b>50 h</b>。折算成日均，下面三段的总容量从 8:55 / 8:15 / 8:30 降到 <b>7:58 / 7:08 / 7:26</b>。模电第 4 章不考已从总量里减掉 <b>13:08</b>；再按你「每天多看 35 分钟」把每周可投入放宽到 <b>22 h</b>，缺口从 4.6 h 变成<b>富余 1.2 h</b>。<br>也就是说 12/14 的收口现在<b>不用砍课也保得住</b>。下面两个减法不用做了，留着当缓冲：<b>①</b> 光学里 16 讲标「考纲外」的，实在赶不上再砍，省 <b>12.3 h</b>；<b>②</b> 中间某周被作业冲掉，就顺延到 <b>12/18</b>，多 4 天约 <b>32 h</b>。</div>
+<div class="meta">2026/11/16 → 2027/01 中 · 五个阶段 · <b>家教已计入</b>（每周六、日 13:30–18:00，合计 9 h/周）· 11/13 前收掉概统 8:24；<b>11/16–12/14 视频还剩 137 小时</b>（模电 63:20、光学 47:32、理力 16:47、速成 9:17），1.5 倍速折算 <b>91 小时</b>，加上等量做题共 <b>183 小时</b>，摊到 30 天是 <b>6:05/天</b>，而这 30 天里有 4.1 个周末被家教吃掉 <b>37 小时</b> · 节点：数竞 <b>11/14</b> · 概率论期中 <b>11/15</b> · 六级 <b>12/14</b> · 期末 <b>1 月中</b>（考试顺序待定，1 月按「谁先考先攻谁」的模板走）</div>
+<div class="tl-tutor"><b>👨‍🏫 家教校准</b>　每周六、日 13:30–18:00 是硬占用，<b>9 h/周</b>。11/16→12/14 共 4.1 周，累计少 <b>37 h</b>；算到 12/31 少 <b>50 h</b>。折算成日均，下面三段的总容量从 9:46 / 7:50 / 8:30 降到 <b>8:29 / 6:33 / 7:13</b>。模电第 4 章不考已从总量里减掉 <b>13:08</b>；再按「看课∶做题 = 1∶1」把每周可投入放宽到 <b>30 h</b>（其中做题占一半），缺口从 4.6 h 变成<b>富余 2.3 h</b>。<br>也就是说 12/14 的收口现在<b>不用砍课也保得住</b>。下面两个减法不用做了，留着当缓冲：<b>①</b> 光学里 16 讲标「考纲外」的，实在赶不上再砍，省 <b>12.3 h</b>；<b>②</b> 中间某周被作业冲掉，就顺延到 <b>12/18</b>，多 4 天约 <b>32 h</b>。</div>
 <div class="tl">
 
 <div class="tl-item" data-from="2026-11-06" data-to="2026-11-14">
@@ -320,7 +320,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <span class="key"><i>模电</i>3:25</span>
 <span class="key"><i>光学</i>2:25</span>
 </div>
-<div class="tl-extra">1.5 倍速实际 <b>3:53</b>、2 倍速 <b>2:55</b>；看课外 <b>六级 2:30 + 作业/看 PPT 1:30 + 习题 1:00</b> ≈ 全天 8:55。这 16 天是全程最重的一段，比原计划每天多推 40 分钟视频</div>
+<div class="tl-extra">看课 5:50 视频 → 1.5 倍速 <b>3:53</b> 实际；<b>做题同样 3:53</b>（课后题 + 例题重算），<b>看课∶做题 = 1∶1</b>；六级 2:00 另算 ≈ 全天 <b>9:46</b>。这 16 天是全程最重的一段</div>
 <div class="tl-note">11/15 概率论期中，考完这门就暂时放下（12/15 起再二轮），这里不再占时间；到 11/30 为止：模电剩 <b>8:40 / 63:20</b>（3:25 × 16 天 = 54:40，第 4 章已跳过）、光学剩 <b>8:52 / 47:32</b>（从 0 起，2:25 × 16 天 = 38:40），两边都只剩 9 小时不到进 12 月</div>
 </div>
 </div>
@@ -336,7 +336,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <span><i>模电</i>0:37</span>
 <span><i>光学</i>0:38</span>
 </div>
-<div class="tl-extra">1.5 倍速实际 <b>2:05</b>；看课外 <b>六级冲刺 3:40 + 理力习题 1:30 + 模电光学课本 1:00</b> ≈ 全天 8:15。11 月加码换来这里比原计划轻 45 分钟，省下的时间全给六级（12/14 就考）</div>
+<div class="tl-extra">看课 3:07 视频 → 1.5 倍速 <b>2:05</b> 实际；<b>做题 2:05</b>（理力推导 + 模电光学课后题），仍 <b>1∶1</b>；六级冲刺 3:40 另算 ≈ 全天 <b>7:50</b>。11 月加码换来这里轻一截，省下的都进了六级（12/14 就考）</div>
 <div class="tl-note">模电剩 <b>8:40</b>（每天 37 分）、光学剩 <b>8:52</b>（每天 38 分），两门 <b>12/14 同时收口</b>；速成 <b>9:17</b>、精讲 <b>16:47</b> 也压在这两周 —— <b>12/14 晚上起一门新课都不剩</b>；12/14 白天六级考试，考完当晚就转纯做题</div>
 </div>
 </div>
@@ -352,7 +352,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <span><i>理力</i>1:30</span>
 <span><i>概率论</i>1:30</span>
 </div>
-<div class="tl-extra">全部为 <b>看课本 / 课后题 / 真题</b>，合计 <b>8:30/天</b>；12/14 之后不必再打开 B 站，全天只做输出型学习</div>
+<div class="tl-extra"><b>看课 0，8:30 全给做题</b>：看课本 / 课后题 / 真题；12/14 之后不必再打开 B 站，全天只做输出型学习</div>
 <div class="tl-note">考试顺序还没出，所以这 17 天<b>四门轮着来、不偏科</b>：模电光学各过一遍课本 + 课后题，概率论二轮，理力刷推导题。等顺序出来，再按顺序调高对应科目的比重</div>
 </div>
 </div>
@@ -494,24 +494,26 @@ function renderBudget(){
   var data=[], total=0;
   BGT.forEach(function(x){
     var st=secRemain(x[0]); if(!st) return;
-    var h=st.rem/3600; total+=h; data.push({n:x[1],h:h});
+    var vid=st.rem/3600;            // 视频原始时长
+    var work=vid/1.5*2;             // 1.5 倍速实际看课 + 等量做题
+    total+=work; data.push({n:x[1],vid:vid,work:work});
   });
   var needWeek=total/weeks;
-  data.sort(function(a,b){return b.h-a.h;});
+  data.sort(function(a,b){return b.work-a.work;});
   tb.innerHTML=data.map(function(d){
-    var pw=d.h/weeks, pct=avail>0?Math.min(100,pw/avail*100):0;
-    return '<tr><td>'+d.n+'</td><td class="n">'+hm(Math.round(d.h*3600))+'</td><td class="n">'+pw.toFixed(1)+'</td>'
+    var pw=d.work/weeks, pct=avail>0?Math.min(100,pw/avail*100):0;
+    return '<tr><td>'+d.n+'</td><td class="n">'+hm(Math.round(d.vid*3600))+'</td><td class="n">'+pw.toFixed(1)+'</td>'
       +'<td><div class="bgt-bar"><div style="width:'+pct.toFixed(0)+'%"></div></div>'
       +'<span style="font-size:11.5px;color:#8b949e">占 '+(avail>0?(pw/avail*100).toFixed(0):0)+'%</span></td></tr>';
   }).join('');
   var e0=document.getElementById('bgt-days'); if(e0) e0.textContent=days;
-  e0=document.getElementById('bgt-need'); if(e0) e0.textContent=hm(Math.round(total*3600));
+  e0=document.getElementById('bgt-need'); if(e0) e0.textContent=total.toFixed(1)+' h';
   e0=document.getElementById('bgt-perw'); if(e0) e0.textContent=needWeek.toFixed(1)+' h';
   var v=document.getElementById('bgt-verdict'); if(!v) return;
   var gap=needWeek-avail;
   if(gap<=0){
     v.className='bgt-verdict ok';
-    v.innerHTML='✅ <b>可行</b>：每周需要 '+needWeek.toFixed(1)+' h，你能给 '+avail+' h，还剩 '+(-gap).toFixed(1)+' h 缓冲。这个节奏元旦前五门都能收掉。';
+    v.innerHTML='✅ <b>可行</b>：每周需要 '+needWeek.toFixed(1)+' h（看课 '+(needWeek/2).toFixed(1)+' + 做题 '+(needWeek/2).toFixed(1)+'），你能给 '+avail+' h，还剩 '+(-gap).toFixed(1)+' h 缓冲。元旦前五门都能收掉。';
   }else if(gap<=3.5){
     v.className='bgt-verdict warn';
     v.innerHTML='⚠️ <b>紧，但做得完</b>：每周还差 '+gap.toFixed(1)+' h。两条路——把光学里标「考纲外」的那部分划掉，或者周六上午再补 3 小时。任选一条就能抹平。';
@@ -862,7 +864,7 @@ function injectToolbar(){
   injectToolbar();
   var bga=document.getElementById('bgt-avail');
   if(bga){
-    try{ if(localStorage.getItem('bgt_avail_v2')!=='1'){ localStorage.setItem('bgt_avail','22'); localStorage.setItem('bgt_avail_v2','1'); } var v0=localStorage.getItem('bgt_avail'); if(v0) bga.value=v0; }catch(e){}
+    try{ if(localStorage.getItem('bgt_avail_v3')!=='1'){ localStorage.setItem('bgt_avail','30'); localStorage.setItem('bgt_avail_v3','1'); } var v0=localStorage.getItem('bgt_avail'); if(v0) bga.value=v0; }catch(e){}
     bga.addEventListener('input',function(){ try{localStorage.setItem('bgt_avail',bga.value);}catch(e){} renderBudget(); });
   }
   setStatus('local');
