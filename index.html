@@ -49,28 +49,6 @@ a{color:#0969da;text-decoration:none}
 .foot{color:#8b949e;font-size:12.5px;margin:22px 0 8px}
 .d-btn{border:1px solid #2ea44f;background:#2ea44f;color:#fff;padding:6px 14px;border-radius:16px;font-size:12.5px;cursor:pointer;font-family:inherit}
 .d-btn:hover{background:#2c974b}
-.daily-history{display:flex;flex-direction:column;gap:6px}
-.daily-row{display:flex;align-items:center;gap:10px;font-size:13px}
-.daily-row .d-date{color:#57606a;width:86px;white-space:nowrap}
-.daily-row .d-bar{flex:1;height:10px;background:#e5e6eb;border-radius:5px;overflow:hidden}
-.daily-row .d-bar>div{height:100%;background:#2ea44f}
-.daily-row .d-min{color:#1f2329;width:84px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.daily-empty{color:#8b949e;font-size:12.5px}
-.daily-list{margin:2px 0 10px}
-.dl-head{font-size:12.5px;color:#8b949e;margin:2px 0 6px}
-.dl-item{display:flex;align-items:center;gap:10px;font-size:13px;background:#f0fbf4;border:1px solid #d6f0e0;border-radius:6px;padding:6px 10px;margin-bottom:5px}
-.dl-sub{color:#1a7f37;font-weight:bold;white-space:nowrap}
-.dl-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dl-dur{color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums}
-.hist-row{display:flex;gap:10px;font-size:12.5px;color:#8b949e;margin-top:3px}
-.hist-row .h-date{width:52px;white-space:nowrap}
-.extra-add{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
-.extra-add input[type=text]{border:1px solid #d0d3d8;border-radius:16px;padding:6px 12px;font-size:13px;flex:1;min-width:150px;font-family:inherit}
-.daily-extra{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.extra-row{display:flex;align-items:center;gap:8px;font-size:13px;background:#f8f9fa;border-radius:8px;padding:5px 10px}
-.extra-row .e-del{color:#cf222e;cursor:pointer;font-weight:bold;width:16px;text-align:center}
-.extra-row .e-txt{flex:1;color:#1f2329}
-.extra-row .e-min{color:#57606a;white-space:nowrap;font-variant-numeric:tabular-nums}
 .ov-dl{font-size:12px;color:#cf222e;margin-top:7px;padding-top:6px;border-top:1px dashed #eceef1;font-variant-numeric:tabular-nums}
 .ov-card.complete{background:linear-gradient(160deg,#fffdf3,#fff 60%);border-color:#e9c76a;box-shadow:0 2px 10px rgba(212,160,23,.15)}
 .ov-card.complete:hover{border-color:#d9a92f;box-shadow:0 4px 16px rgba(212,160,23,.26)}
@@ -143,7 +121,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="sub">共 8 门课程 · 更新日期：2026-11-13<br><span id="dd-sum-a">🎯 数竞前（11/14）还剩 13 天 · 待学 49:51:39</span> · <span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
 <div class="nav">
 <button class="tab-btn active" data-tab="tab-overview" onclick="showTab('tab-overview')">📊 总览</button>
-<button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-llsc" onclick="showTab('tab-llsc')">⚡ 理力速成</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·钟锡华</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button><a class="tab-btn" href="study-planner.html" style="text-decoration:none;display:inline-flex;align-items:center">🗓 周计划表</a>
+<button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-llsc" onclick="showTab('tab-llsc')">⚡ 理力速成</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·钟锡华</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button>
 </div>
 <section class="tab-page" id="tab-overview">
 <div class="legend"><span class="sw"></span>绿色 = 已看完 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄色 = 暂不学（该节从需学时长/节数中扣除，进度条上标黄） · 无色 = 尚未观看 · <b>点击任意一行切换「已看 / 未看」；点行尾 ⏸ 可标记「暂不学」</b> · 点击卡片或顶部标签切换课程</div>
@@ -280,15 +258,6 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <table><tr><th>P/节</th><th>标题</th><th>时长</th><th>状态</th></tr>
 <tr class="sec"><td colspan="4">📁 课时1 基础语法和竞赛快速入门 · <a href="https://www.bilibili.com/video/BV1Zs9VYrEgg/" target="_blank">BV1Zs9VYrEgg</a> · 已看 1/1 集</td></tr><tr class="done clk" data-vid="python:BV1Zs9VYrEgg:1" data-dur="1445"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时1：基础语法和竞赛快速入门</td><td class="dur">24:05</td><td class="donecell status">✅ 已看完<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时2 算法入门 · <a href="https://www.bilibili.com/video/BV12VXRYTEQh/" target="_blank">BV12VXRYTEQh</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV12VXRYTEQh:1" data-dur="1363"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时2：算法入门</td><td class="dur">22:43</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时3 贪心&排序 · <a href="https://www.bilibili.com/video/BV18c9iY4Eyu/" target="_blank">BV18c9iY4Eyu</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV18c9iY4Eyu:1" data-dur="1334"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时3：贪心 &amp; 排序 例题精讲</td><td class="dur">22:14</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时4 哈希&暴力&前缀和 · <a href="https://www.bilibili.com/video/BV1yM9pY5EaW/" target="_blank">BV1yM9pY5EaW</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1yM9pY5EaW:1" data-dur="1803"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时4：哈希 &amp; 暴力 &amp; 前缀和  例题 + 模板</td><td class="dur">30:03</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时5（上）二分查找 · <a href="https://www.bilibili.com/video/BV14ARKYqEb1/" target="_blank">BV14ARKYqEb1</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV14ARKYqEb1:1" data-dur="1762"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时5（上）：二分查找 &amp; bisect库 （吃透二分问题）</td><td class="dur">29:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时5（下）二分答案 · <a href="https://www.bilibili.com/video/BV1U99QYKEj2/" target="_blank">BV1U99QYKEj2</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1U99QYKEj2:1" data-dur="1562"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时5（下）：二分答案</td><td class="dur">26:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 刷题指南 · <a href="https://www.bilibili.com/video/BV1wcR3Y5EMg/" target="_blank">BV1wcR3Y5EMg</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1wcR3Y5EMg:1" data-dur="1052"><td class="num">P1</td><td>【蓝桥杯】Python速成  刷题指南</td><td class="dur">17:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时6（上）BFS · <a href="https://www.bilibili.com/video/BV1zUR3Y3EBE/" target="_blank">BV1zUR3Y3EBE</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1zUR3Y3EBE:1" data-dur="1138"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时6（上） BFS 网格图问题真题讲解</td><td class="dur">18:58</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时6（下）DFS · <a href="https://www.bilibili.com/video/BV1tJRjYiE6r/" target="_blank">BV1tJRjYiE6r</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1tJRjYiE6r:1" data-dur="1342"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时6（下）DFS 国赛 + 省赛真题解析</td><td class="dur">22:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时7 并查集&堆 · <a href="https://www.bilibili.com/video/BV1BkQnYxEuZ/" target="_blank">BV1BkQnYxEuZ</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1BkQnYxEuZ:1" data-dur="1294"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时7 【数据结构】并查集 &amp; 堆</td><td class="dur">21:34</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时8 动态规划 · <a href="https://www.bilibili.com/video/BV1zGQ6YmE6J/" target="_blank">BV1zGQ6YmE6J</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1zGQ6YmE6J:1" data-dur="2132"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时8 动态规划：入门dp、背包dp、网格图dp</td><td class="dur">35:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时9 图论 · <a href="https://www.bilibili.com/video/BV1umQxYtERz/" target="_blank">BV1umQxYtERz</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1umQxYtERz:1" data-dur="1929"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时9 图论：建图、图遍历、Dijkstra、Floyd</td><td class="dur">32:09</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时10 IDLE&日期&数论 · <a href="https://www.bilibili.com/video/BV1AGXzYXEWF/" target="_blank">BV1AGXzYXEWF</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1AGXzYXEWF:1" data-dur="1682"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时10 IDLE使用 &amp; 日期问题（填空题） &amp; 数论入门</td><td class="dur">28:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr></table>
 </div></section>
-<div class="card" id="daily-log">
-<h2>📈 每日学习记录</h2>
-<div class="meta">每次勾选 / 取消课程，都会把当天的最新状态记录一次；第二天再改动时，自动和上一次记录对比，把「新看完」的课程（课程名 + 时长）列在下面。自己额外学的内容也可以在下方手动补记。</div>
-<div class="stats"><span>📺 今日新看完 <b id="daily-new">0</b> 节</span><span>⏱ 课程时长 <b id="daily-dur">0</b></span><span>✏️ 额外学习 <b id="daily-extra-sum">0</b></span><span>🧮 今日合计 <b id="daily-total">0 分钟</b></span></div>
-<div class="extra-add"><input id="extra-what" type="text" placeholder="额外学了什么(如：线代3.1)"><input id="extra-min" type="number" min="1" max="1440" placeholder="分钟"><button class="d-btn" id="extra-add">添加</button></div>
-<div id="daily-extra" class="daily-extra"></div>
-<div id="daily-list" class="daily-list"></div>
-<div id="daily-history" class="daily-history"></div>
-</div>
 <div class="card" id="timeline">
 <h2>📅 我的时间安排<span class="tl-now" id="tlNow"></span></h2>
 <div class="meta">2026/11/16 → 2027/01 中 · 五个阶段 · <b>家教已计入</b>（每周六、日 13:30–18:00，合计 9 h/周）· 11/13 前收掉概统 8:24；<b>11/16–12/14 视频还剩 137 小时</b>（模电 63:20、光学 47:32、理力 16:47、速成 9:17），1.5 倍速折算 <b>91 小时</b>，加上等量做题共 <b>183 小时</b>，摊到 30 天是 <b>6:05/天</b>，而这 30 天里有 4.1 个周末被家教吃掉 <b>37 小时</b> · 节点：数竞 <b>11/14</b> · 概率论期中 <b>11/15</b> · 六级 <b>12/14</b> · 期末 <b>1 月中</b>（考试顺序待定，1 月按「谁先考先攻谁」的模板走）</div>
@@ -571,10 +540,6 @@ function recompute(){
   sortOverview();
   renderBudget();
 }
-function dkey(d){ return 'daily:'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-function fmtMin(m){ m=Math.round(m||0); var h=Math.floor(m/60),mm=m%60; return h?(h+' 小时'+(mm?' '+mm+' 分':'')):(m+' 分钟'); }
-function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-function sumExtra(dk){ return (state['extra:'+dk]||[]).reduce(function(s,x){return s+(+x.m||0);},0); }
 var META={};
 function buildMeta(){
   rows.forEach(function(tr){
@@ -583,65 +548,9 @@ function buildMeta(){
     META[tr.dataset.vid]={c:h2?h2.textContent.trim():'', t:td[1]?td[1].textContent.trim():'', d:(+tr.dataset.dur)||0, m:(sec?(sec.dataset.mode||'dur'):'dur')};
   });
 }
-function doneVids(){ var a=[]; rows.forEach(function(tr){ if(tr.classList.contains('done')) a.push(tr.dataset.vid); }); return a; }
-function snapDates(){ return Object.keys(state).filter(function(k){return k.indexOf('snap:')===0;}).map(function(k){return k.slice(5);}).sort(); }
-function snapSet(d){ var o={}; (state['snap:'+d]||[]).forEach(function(v){o[v]=1;}); return o; }
-function snapToday(){
-  var dk=dkey(new Date()).slice(6);
-  state['snap:'+dk]=doneVids();
-  var ds=snapDates();
-  if(ds.length>7){ ds.slice(0,ds.length-7).forEach(function(d){ delete state['snap:'+d]; }); }
-}
-function prevSnapDate(dk){ var a=snapDates().filter(function(x){return x<dk;}); return a.length?a[a.length-1]:null; }
-function renderDaily(){
-  var dk=dkey(new Date()).slice(6);
-  var prev=prevSnapDate(dk);
-  var base=snapSet(prev||'');
-  var news=prev ? doneVids().filter(function(v){return !base[v];}) : [];
-  var mins=0;
-  var items=news.map(function(v){
-    var m=META[v]||{c:'',t:v,d:0,m:'dur'};
-    if(m.m!=='pages') mins += m.d/60;
-    var durTxt = m.m==='pages' ? (m.d+' 页') : fmt(m.d);
-    return '<div class="dl-item"><span class="dl-sub">'+escapeHtml(m.c)+'</span><span class="dl-title" title="'+escapeHtml(m.t)+'">'+escapeHtml(m.t)+'</span><span class="dl-dur">'+durTxt+'</span></div>';
-  }).join('');
-  var extra=state['extra:'+dk]||[];
-  var exm=sumExtra(dk);
-  var setTxt=function(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; };
-  setTxt('daily-new',news.length);
-  setTxt('daily-dur',mins?fmtMin(mins):'0');
-  setTxt('daily-extra-sum',exm?fmtMin(exm):'0');
-  setTxt('daily-total',(mins+exm)?fmtMin(mins+exm):'0 分钟');
-  var eb=document.getElementById('daily-extra');
-  if(eb){ eb.innerHTML = extra.length ? extra.map(function(x,i){ return '<div class="extra-row"><span class="e-del" data-i="'+i+'">×</span><span class="e-txt">'+escapeHtml(x.t)+'</span><span class="e-min">'+fmtMin(x.m)+'</span></div>'; }).join('') : ''; }
-  var lb=document.getElementById('daily-list');
-  if(lb){
-    if(!prev){ lb.innerHTML='<div class="daily-empty">这是第一天的记录。之后再改动时，会自动拿上一次的记录做对比，把新看完的课程列在这里。</div>'; }
-    else if(!items){ lb.innerHTML='<div class="daily-empty">今天还没有新看完的课程（对比 '+prev+' 的记录）。勾选一节后会自动出现在这里。</div>'; }
-    else { lb.innerHTML='<div class="dl-head">对比 '+prev+' 的记录，今天新看完：</div>'+items; }
-  }
-  var hb=document.getElementById('daily-history'); if(!hb) return;
-  var all=snapDates();
-  if(all.length<2){ hb.innerHTML=''; return; }
-  hb.innerHTML=all.slice(-7).map(function(d){
-    var i=all.indexOf(d); var p=i>0?all[i-1]:null; var pb=snapSet(p||'');
-    var arr=(state['snap:'+d]||[]).filter(function(v){return !pb[v];});
-    var mm=0; arr.forEach(function(v){ var m=META[v]; if(m&&m.m!=='pages') mm+=m.d/60; });
-    return '<div class="hist-row"><span class="h-date">'+d.slice(5)+'</span><span>新看完 '+arr.length+' 节'+(mm?' · '+fmtMin(mm):'')+'</span></div>';
-  }).join('');
-}
-function addExtra(){
-  var w=document.getElementById('extra-what'), m=document.getElementById('extra-min'); if(!w||!m) return;
-  var t=(w.value||'').trim(); var v=parseInt(m.value,10);
-  if(!t){ setStatus('error','请填写额外学了什么'); return; }
-  if(!v||v<=0){ setStatus('error','请填写分钟数'); return; }
-  var dk=dkey(new Date()).slice(6); var a=state['extra:'+dk]||[]; a.push({t:t,m:v}); state['extra:'+dk]=a;
-  sv(state); dirty=true; w.value=''; m.value=''; renderDaily(); schedulePush(); setStatus(TOKEN?'saved':'localnewer');
-}
-function delExtra(i){
-  var dk=dkey(new Date()).slice(6); var a=state['extra:'+dk]||[]; a.splice(i,1); state['extra:'+dk]=a;
-  sv(state); dirty=true; renderDaily(); schedulePush();
-}
+/* daily log removed — no-op stubs kept for legacy call sites */
+function snapToday(){}
+function renderDaily(){}
 var rows=[], state={};
 function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); snapToday(); sv(state); dirty=true; renderDaily(); schedulePush(); }
 function toggleVid(v){ setStat(v, state[v]===true ? false : true); }
@@ -841,7 +750,7 @@ function injectToolbar(){
   rows=Array.prototype.slice.call(document.querySelectorAll('tr[data-vid]'));
   state=ls();
   if(!state){ state={}; rows.forEach(function(tr){ state[tr.dataset.vid]=tr.classList.contains('done')?true:(tr.classList.contains('skip')?'skip':false); }); sv(state); }
-  Object.keys(state||{}).forEach(function(k){ if(k.indexOf('daily:')===0) delete state[k]; });
+  Object.keys(state||{}).forEach(function(k){ if(k.indexOf('daily:')===0||k.indexOf('extra:')===0||k.indexOf('snap:')===0) delete state[k]; });
   buildMeta();
   applyAll();
   rows.forEach(function(tr){
@@ -857,10 +766,6 @@ function injectToolbar(){
   snapToday();
   sv(state);
   renderDaily();
-  var eadd=document.getElementById('extra-add');
-  if(eadd) eadd.addEventListener('click',addExtra);
-  var ebox=document.getElementById('daily-extra');
-  if(ebox) ebox.addEventListener('click',function(e){ var t=e.target; if(t&&t.classList&&t.classList.contains('e-del')){ delExtra(+t.dataset.i); } });
   injectToolbar();
   var bga=document.getElementById('bgt-avail');
   if(bga){
