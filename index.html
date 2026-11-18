@@ -58,6 +58,19 @@ a{color:#0969da;text-decoration:none}
 .ov-card.complete .bar>div[data-bar]{background:linear-gradient(90deg,#f6c445,#d99a12)}
 .ov-dl.doneall{color:#8a6100;border-top-color:#f3e2b6}
 /* 时间安排 */
+.tl-keys{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.tl-keys span{background:#f6f8fa;border:1px solid #e3e6ea;border-radius:7px;padding:5px 10px;font-size:12px;color:#57606a}
+.tl-keys b{color:#0969da}
+.tl-day{margin-top:9px;width:100%;border-collapse:collapse;font-size:12.5px}
+.tl-day th{text-align:left;padding:5px 8px;background:#f0f3f6;color:#57606a;font-weight:600;font-size:12px;border-bottom:1px solid #d8dee4}
+.tl-day td{padding:5px 8px;border-bottom:1px solid #eceef1;font-variant-numeric:tabular-nums;color:#24292f}
+.tl-day tr:last-child td{border-bottom:none}
+.tl-day td:first-child{white-space:nowrap;color:#57606a}
+.tl-day th:nth-child(3),.tl-day th:nth-child(4){white-space:nowrap;text-align:right}
+.tl-day td:nth-child(3),.tl-day td:nth-child(4){white-space:nowrap;text-align:right}
+.tl-day b{color:#1f6feb;font-weight:600}
+.tl-day tr:nth-child(even) td{background:#fafbfc}
+@media(max-width:640px){.tl-day{font-size:11px}.tl-day th,.tl-day td{padding:4px 4px}.tl-day th:nth-child(2){min-width:150px}.tl-day b{font-weight:600}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -278,56 +291,54 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="meta" style="margin-top:12px"><b>12/11–12/14 四天</b>：模电光学 <b>12/10</b> 看完，这四天看课归零但<b>不做纯英语日</b>——专业课做题 <b>4:00</b>（课本 + 课后题 + 期末真题）照常推进，六级只留 <b>1:30</b>（一天一套真题限时或错题回看 + 框架默写）。<b>六级永远在专业课之后</b>；考完当晚连这 1:30 也收掉，全部转回期末。</div>
 </div>
 <div class="card" id="timeline">
-<h2>📅 我的时间安排<span class="tl-now" id="tlNow"></span></h2>
-<div class="meta">2026/11/16 → 2027/01 中 · 七个阶段 · <b>家教已计入</b>（每周六、日 13:30–18:00，合计 9 h/周）· <b>11/16–11/18 原定清掉概统 7 集，实际只到第三章、还剩 6 集 6:03</b>；11/19–12/10 只刷模电光学 <b>110:52 视频</b>（1.5 倍速 <b>73:55</b>；<b>模电做题按看课实际的 40%</b>、光学仍 1∶1，做题合计 <b>48:35</b>，净学习 <b>122:29</b>，22 天摊 <b>5:34/天</b>），<b>12/11–12/14 四天看课归零，六级每天 1:30（专业课做题照常 4:00）</b>，理力两套课 26:04 推到 12/15 之后（1 月考，来得及），而这 30 天里有 4.1 个周末被家教吃掉 <b>37 小时</b> · 节点：数竞 <b>11/14</b>（已考）· 概率论期中 <b>11/15</b>（已考）· 六级 <b>12/14</b> · 期末 <b>1 月中</b>（考试顺序待定，1 月按「谁先考先攻谁」的模板走）</div>
-<div class="tl-tutor"><b>👨‍🏫 家教 + 做题口径校准</b>　每周六、日 13:30–18:00 是硬占用，<b>9 h/周</b>（摊到每天 <b>1:17</b>）。11/16→12/14 共 4.1 周，累计少 <b>37 h</b>；算到 12/31 少 <b>50 h</b>。模电第 4 章不考已从总量里减掉 <b>13:08</b>。<br><b>做题口径按科目分</b>：模电做习题时间只有看课的 <b>40%</b>（按实际观看时长算，即 1.5 倍速后的 <b>42:13 → 做题 16:53</b>，比原来 1∶1 的口径<b>省下 25:20</b>）；光学仍按 1∶1（<b>31:41 → 31:41</b>）。两科净学习从 147:48 降到 <b>122:29</b>，每周可投入登记维持 <b>38 h</b> 不变。扣掉家教摊薄后各段净容量：<b>11/16–11/18 概率论三天 7:17</b>、11/19–11/30 <b>8:29</b>、12/01–12/10 <b>4:39</b>、12/11–12/14 <b>4:13</b>。<br>概率论从「11/13 前」推到 <b>11/16–11/18</b>，等于这两周多背 <b>11 小时</b>（8:24 视频 + 等量做题），所以 11/16–11/18 这三天是全程最紧的三天，模电光学只保底；模电做题降到 40% 正好腾出约 <b>25 小时</b>，够把概率论落后的部分补掉还不挤占光学。顶不住就按优先级砍：P43/P44 标「仅数学一」，不考直接跳过，省 <b>57 分</b>；光学里 16 讲标「考纲外」的，实在赶不上再砍，省 <b>12.3 h</b>。</div>
+<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span></h2>
+<div class="tl-keys">
+<span><b>看课</b>：表中「视频」是原始时长，按 <b>1.5 倍速</b>实际用时 ÷1.5</span>
+<span><b>练习</b>：模电 = 视频÷1.5×40%，光学 / 概统 / 理力按 1∶1</span>
+<span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
+</div>
 <div class="tl">
 
-<div class="tl-item" data-from="2026-11-06" data-to="2026-11-14">
+<div class="tl-item" data-from="2026-11-06" data-to="2026-11-18">
 <div class="tl-dot"></div>
-<div class="tl-date">11/06 – 11/14 · 9 天</div>
+<div class="tl-date">11/06 – 11/18 · 已过去</div>
 <div class="tl-body">
-<b>数竞 + 概率论双线冲刺，网课给概率论加码</b><span class="tl-tag y">看课 3:30/天</span>
-<div class="tl-load">
-<span class="key"><i>概率论</i>1:00</span>
-<span><i>模电</i>1:05</span>
-<span><i>光学</i>1:00</span>
-<span><i>数竞</i>0:25</span>
-</div>
-<div class="tl-extra">1.5 倍速实际 <b>2:20</b> · 看课外 <b>数竞真题 3:30 + 概率论真题 1:30 + 作业 1:00</b> ≈ 全天 8:20（11/14 数竞、11/15 概率论，两门连着考）</div>
-<div class="tl-note">这段实际只学到概统第 3 集（2.4 一维连续变量），原计划「11/13 刷完」<b>没跟上</b>，剩下的 <b>7 集 8:24 挪到 11/16–11/18 三天集中清</b>；数竞课剩 4 集，<b>11/12</b> 收口；高数 11/06 已全部刷完，那 30 分转给了概率论</div>
+<b>数竞 + 期中冲刺</b><span class="tl-tag g">已完成</span>
+<div class="tl-note">数竞 11/14 已考、概率论期中 11/15 已考；概统到 11/18 晚只学到第 3 章（P38），剩 6 集从 <b>11/19</b> 起三天清完；高数 30 集全部刷完 🏅。下面的表从 11/19 开始排</div>
 </div>
 </div>
 
-<div class="tl-item" data-from="2026-11-15" data-to="2026-11-18">
+<div class="tl-item" data-from="2026-11-19" data-to="2026-11-21">
 <div class="tl-dot"></div>
-<div class="tl-date">11/15 – 11/18 · 4 天（实际学 11/16–11/18）· <b style="color:#b42318">概率论三天清盘</b></div>
+<div class="tl-date">11/19 – 11/21 · 3 天 · <b style="color:#b42318">概率论三天清盘</b></div>
 <div class="tl-body">
-<b>概统剩下的 7 集 8:24 三天吃完，模电光学只保底</b><span class="tl-tag r">看课 5:18/天</span>
-<div class="tl-load">
-<span class="key"><i>概率论</i>2:48</span>
-<span><i>模电</i>1:30</span>
-<span><i>光学</i>1:00</span>
-<span><i>六级</i>1:30</span>
-</div>
-<div class="tl-extra">看课 5:18 → 1.5 倍速 <b>3:32</b> 实际；做题 <b>2:56</b>（概统 1:52 挑老师布置的 + 模电 0:24 = 看课实际的 40% + 光学 0:40 按 1∶1），专业课合计 <b>6:28</b>；六级 <b>1:30</b> ≈ 全天 <b>7:58</b>。模电做题按 40% 口径后这三天不再顶到 8:30，省下的时间优先给概统</div>
-<div class="tl-note">按集数硬排：<b>11/16</b> P38 二维随机变量 2:21 → <b>11/17</b> P39 数字特征 + P40 大数定律 3:07 → <b>11/18</b> P41 数理统计 + P42 点估计 + P43 区间估计 + P44 假设检验 2:55，合计 8:24，<b>11/18 晚概统全部学完</b>。11/15 期中已考，之后到 12/14 不再碰（期末二轮从 12/15 起）</div>
-<div class="tl-note">P43、P44 标题带「仅数学一」，你们课程不考可直接跳过，省 <b>57 分钟</b>，第三天只剩 1:58；模电光学这三天各压到 1:30 / 1:00，是为了不让概率论拖到第四天</div>
+<b>概统剩 6 集全部学完，模电光学只保底</b><span class="tl-tag r">每天视频 2:57–5:52</span>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>练习</th></tr>
+<tr><td>11/19</td><td><b>概统</b> P39–40 · <b>模电</b> P33–35 · <b>光学</b> P1</td><td>5:52</td><td>3:13</td></tr>
+<tr><td>11/20</td><td><b>概统</b> P41–42 · <b>模电</b> P36–37 · <b>光学</b> P2</td><td>4:07</td><td>2:09</td></tr>
+<tr><td>11/21</td><td><b>概统</b> P43–44 · <b>模电</b> P38 · <b>光学</b> P3</td><td>2:57</td><td>1:29</td></tr>
+</table>
+<div class="tl-note">P43 区间估计、P44 假设检验标「仅数学一」，你们课不考就跳过，11/21 直接空出来。概统 11/21 收口后到 12/14 不再碰，期末二轮从 12/15 起</div>
 </div>
 </div>
 
-<div class="tl-item" data-from="2026-11-19" data-to="2026-11-30">
+<div class="tl-item" data-from="2026-11-22" data-to="2026-11-30">
 <div class="tl-dot"></div>
-<div class="tl-date">11/19 – 11/30 · 12 天 · <b style="color:#b42318">看课最重的一段</b></div>
+<div class="tl-date">11/22 – 11/30 · 9 天 · <b style="color:#b42318">模电光学主攻</b></div>
 <div class="tl-body">
-<b>网课猛刷：模电光学推掉大半，剩下的漏到 12 月初</b><span class="tl-tag r">看课 5:50/天</span>
-<div class="tl-load">
-<span class="key"><i>模电</i>3:25</span>
-<span class="key"><i>光学</i>2:25</span>
-<span><i>六级</i>2:00</span>
-</div>
-<div class="tl-extra">看课 5:50 视频 → 1.5 倍速 <b>3:54</b> 实际；做题 <b>2:32</b>（模电 2:17 × 40% = <b>0:55</b>，光学 1:37 × 1 = <b>1:37</b>），专业课合计 <b>6:26</b>；六级 <b>2:00</b>（每天 40 分碎片听力 + 词汇，周六一套真题 2:20 拆进当天）≈ 全天 <b>8:26</b>。比原来 1∶1 口径的 9:46 轻了 1:20，这 1:20 就是给概率论补进度留的</div>
-<div class="tl-note">概统到 11/18 晚只学到第三章，还差 <b>6 集 6:03</b>（P39–P44）；模电做题按 40% 省出的时间正好用来补这块，按需从下面两科里匀，<b>别把全天堆到 11 小时以上</b>。到 11/30 为止：模电剩 <b>17:50 / 63:20</b>（3:25 × 12 天 = 41:00，第 4 章已跳过）、光学剩 <b>15:32 / 47:32</b>（2:25 × 12 天 = 29:00）</div>
+<b>只看模电光学，周末减量</b><span class="tl-tag r">每天视频 2:51–7:19</span>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>练习</th></tr>
+<tr><td>11/22</td><td><b>模电</b> P39–42 · <b>光学</b> P4–5</td><td>2:59</td><td>1:22</td></tr>
+<tr><td>11/23</td><td><b>模电</b> P44–49 · <b>光学</b> P6–8</td><td>6:38</td><td>2:45</td></tr>
+<tr><td>11/24</td><td><b>模电</b> P50–54 · <b>光学</b> P9–12</td><td>7:04</td><td>3:10</td></tr>
+<tr><td>11/25</td><td><b>模电</b> P55–64 · <b>光学</b> P13–16</td><td>7:19</td><td>3:14</td></tr>
+<tr><td>11/26</td><td><b>模电</b> P65–92 · <b>光学</b> P17–20</td><td>6:36</td><td>2:54</td></tr>
+<tr><td>11/27</td><td><b>模电</b> P93–99 · <b>光学</b> P21–23</td><td>6:25</td><td>2:43</td></tr>
+<tr><td>11/28</td><td><b>模电</b> P100–103 · <b>光学</b> P24–25</td><td>3:19</td><td>1:31</td></tr>
+<tr><td>11/29</td><td><b>模电</b> P104–106 · <b>光学</b> P26–27</td><td>2:51</td><td>1:22</td></tr>
+<tr><td>11/30</td><td><b>模电</b> P107–112 · <b>光学</b> P28–30</td><td>6:01</td><td>2:26</td></tr>
+</table>
+<div class="tl-note">到 11/30：模电看到 <b>P116</b>（剩 50 集）、光学看到 <b>P30</b>（剩 31 集）。六级每天 1:30（周六套真题 2:20 拆两天），表里是专业课时间</div>
 </div>
 </div>
 
@@ -335,14 +346,20 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-dot"></div>
 <div class="tl-date">12/01 – 12/10 · 10 天 · <b style="color:#b42318">网课收口</b></div>
 <div class="tl-body">
-<b>模电光学刷完，12/10 之后一门网课都不剩</b><span class="tl-tag y">看课 3:20/天</span>
-<div class="tl-load">
-<span class="key"><i>模电</i>1:47</span>
-<span class="key"><i>光学</i>1:33</span>
-<span><i>六级</i>1:30</span>
-</div>
-<div class="tl-extra">看课 3:20 视频 → 1.5 倍速 <b>2:13</b> 实际；做题 <b>1:30</b>（模电 1:11 × 40% = <b>0:28</b>，光学 1:02 × 1 = <b>1:02</b>），专业课合计 <b>3:43</b>；六级 <b>1:30</b>（一套真题拆两天做，40 分碎片听力照旧）≈ 全天 <b>5:13</b>。模电做题按 40% 后这段更松，多出来的时间全给期末真题，不再给英语</div>
-<div class="tl-note">模电剩 <b>17:50</b>（每天 1:47）、光学剩 <b>15:32</b>（每天 1:33），10 天正好归零；<b>12/10 晚上起不再打开 B 站</b>，后面全是做题。比原来紧一点，是因为概率论占掉了 11/16–11/18 三天</div>
+<b>模电光学刷完，12/10 之后没有新课</b><span class="tl-tag y">每天视频 2:20–6:54</span>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>练习</th></tr>
+<tr><td>12/01</td><td><b>模电</b> P113–121 · <b>光学</b> P31–33</td><td>6:41</td><td>2:53</td></tr>
+<tr><td>12/02</td><td><b>模电</b> P122–127 · <b>光学</b> P34–37</td><td>6:27</td><td>2:47</td></tr>
+<tr><td>12/03</td><td><b>模电</b> P128–132 · <b>光学</b> P38–41</td><td>6:25</td><td>2:56</td></tr>
+<tr><td>12/04</td><td><b>模电</b> P133–139 · <b>光学</b> P42–45</td><td>6:47</td><td>3:00</td></tr>
+<tr><td>12/05</td><td><b>模电</b> P140–141 · <b>光学</b> P46–47</td><td>2:58</td><td>1:24</td></tr>
+<tr><td>12/06</td><td><b>模电</b> P142–143 · <b>光学</b> P48</td><td>2:20</td><td>0:59</td></tr>
+<tr><td>12/07</td><td><b>模电</b> P144–150 · <b>光学</b> P49–51</td><td>6:10</td><td>2:35</td></tr>
+<tr><td>12/08</td><td><b>模电</b> P151–157 · <b>光学</b> P52–55</td><td>6:54</td><td>3:01</td></tr>
+<tr><td>12/09</td><td><b>模电</b> P158–163 · <b>光学</b> P56–58</td><td>6:31</td><td>2:47</td></tr>
+<tr><td>12/10</td><td><b>模电</b> P164–166 · <b>光学</b> P59–61</td><td>3:26</td><td>1:44</td></tr>
+</table>
+<div class="tl-note">12/05、12/06 是家教周末所以减量；<b>12/10 晚光学 P61 收尾，网课全部结束</b>，之后全是课本和做题。12/14 六级</div>
 </div>
 </div>
 
@@ -350,13 +367,9 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-dot"></div>
 <div class="tl-date">12/11 – 12/14 · 4 天 · <b style="color:#b42318">六级周</b></div>
 <div class="tl-body">
-<b>看课归零，专业课做题照常，六级只占 1:30</b><span class="tl-tag y">六级 1:30/天</span>
-<div class="tl-load">
-<span class="key"><i>模电光学做题</i>4:00</span>
-<span><i>六级</i>1:30</span>
-</div>
-<div class="tl-extra">专业课 <b>4:00</b>（过课本 + 课后题 + 期末真题），六级 <b>1:30</b>——一天一套真题<b>整套限时</b>（2:20）那天，专业课压到 3:10，其余三天六级只做错题回看 + 作文框架默写 1:00。全天 <b>5:30</b>，<b>六级占不到 1/3</b></div>
-<div class="tl-note">12/14 考试当天上午只默写一遍框架、听一套听力，<b>不开新题</b>；考完当晚英语彻底收掉，连碎片时间也不给了，全部转回期末。如果实际考期是 12/12 周六，这两天整体前移，模电光学收口相应提到 <b>12/08</b></div>
+<b>看课归零</b><span class="tl-tag y">专业课做题 4:00 · 六级 1:30</span>
+<div class="tl-extra">专业课 <b>4:00</b>（课本 + 课后题 + 期末真题），六级 <b>1:30</b>：一套真题整套限时 2:20 那天专业课压到 3:10，其余三天六级只做错题回看 + 作文框架默写。全天 <b>5:30</b>，六级占不到 1/3</div>
+<div class="tl-note">12/14 上午只默写框架、听一套听力，不开新题；考完当晚英语彻底收掉，全转期末</div>
 </div>
 </div>
 
@@ -364,16 +377,27 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-dot"></div>
 <div class="tl-date">12/15 – 12/31 · 17 天</div>
 <div class="tl-body">
-<b>课本 + 习题期 + 理力两套课补上</b><span class="tl-tag y">看课 1:32/天</span>
-<div class="tl-load">
-<span class="key"><i>理力精讲</i>0:59</span>
-<span class="key"><i>理力速成</i>0:33</span>
-<span><i>模电</i>3:15</span>
-<span><i>光学</i>2:15</span>
-<span><i>概率论</i>1:30</span>
-</div>
-<div class="tl-extra">看课 1:32 视频 → 1.5 倍速 <b>1:01</b> 实际；<b>做题 7:30</b> ≈ 全天 <b>8:31</b>。模电光学概率论全是看课本 / 课后题 / 真题，只有理力还在听新课（1 月考，正好赶得上）</div>
-<div class="tl-note">理力精讲剩 <b>16:47</b>（每天 59 分）、速成 <b>9:17</b>（每天 33 分），17 天正好刷完。考试顺序还没出，所以其余四门<b>轮着来、不偏科</b>：模电光学各过一遍课本 + 课后题，概率论二轮。等顺序出来，再按顺序调高对应科目的比重</div>
+<b>理力两套课补上，其余全是做题</b><span class="tl-tag y">看课 1:32/天 + 做题 7:30</span>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>练习</th></tr>
+<tr><td>12/15</td><td><b>精讲</b> P23–27 · <b>速成</b> P1–2</td><td>0:58</td><td>0:38</td></tr>
+<tr><td>12/16</td><td><b>精讲</b> P28–32 · <b>速成</b> P3–4</td><td>1:49</td><td>1:12</td></tr>
+<tr><td>12/17</td><td><b>精讲</b> P33–37 · <b>速成</b> P5–6</td><td>1:22</td><td>0:54</td></tr>
+<tr><td>12/18</td><td><b>精讲</b> P38–42 · <b>速成</b> P7–8</td><td>1:39</td><td>1:06</td></tr>
+<tr><td>12/19</td><td><b>精讲</b> P43–47 · <b>速成</b> P9–10</td><td>1:42</td><td>1:08</td></tr>
+<tr><td>12/20</td><td><b>精讲</b> P48–52 · <b>速成</b> P11–12</td><td>1:31</td><td>1:00</td></tr>
+<tr><td>12/21</td><td><b>精讲</b> P53–57 · <b>速成</b> P13–14</td><td>1:24</td><td>0:56</td></tr>
+<tr><td>12/22</td><td><b>精讲</b> P58–62 · <b>速成</b> P15–16</td><td>1:16</td><td>0:51</td></tr>
+<tr><td>12/23</td><td><b>精讲</b> P63–67 · <b>速成</b> P17–18</td><td>1:28</td><td>0:59</td></tr>
+<tr><td>12/24</td><td><b>精讲</b> P68–72 · <b>速成</b> P19–20</td><td>1:56</td><td>1:17</td></tr>
+<tr><td>12/25</td><td><b>精讲</b> P73–77 · <b>速成</b> P21–22</td><td>1:30</td><td>1:00</td></tr>
+<tr><td>12/26</td><td><b>精讲</b> P78–81 · <b>速成</b> P23–24</td><td>2:06</td><td>1:24</td></tr>
+<tr><td>12/27</td><td><b>精讲</b> P82–85 · <b>速成</b> P25–26</td><td>1:26</td><td>0:57</td></tr>
+<tr><td>12/28</td><td><b>精讲</b> P86–89 · <b>速成</b> P27–28</td><td>1:35</td><td>1:03</td></tr>
+<tr><td>12/29</td><td><b>精讲</b> P90–93 · <b>速成</b> P29–30</td><td>1:11</td><td>0:47</td></tr>
+<tr><td>12/30</td><td><b>精讲</b> P94–97 · <b>速成</b> P31–32</td><td>1:17</td><td>0:51</td></tr>
+<tr><td>12/31</td><td><b>精讲</b> P98–101 · <b>速成</b> P33–34</td><td>1:47</td><td>1:11</td></tr>
+</table>
+<div class="tl-extra">表内是<b>看课 + 对应练习</b>（理力按 1∶1）。此外模电 / 光学 / 概统的课本、课后题、真题合计 <b>7:30/天</b>，全天约 <b>8:30</b>。考试顺序没出，四门轮着来；顺序一定，立刻把时间集中到最先考的那门</div>
 </div>
 </div>
 
@@ -381,7 +405,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-dot"></div>
 <div class="tl-date">01/01 – 01/15 · 15 天 · 一门考完就扔一门</div>
 <div class="tl-body">
-<b>按次序四轮冲刺，考前只攻一门</b><span class="tl-tag g">看课 0 · 全做题</span>
+<b>按考期四轮冲刺，考前只攻一门</b><span class="tl-tag g">看课 0 · 全做题</span>
 <table class="tl-exam">
 <tr><th>时间</th><th>主攻</th><th>配比</th><th>合计</th></tr>
 <tr><td>01/01 – 01/04</td><td><span class="ex">第 1 门</span> 考前 4 天</td><td>该门 5:00 · 其余三门各 40 分</td><td>7:00</td></tr>
@@ -389,14 +413,13 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <tr><td>01/09 – 01/11</td><td><span class="ex">第 3 门</span> 考前 3 天</td><td>该门 5:30 · 最后那门 1:00</td><td>6:30</td></tr>
 <tr><td>01/12 – 01/15</td><td><span class="ex">第 4 门</span> 考前 4 天</td><td>该门 6:00（只剩它一门）</td><td>6:00</td></tr>
 </table>
-<div class="tl-extra">这是<b>顺序无关的模板</b>：考试安排一出来，把「第 1 门」替换成最先考的那门即可，时间配比一个数都不用改</div>
-<div class="tl-note">三条规则：① <b>考完即删</b>——那门课从第二天的表里彻底消失，剩下的时间全给还没考的；② <b>越往后越集中</b>——从 4 门分 6 小时到 1 门独占 6 小时；③ 两门间隔不足 3 天时，前一门考完立刻切换，放弃保温时间，只保单科冲刺</div>
+<div class="tl-extra">顺序无关模板：考试安排一出来，把「第 1 门」换成最先考的那门，配比一个数都不用改</div>
+<div class="tl-note">三条规则：① 考完即删，那门从第二天表里彻底消失；② 越往后越集中，从 4 门分 6 小时到 1 门独占 6 小时；③ 两门间隔不足 3 天，前门考完立刻切换，只保单科冲刺</div>
 </div>
 </div>
 
 </div>
 </div>
-
 <div class="foot">数据来源：B站合集接口（时长以B站为准）。理论力学采用任延宇本人账号合集（BV1xJ411s78q，101集），若看的是哈工大官方合集（BV1qV411X7Yp，102集）告诉我即可切换。李天意《考研数学精讲课》在同一合集（BV16BjHz9EUJ）内已拆成「高数（P1–P34）」和「概统（P35–P44）」两个独立页签，线代部分（P45–P55）不显示。数据结构（王卓·C/C++）已按你的 Python 组路线移除，替换为 TsingPig《蓝桥杯Python冲刺课》（课时1–10 + 刷题指南），更贴合蓝桥杯 Python 组。清风数学建模部分已移除，替换为钟锡华《光学》（北京大学，BV1Sy4y1n7z5，61 讲 / 约 47.5 小时）课堂实录，按分P打卡、进度按时长计；分组标题后标注了对应的蔡履中《光学》第三版章节，方便对着考试范围看。更新进度：直接点击网页里的课程行即可勾选 / 取消「已看」；点顶部「连接GitHub自动同步」后，每次改动会自动提交到本仓库，跨设备/清缓存都不丢。</div>
 </div>
 
