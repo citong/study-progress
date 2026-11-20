@@ -131,13 +131,13 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 .bgt-bar>div{height:100%;background:#2ea44f}
 </style></head><body><div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
-<div class="sub">共 8 门课程 · 更新日期：2026-11-13<br><span id="dd-sum-a">🎯 数竞前（11/14）还剩 13 天 · 待学 49:51:39</span> · <span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
+<div class="sub"><span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
 <div class="nav">
 <button class="tab-btn active" data-tab="tab-overview" onclick="showTab('tab-overview')">📊 总览</button>
 <button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-llsc" onclick="showTab('tab-llsc')">⚡ 理力速成</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·钟锡华</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button>
 </div>
 <section class="tab-page" id="tab-overview">
-<div class="legend"><span class="sw"></span>绿色 = 已看完 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄色 = 暂不学（该节从需学时长/节数中扣除，进度条上标黄） · 无色 = 尚未观看 · <b>点击任意一行切换「已看 / 未看」；点行尾 ⏸ 可标记「暂不学」</b> · 点击卡片或顶部标签切换课程</div>
+<div class="legend"><span class="sw"></span>绿=已看 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄=暂不学 · 无色=未看 · <b>点行切换「已看 / 未看」，点 ⏸ 标「暂不学」</b></div>
 <div class="ov-grid">
 <div class="ov-card" data-key="lilun" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-lilun')">
 <div class="ov-head"><b>⚙️ 理论力学</b><span class="ov-pct">21.9%</span></div>
@@ -192,12 +192,12 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 </div>
 
 <div class="card bgt">
-<h2>⏱ 时间预算<span class="dd-badge" style="color:#8b949e">已扣除周末家教 2 个下午（9 h/周）</span></h2>
+<h2>⏱ 时间预算<span class="dd-badge" style="color:#8b949e">已扣家教 9h/周</span></h2>
 <div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 学期五门 + 六级总投入 <b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
 <div class="bgt-ctrl">你每周实际能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="38"> 小时（扣掉上课、作业、家教之后；<b>模电做题按看课的 40%</b>，其余 1∶1，六级已算在里面）</div>
 <div id="bgt-verdict" class="bgt-verdict"></div>
 <table class="bgt-tab"><thead><tr><th>课程</th><th class="n">视频</th><th class="n">投入 h/周</th><th style="width:34%">占可用时间</th></tr></thead><tbody id="bgt-tab-body"></tbody></table>
-<div class="meta" style="margin:8px 0 0">统计范围：学期五门（模电、光学、理论力学、理力速成、概统）+ 六级；考研高数、蓝桥杯、数竞不计入。<br>「视频」是原始时长，「投入 h/周」= 视频 ÷ 1.5（实际看课）+ <b>做题</b>时间。<b>模电做题只有看课的 40%</b>（系数 1.4），其余四门仍是 1∶1（系数 2）。<b>六级没有视频</b>，按时间安排的实际排量硬算 <b>53 h</b>（11/15–11/30 每天 2:00、12/01–12/14 每天 1:30），所以它在表里「视频」一列是 —；它排在五门之后，每周额度只有五门的 1/4 左右。</div>
+<div class="meta" style="margin:8px 0 0">范围：学期五门 + 六级（高数、蓝桥杯、数竞不计）。「投入」= 视频÷1.5 实际看课 + 做题，<b>模电做题按 40%</b>、其余 1∶1。六级无视频，按安排记 <b>53 h</b>。</div>
 </div>
 </section>
 <section class="tab-page" id="tab-lilun" data-key="lilun" style="display:none">
@@ -212,13 +212,13 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <section class="tab-page" id="tab-llsc" data-key="llsc" style="display:none">
 <div class="card">
 <h2>理论力学速成课<span class="dd-badge" data-ddbadge="llsc">⏳ 还剩 57 天</span></h2>
-<div class="meta">速成专页：精讲走「理论力学」那页的任延宇，这里只放另一套，不重复、不交叉</div>
+<div class="meta">精讲在「理论力学」页（任延宇），本页是另一套</div>
 <div class="stats"><span>📺 已看 <b data-stat="w">0</b> / <b data-stat="tot">34</b> 集</span><span>⏱ 已看 <b data-stat="wp">0:00</b> / 需学 <b data-stat="tt">9:17:53</b></span><span>📈 进度（按时长）<b data-stat="pct">0.0%</b></span><span data-stat="skwrap" style="display:none">⏸ 已跳过 <b data-stat="sk">0</b> 集</span></div>
 <div class="bar"><div data-bar style="width:0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 </div>
 <div class="card">
 <h2 style="font-size:16px">凌云师兄《理论力学期末急救》全 34 集 · 218.9 万播放</h2>
-<div class="meta">静力学、桁架、摩擦、点的合成运动、平面运动、三大定理、达朗贝尔、虚位移全覆盖，<a href="https://www.bilibili.com/video/BV1U6T7zeEAA/" target="_blank">BV1U6T7zeEAA</a> · 约 9:17:53，与任延宇精讲课互补不重复</div>
+<div class="meta">凌云师兄 · <a href="https://www.bilibili.com/video/BV1U6T7zeEAA/" target="_blank">BV1U6T7zeEAA</a> · 34 集 / 9:17:53</div>
 <table><tr><th>集</th><th>标题</th><th>时长</th><th>状态</th></tr>
 <tr class="clk" data-vid="llsc:m1" data-dur="29"><td class="num">P1</td><td>【全免费】考试不挂科，期末突击课！</td><td class="dur">0:29</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m2" data-dur="451"><td class="num">P2</td><td>考点1-1.1静力学基础</td><td class="dur">7:31</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m3" data-dur="1383"><td class="num">P3</td><td>考点1-1.2静力学五大定理</td><td class="dur">23:03</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m4" data-dur="653"><td class="num">P4</td><td>考点2-2.1工程中常见的约束及其约束力</td><td class="dur">10:53</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m5" data-dur="1102"><td class="num">P5</td><td>考点2-2.2物体的受力分析</td><td class="dur">18:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m6" data-dur="733"><td class="num">P6</td><td>考点3-3.1平面汇交力系合成与平衡</td><td class="dur">12:13</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m7" data-dur="374"><td class="num">P7</td><td>考点3-3.2平面力对点之矩</td><td class="dur">6:14</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m8" data-dur="483"><td class="num">P8</td><td>考点3-3.3平面力偶系合成与平衡</td><td class="dur">8:03</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m9" data-dur="1258"><td class="num">P9</td><td>考点3-3.4平面任意力系简化&平衡方程</td><td class="dur">20:58</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m10" data-dur="915"><td class="num">P10</td><td>考点4-4.1单一物体平衡求约束力</td><td class="dur">15:15</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m11" data-dur="1330"><td class="num">P11</td><td>考点4-4.2物体系统平衡求约束力</td><td class="dur">22:10</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m12" data-dur="815"><td class="num">P12</td><td>考点5-5.1平面桁架内力计算（节点法）</td><td class="dur">13:35</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m13" data-dur="693"><td class="num">P13</td><td>考点5-5.1平面桁架内力计算（截面法）</td><td class="dur">11:33</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m14" data-dur="310"><td class="num">P14</td><td>考点6-6.1空间力分解(二次投影法)</td><td class="dur">5:10</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m15" data-dur="317"><td class="num">P15</td><td>考点6-6.2空间力对点的矩</td><td class="dur">5:17</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m16" data-dur="432"><td class="num">P16</td><td>考点6-6.3空间力对轴的矩</td><td class="dur">7:12</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m17" data-dur="688"><td class="num">P17</td><td>考点6-6.4空间任意力系平衡方程</td><td class="dur">11:28</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m18" data-dur="692"><td class="num">P18</td><td>考点7-7.1摩擦基础</td><td class="dur">11:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m19" data-dur="1442"><td class="num">P19</td><td>考点7-7.2考虑摩擦时物体的平衡问题</td><td class="dur">24:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m20" data-dur="1272"><td class="num">P20</td><td>考点8-8.1点的运动学</td><td class="dur">21:12</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m21" data-dur="783"><td class="num">P21</td><td>考点8-8.2刚体的简单运动（平移&定轴转动）</td><td class="dur">13:03</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m22" data-dur="1135"><td class="num">P22</td><td>考点9-9.1点的合成运动（速度求解）</td><td class="dur">18:55</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m23" data-dur="1973"><td class="num">P23</td><td>考点9-9.2点的合成运动（加速度求解）</td><td class="dur">32:53</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m24" data-dur="1996"><td class="num">P24</td><td>考点10-10.1刚体的平面运动（速度分析）</td><td class="dur">33:16</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m25" data-dur="1579"><td class="num">P25</td><td>考点10-10.2刚体的平面运动（加速度分析）</td><td class="dur">26:19</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m26" data-dur="654"><td class="num">P26</td><td>考点11-11.1动量&冲量</td><td class="dur">10:54</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m27" data-dur="2061"><td class="num">P27</td><td>考点11-11.2动量定理&质心运动定理</td><td class="dur">34:21</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m28" data-dur="1061"><td class="num">P28</td><td>考点12-12.1动量矩&转动惯量</td><td class="dur">17:41</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m29" data-dur="1149"><td class="num">P29</td><td>考点12-12.2动量矩定理&刚体运动微分方程</td><td class="dur">19:09</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m30" data-dur="613"><td class="num">P30</td><td>考点13-13.1常见力的功计算</td><td class="dur">10:13</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m31" data-dur="231"><td class="num">P31</td><td>考点13-13.2刚体的动能计算</td><td class="dur">3:51</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m32" data-dur="1082"><td class="num">P32</td><td>考点13-13.3动能定理</td><td class="dur">18:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m33" data-dur="1742"><td class="num">P33</td><td>考点14-达朗贝尔原理</td><td class="dur">29:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="clk" data-vid="llsc:m34" data-dur="2042"><td class="num">P34</td><td>考点15-虚位移原理</td><td class="dur">34:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr></table>
 </div>
@@ -420,7 +420,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 
 </div>
 </div>
-<div class="foot">数据来源：B站合集接口（时长以B站为准）。理论力学采用任延宇本人账号合集（BV1xJ411s78q，101集），若看的是哈工大官方合集（BV1qV411X7Yp，102集）告诉我即可切换。李天意《考研数学精讲课》在同一合集（BV16BjHz9EUJ）内已拆成「高数（P1–P34）」和「概统（P35–P44）」两个独立页签，线代部分（P45–P55）不显示。数据结构（王卓·C/C++）已按你的 Python 组路线移除，替换为 TsingPig《蓝桥杯Python冲刺课》（课时1–10 + 刷题指南），更贴合蓝桥杯 Python 组。清风数学建模部分已移除，替换为钟锡华《光学》（北京大学，BV1Sy4y1n7z5，61 讲 / 约 47.5 小时）课堂实录，按分P打卡、进度按时长计；分组标题后标注了对应的蔡履中《光学》第三版章节，方便对着考试范围看。更新进度：直接点击网页里的课程行即可勾选 / 取消「已看」；点顶部「连接GitHub自动同步」后，每次改动会自动提交到本仓库，跨设备/清缓存都不丢。</div>
+<div class="foot">时长以 B 站为准 · 点课程行勾选进度，点顶部「连接 GitHub 自动同步」后自动保存、跨设备不丢。</div>
 </div>
 
 <script>
@@ -487,7 +487,7 @@ function sortOverview(){
   cards.forEach(function(c){ grid.appendChild(c); });
 }
 function renderDeadlines(){
-  var gA={m:0,p:0}, gB={m:0,p:0};
+  var gB={m:0,p:0};
   document.querySelectorAll('.ov-card[data-key]').forEach(function(card){
     var key=card.dataset.key, dl=card.dataset.dl||'', st=secRemain(key);
     var n=ddDaysLeft(dl);
@@ -512,10 +512,9 @@ function renderDeadlines(){
         el.className = 'ov-dl' + (dl?'':' free');
       }
     }
-    if(dl==='2026-11-14'){ if(st.pages) gA.p+=st.rem; else gA.m+=st.rem; }
     if(dl==='2027-01-01'){ if(st.pages) gB.p+=st.rem; else gB.m+=st.rem; }
   });
-  [['a','2026-11-14',gA,'🎯 数竞前（11/14）'],['b','2027-01-01',gB,'🗓 元旦前（1/1）']].forEach(function(x){
+  [['b','2027-01-01',gB,'🗓 元旦前（1/1）']].forEach(function(x){
     var n=ddDaysLeft(x[1]), g=x[2], el=document.getElementById('dd-sum-'+x[0]);
     if(!el) return;
     var parts=[];
