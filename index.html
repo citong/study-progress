@@ -444,6 +444,13 @@ var dirty=false; /* 本地是否有还没推到云端的改动 */
 function ls(){try{return JSON.parse(localStorage.getItem(LS));}catch(e){return null;}}
 function sv(s){try{localStorage.setItem(LS,JSON.stringify(s));localStorage.setItem(LT,new Date().toISOString());}catch(e){}}
 function getToken(){try{return localStorage.getItem(TK)||'';}catch(e){return '';}}
+/* 从链接片段一次性导入 Token，不写进公开源码 */
+(function(){
+  var m=/[#&]gh=([^&]+)/.exec(location.hash||'');
+  if(!m) return;
+  try{localStorage.setItem(TK,decodeURIComponent(m[1]));}catch(e){}
+  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+})();
 function tsGet(){try{return localStorage.getItem(LT)||'';}catch(e){return '';}}
 var OWNER=(location.hostname.split('.')[0]||'').toLowerCase();
 var _seg=location.pathname.split('/').filter(Boolean);
