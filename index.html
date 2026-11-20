@@ -2,21 +2,22 @@
 <html lang="zh-CN"><head><meta charset="UTF-8">
 <title>B站课程学习进度表</title>
 <style>
-body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f4f5f7;margin:0;padding:20px 16px 40px;color:#1f2329}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20px 16px 40px;color:#1f2329;background:radial-gradient(1100px 460px at 12% -160px,#e3f3e8 0%,transparent 62%),radial-gradient(900px 420px at 92% -120px,#e8effa 0%,transparent 58%),#f4f5f7;background-attachment:fixed}
 .wrap{max-width:980px;margin:0 auto}
-h1{font-size:24px;margin:0 0 4px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.3px}
+h1::after{content:"";display:block;width:54px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2ea44f,#8fd6a6);margin-top:9px}
 .sub{color:#57606a;font-size:14px;margin-bottom:12px}
-.nav{position:sticky;top:0;background:#f4f5f7;padding:10px 0;z-index:10;display:flex;gap:8px;flex-wrap:wrap}
+.nav{position:sticky;top:0;background:rgba(244,245,247,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:10px 0;z-index:10;display:flex;gap:8px;flex-wrap:wrap}
 .tab-btn{border:1px solid #d0d3d8;background:#fff;color:#1f2329;padding:7px 16px;border-radius:18px;font-size:14px;cursor:pointer;font-family:inherit}
-.tab-btn:hover{border-color:#2ea44f}
-.tab-btn.active{background:#2ea44f;border-color:#2ea44f;color:#fff;font-weight:bold}
-.card{background:#fff;border-radius:10px;padding:20px 24px;margin:14px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tab-btn:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
+.tab-btn.active{background:#2ea44f;border-color:#2ea44f;color:#fff;font-weight:bold;box-shadow:0 3px 10px rgba(46,164,79,.28)}
+.card{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:20px 24px;margin:14px 0;box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px rgba(16,24,40,.05)}
 h2{margin:0 0 6px;font-size:19px}
 .meta{color:#57606a;font-size:13px;margin-bottom:10px}
 .stats{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;margin-bottom:8px}
 .bar{height:8px;background:#e5e6eb;border-radius:4px;overflow:hidden;margin-bottom:14px;display:flex}
-.bar>div{height:100%;background:#2ea44f}
-.bar>div.bar-skip{background:#f2c744}
+.bar>div{height:100%;background:linear-gradient(90deg,#2ea44f,#4fc06e)}
+.bar>div.bar-skip{background:linear-gradient(90deg,#f2c744,#f7d977)}
 i.sk{display:inline-block;margin-left:8px;padding:0 6px;border:1px solid #d0d3d8;border-radius:9px;color:#8b949e;font-style:normal;font-size:11px;line-height:17px;cursor:pointer;user-select:none}
 i.sk:hover{border-color:#d4a72c;color:#a16207;background:#fffbe6}
 tr.skip td{background:#fff8e1}
@@ -36,8 +37,9 @@ tr.clk{cursor:pointer}
 tr.clk:hover:not(.done) td{background:#eaf6ee}
 td.status{text-align:center}
 .ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:6px}
-.ov-card{background:#fff;border:1px solid #e5e6eb;border-radius:10px;padding:14px 16px;cursor:pointer;transition:box-shadow .15s}
-.ov-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.12);border-color:#2ea44f}
+.ov-card{position:relative;background:#fff;border:1px solid #e5e6eb;border-radius:12px;padding:14px 16px;cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
+.ov-card::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:linear-gradient(90deg,#2ea44f,#8fd6a6)}
+.ov-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(16,24,40,.12);border-color:#2ea44f}
 .ov-head{display:flex;justify-content:space-between;font-size:15px;margin-bottom:2px}
 .ov-pct{color:#2ea44f;font-weight:bold}
 .ov-meta{color:#57606a;font-size:12.5px;margin-bottom:8px}
@@ -46,11 +48,12 @@ td.status{text-align:center}
 .legend{font-size:13px;color:#57606a;margin:6px 0 4px}
 .sw{display:inline-block;width:14px;height:14px;background:#c6efce;border:1px solid #86c086;vertical-align:-2px;margin-right:5px}
 a{color:#0969da;text-decoration:none}
-.foot{color:#8b949e;font-size:12.5px;margin:22px 0 8px}
+.foot{color:#8b949e;font-size:12.5px;margin:22px 0 8px;padding-top:12px;border-top:1px solid rgba(16,24,40,.06);text-align:center}
 .d-btn{border:1px solid #2ea44f;background:#2ea44f;color:#fff;padding:6px 14px;border-radius:16px;font-size:12.5px;cursor:pointer;font-family:inherit}
 .d-btn:hover{background:#2c974b}
 .ov-dl{font-size:12px;color:#cf222e;margin-top:7px;padding-top:6px;border-top:1px dashed #eceef1;font-variant-numeric:tabular-nums}
 .ov-card.complete{background:linear-gradient(160deg,#fffdf3,#fff 60%);border-color:#e9c76a;box-shadow:0 2px 10px rgba(212,160,23,.15)}
+.ov-card.complete::before{background:linear-gradient(90deg,#e0a912,#f6c445)}
 .ov-card.complete:hover{border-color:#d9a92f;box-shadow:0 4px 16px rgba(212,160,23,.26)}
 .ov-card.complete .ov-head b{color:#8a6100}
 .ov-card.complete .ov-pct{color:#b8860b}
@@ -62,7 +65,7 @@ a{color:#0969da;text-decoration:none}
 .tl-keys span{background:#f6f8fa;border:1px solid #e3e6ea;border-radius:7px;padding:5px 10px;font-size:12px;color:#57606a}
 .tl-keys b{color:#0969da}
 .tl-day{margin-top:9px;width:100%;border-collapse:collapse;font-size:12.5px}
-.tl-day th{text-align:left;padding:5px 8px;background:#f0f3f6;color:#57606a;font-weight:600;font-size:12px;border-bottom:1px solid #d8dee4}
+.tl-day th{text-align:left;padding:5px 8px;background:linear-gradient(180deg,#f4f6f9,#edf0f4);color:#57606a;font-weight:600;font-size:12px;border-bottom:1px solid #d8dee4}
 .tl-day td{padding:5px 8px;border-bottom:1px solid #eceef1;font-variant-numeric:tabular-nums;color:#24292f}
 .tl-day tr:last-child td{border-bottom:none}
 .tl-day td:first-child{white-space:nowrap;color:#57606a}
@@ -75,7 +78,7 @@ a{color:#0969da;text-decoration:none}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
-.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:#e8eaed}
+.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,#cdebd7,#e8eaed 30%,#e8eaed 70%,#cdebd7)}
 .tl-item{position:relative;margin-bottom:18px}
 .tl-item:last-child{margin-bottom:0}
 .tl-dot{position:absolute;left:-23px;top:5px;width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid #c9cdd4;box-sizing:border-box}
