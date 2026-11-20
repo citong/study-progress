@@ -68,9 +68,10 @@ a{color:#0969da;text-decoration:none}
 .tl-day td:first-child{white-space:nowrap;color:#57606a}
 .tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){white-space:nowrap;text-align:right}
 .tl-day td:nth-child(3),.tl-day td:nth-child(4),.tl-day td:nth-child(5){white-space:nowrap;text-align:right}
+.tl-day th:nth-child(6),.tl-day td:nth-child(6){white-space:nowrap}
 .tl-day b{color:#1f6feb;font-weight:600}
 .tl-day tr:nth-child(even) td{background:#fafbfc}
-@media(max-width:640px){.tl-day{font-size:11px}.tl-day th,.tl-day td{padding:4px 4px}.tl-day th:nth-child(2){min-width:150px}.tl-day b{font-weight:600}}
+@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:11%}.tl-day th:nth-child(2){width:36%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:12%}.tl-day th:nth-child(6){width:17%;white-space:normal;line-height:1.35}.tl-day b{font-weight:600}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -288,6 +289,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-keys">
 <span><b>视频</b>=原始时长 · <b>实际</b>=1.5 倍速看课用时（视频÷1.5）</span>
 <span><b>练习</b>：模电=实际×40%，光学/概统/理力按 1∶1</span>
+<span><b>复习</b>：看课以外的六级 / 模电·光学·概统复习</span>
 <span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
 </div>
 <div class="tl">
@@ -306,12 +308,12 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">11/19 – 11/21 · 3 天 · <b style="color:#b42318">概率论三天清盘</b></div>
 <div class="tl-body">
 <b>概统剩 6 集全部学完，模电光学只保底</b><span class="tl-tag r">视频 3:19–4:57/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th></tr>
-<tr><td>11/19</td><td><b>概统</b> P39–40 · <b>模电</b> P33 · <b>光学</b> P1</td><td>4:57</td><td>3:18</td><td>2:59</td></tr>
-<tr><td>11/20</td><td><b>概统</b> P41–42 · <b>模电</b> P34–36 · <b>光学</b> P2</td><td>4:06</td><td>2:44</td><td>2:09</td></tr>
-<tr><td>11/21</td><td><b>概统</b> P43–44 · <b>模电</b> P37 · <b>光学</b> P3–4</td><td>3:19</td><td>2:13</td><td>1:50</td></tr>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr>
+<tr><td>11/19</td><td><b>概统</b> P39–40 · <b>模电</b> P33 · <b>光学</b> P1</td><td>4:57</td><td>3:18</td><td>2:59</td><td>—</td></tr>
+<tr><td>11/20</td><td><b>概统</b> P41–42 · <b>模电</b> P34–36 · <b>光学</b> P2</td><td>4:06</td><td>2:44</td><td>2:09</td><td>—</td></tr>
+<tr><td>11/21</td><td><b>概统</b> P43–44 · <b>模电</b> P37 · <b>光学</b> P3–4</td><td>3:19</td><td>2:13</td><td>1:50</td><td>—</td></tr>
 </table>
-<div class="tl-note">P43 区间估计、P44 假设检验标「仅数学一」，你们课不考就跳过。概统 11/21 收口后到 12/14 不再碰，期末二轮从 12/15 起</div>
+<div class="tl-note">P43/P44 标「仅数学一」的不考就跳；概统二轮 12/15 起。</div>
 </div>
 </div>
 
@@ -320,18 +322,18 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">11/22 – 11/30 · 9 天 · <b style="color:#b42318">模电光学主攻</b></div>
 <div class="tl-body">
 <b>只看模电光学，周末减量</b><span class="tl-tag r">视频 3:17–6:34/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th></tr>
-<tr><td>11/22</td><td><b>模电</b> P38–41 · <b>光学</b> P5–6</td><td>3:56</td><td>2:37</td><td>1:44</td></tr>
-<tr><td>11/23</td><td><b>模电</b> P42–47 · <b>光学</b> P7–9</td><td>5:30</td><td>3:40</td><td>2:25</td></tr>
-<tr><td>11/24</td><td><b>模电</b> P48–50 · <b>光学</b> P10–12</td><td>5:07</td><td>3:24</td><td>2:21</td></tr>
-<tr><td>11/25</td><td><b>模电</b> P51–55 · <b>光学</b> P13–16</td><td>6:34</td><td>4:23</td><td>3:03</td></tr>
-<tr><td>11/26</td><td><b>模电</b> P56–63 · <b>光学</b> P17–19</td><td>5:34</td><td>3:42</td><td>2:30</td></tr>
-<tr><td>11/27</td><td><b>模电</b> P64–89 · <b>光学</b> P20–22</td><td>4:28</td><td>2:59</td><td>1:59</td></tr>
-<tr><td>11/28</td><td><b>模电</b> P90–92 · <b>光学</b> P23–24</td><td>3:21</td><td>2:14</td><td>1:32</td></tr>
-<tr><td>11/29</td><td><b>模电</b> P93–95 · <b>光学</b> P25–26</td><td>3:17</td><td>2:11</td><td>1:31</td></tr>
-<tr><td>11/30</td><td><b>模电</b> P96–101 · <b>光学</b> P27–30</td><td>5:55</td><td>3:56</td><td>2:44</td></tr>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr>
+<tr><td>11/22</td><td><b>模电</b> P38–41 · <b>光学</b> P5–6</td><td>3:56</td><td>2:37</td><td>1:44</td><td>六级 1:30</td></tr>
+<tr><td>11/23</td><td><b>模电</b> P42–47 · <b>光学</b> P7–9</td><td>5:30</td><td>3:40</td><td>2:25</td><td>六级 1:30</td></tr>
+<tr><td>11/24</td><td><b>模电</b> P48–50 · <b>光学</b> P10–12</td><td>5:07</td><td>3:24</td><td>2:21</td><td>六级 1:30</td></tr>
+<tr><td>11/25</td><td><b>模电</b> P51–55 · <b>光学</b> P13–16</td><td>6:34</td><td>4:23</td><td>3:03</td><td>六级 1:30</td></tr>
+<tr><td>11/26</td><td><b>模电</b> P56–63 · <b>光学</b> P17–19</td><td>5:34</td><td>3:42</td><td>2:30</td><td>六级 1:30</td></tr>
+<tr><td>11/27</td><td><b>模电</b> P64–89 · <b>光学</b> P20–22</td><td>4:28</td><td>2:59</td><td>1:59</td><td>六级 1:30</td></tr>
+<tr><td>11/28</td><td><b>模电</b> P90–92 · <b>光学</b> P23–24</td><td>3:21</td><td>2:14</td><td>1:32</td><td>六级 1:30</td></tr>
+<tr><td>11/29</td><td><b>模电</b> P93–95 · <b>光学</b> P25–26</td><td>3:17</td><td>2:11</td><td>1:31</td><td>六级 1:30</td></tr>
+<tr><td>11/30</td><td><b>模电</b> P96–101 · <b>光学</b> P27–30</td><td>5:55</td><td>3:56</td><td>2:44</td><td>六级 1:30</td></tr>
 </table>
-<div class="tl-note">模电线拉长后每天更匀（原来有 7 小时的重天，现在压到 6:34 以内）。六级每天 1:30（周六套真题拆两天），表里是专业课时间</div>
+<div class="tl-note">模电线已拉平；六级见「复习」列。</div>
 </div>
 </div>
 
@@ -340,19 +342,19 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">12/01 – 12/10 · 10 天 · <b style="color:#b42318">光学收口</b></div>
 <div class="tl-body">
 <b>光学 12/10 刷完，模电留下一段尾巴</b><span class="tl-tag y">视频 3:03–6:58/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th></tr>
-<tr><td>12/01</td><td><b>模电</b> P102–107 · <b>光学</b> P31–32</td><td>5:12</td><td>3:28</td><td>2:13</td></tr>
-<tr><td>12/02</td><td><b>模电</b> P108–112 · <b>光学</b> P33–36</td><td>5:42</td><td>3:48</td><td>2:35</td></tr>
-<tr><td>12/03</td><td><b>模电</b> P113–119 · <b>光学</b> P37–40</td><td>6:02</td><td>4:01</td><td>2:53</td></tr>
-<tr><td>12/04</td><td><b>模电</b> P120–125 · <b>光学</b> P41–43</td><td>5:24</td><td>3:36</td><td>2:16</td></tr>
-<tr><td>12/05</td><td><b>模电</b> P126–127 · <b>光学</b> P44–45</td><td>3:03</td><td>2:02</td><td>1:27</td></tr>
-<tr><td>12/06</td><td><b>模电</b> P128–129 · <b>光学</b> P46–47</td><td>3:05</td><td>2:03</td><td>1:26</td></tr>
-<tr><td>12/07</td><td><b>模电</b> P130–134 · <b>光学</b> P48–50</td><td>5:35</td><td>3:44</td><td>2:31</td></tr>
-<tr><td>12/08</td><td><b>模电</b> P135–140 · <b>光学</b> P51–54</td><td>6:17</td><td>4:11</td><td>2:54</td></tr>
-<tr><td>12/09</td><td><b>模电</b> P141–143 · <b>光学</b> P55–57</td><td>4:21</td><td>2:54</td><td>2:02</td></tr>
-<tr><td>12/10</td><td><b>模电</b> P144–150 · <b>光学</b> P58–61</td><td>6:58</td><td>4:39</td><td>3:07</td></tr>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr>
+<tr><td>12/01</td><td><b>模电</b> P102–107 · <b>光学</b> P31–32</td><td>5:12</td><td>3:28</td><td>2:13</td><td>六级 1:30</td></tr>
+<tr><td>12/02</td><td><b>模电</b> P108–112 · <b>光学</b> P33–36</td><td>5:42</td><td>3:48</td><td>2:35</td><td>六级 1:30</td></tr>
+<tr><td>12/03</td><td><b>模电</b> P113–119 · <b>光学</b> P37–40</td><td>6:02</td><td>4:01</td><td>2:53</td><td>六级 1:30</td></tr>
+<tr><td>12/04</td><td><b>模电</b> P120–125 · <b>光学</b> P41–43</td><td>5:24</td><td>3:36</td><td>2:16</td><td>六级 1:30</td></tr>
+<tr><td>12/05</td><td><b>模电</b> P126–127 · <b>光学</b> P44–45</td><td>3:03</td><td>2:02</td><td>1:27</td><td>六级 1:30</td></tr>
+<tr><td>12/06</td><td><b>模电</b> P128–129 · <b>光学</b> P46–47</td><td>3:05</td><td>2:03</td><td>1:26</td><td>六级 1:30</td></tr>
+<tr><td>12/07</td><td><b>模电</b> P130–134 · <b>光学</b> P48–50</td><td>5:35</td><td>3:44</td><td>2:31</td><td>六级 1:30</td></tr>
+<tr><td>12/08</td><td><b>模电</b> P135–140 · <b>光学</b> P51–54</td><td>6:17</td><td>4:11</td><td>2:54</td><td>六级 1:30</td></tr>
+<tr><td>12/09</td><td><b>模电</b> P141–143 · <b>光学</b> P55–57</td><td>4:21</td><td>2:54</td><td>2:02</td><td>六级 1:30</td></tr>
+<tr><td>12/10</td><td><b>模电</b> P144–150 · <b>光学</b> P58–61</td><td>6:58</td><td>4:39</td><td>3:07</td><td>六级 1:30</td></tr>
 </table>
-<div class="tl-note">12/05、12/06 家教周末减量；<b>光学 P61 于 12/10 收尾</b>。模电故意留 16 集到 12/11–12/14 收口，战线拉长、每天不堆太满</div>
+<div class="tl-note">光学 P61 于 12/10 收尾；模电留 16 集到 12/14 收口。</div>
 </div>
 </div>
 
@@ -360,14 +362,14 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-dot"></div>
 <div class="tl-date">12/11 – 12/14 · 4 天 · <b style="color:#b42318">六级周 + 模电收尾</b></div>
 <div class="tl-body">
-<b>模电 P151–P166 收口，六级冲刺</b><span class="tl-tag y">专业课 · 六级 1:30</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th></tr>
-<tr><td>12/11</td><td><b>模电</b> P151–156</td><td>3:05</td><td>2:03</td><td>0:49</td></tr>
-<tr><td>12/12</td><td><b>模电</b> P157</td><td>0:52</td><td>0:35</td><td>0:14</td></tr>
-<tr><td>12/13</td><td><b>模电</b> P158–160</td><td>1:40</td><td>1:07</td><td>0:27</td></tr>
-<tr><td>12/14</td><td><b>模电</b> P161–166</td><td>3:37</td><td>2:25</td><td>0:58</td></tr>
+<b>模电 P151–P166 收口，六级冲刺</b><span class="tl-tag y">专业课 · 见复习列</span>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr>
+<tr><td>12/11</td><td><b>模电</b> P151–156</td><td>3:05</td><td>2:03</td><td>0:49</td><td>六级 1:30</td></tr>
+<tr><td>12/12</td><td><b>模电</b> P157</td><td>0:52</td><td>0:35</td><td>0:14</td><td>六级 2:20</td></tr>
+<tr><td>12/13</td><td><b>模电</b> P158–160</td><td>1:40</td><td>1:07</td><td>0:27</td><td>六级 1:30</td></tr>
+<tr><td>12/14</td><td><b>模电</b> P161–166</td><td>3:37</td><td>2:25</td><td>0:58</td><td>六级 1:30</td></tr>
 </table>
-<div class="tl-extra">这四天六级 <b>1:30/天</b>（周六 2:20 整套真题那天专业课压到 3:10），模电看课照表走、12/14 全部结束。12/14 上午只默框架、听一套听力，考完当晚英语收掉</div>
+<div class="tl-note">模电 12/14 收口；12/14 考完英语收掉。</div>
 </div>
 </div>
 
@@ -376,12 +378,12 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">12/15 – 12/17 · 3 天 · <b style="color:#b42318">理力速成先看</b></div>
 <div class="tl-body">
 <b>速成 34 集一次看完，再开精讲</b><span class="tl-tag r">视频 2:54–3:24/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th></tr>
-<tr><td>12/15</td><td><b>速成</b> P1–15</td><td>3:01</td><td>2:01</td><td>2:01</td></tr>
-<tr><td>12/16</td><td><b>速成</b> P16–24</td><td>2:54</td><td>1:56</td><td>1:56</td></tr>
-<tr><td>12/17</td><td><b>速成</b> P25–34</td><td>3:24</td><td>2:16</td><td>2:16</td></tr>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr>
+<tr><td>12/15</td><td><b>速成</b> P1–15</td><td>3:01</td><td>2:01</td><td>2:01</td><td>模/光/概 4:30</td></tr>
+<tr><td>12/16</td><td><b>速成</b> P16–24</td><td>2:54</td><td>1:56</td><td>1:56</td><td>模/光/概 4:30</td></tr>
+<tr><td>12/17</td><td><b>速成</b> P25–34</td><td>3:24</td><td>2:16</td><td>2:16</td><td>模/光/概 4:30</td></tr>
 </table>
-<div class="tl-note">按你的要求：<b>先速通、后精讲</b>。速成 12/17 收口，精讲从 12/18 才开始，两套课不穿插</div>
+<div class="tl-note">先速通、后精讲，两套不穿插。</div>
 </div>
 </div>
 
@@ -389,24 +391,23 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-dot"></div>
 <div class="tl-date">12/18 – 12/31 · 14 天 · 理力精讲</div>
 <div class="tl-body">
-<b>精讲 79 集 + 其余全是做题</b><span class="tl-tag y">视频 0:57–1:27/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th></tr>
-<tr><td>12/18</td><td><b>精讲</b> P23–28</td><td>0:57</td><td>0:38</td><td>0:38</td></tr>
-<tr><td>12/19</td><td><b>精讲</b> P29–34</td><td>1:27</td><td>0:58</td><td>0:58</td></tr>
-<tr><td>12/20</td><td><b>精讲</b> P35–39</td><td>1:03</td><td>0:42</td><td>0:42</td></tr>
-<tr><td>12/21</td><td><b>精讲</b> P40–43</td><td>1:13</td><td>0:49</td><td>0:49</td></tr>
-<tr><td>12/22</td><td><b>精讲</b> P44–49</td><td>1:13</td><td>0:49</td><td>0:49</td></tr>
-<tr><td>12/23</td><td><b>精讲</b> P50–55</td><td>1:16</td><td>0:51</td><td>0:51</td></tr>
-<tr><td>12/24</td><td><b>精讲</b> P56–60</td><td>1:05</td><td>0:43</td><td>0:43</td></tr>
-<tr><td>12/25</td><td><b>精讲</b> P61–66</td><td>1:10</td><td>0:47</td><td>0:47</td></tr>
-<tr><td>12/26</td><td><b>精讲</b> P67–71</td><td>1:13</td><td>0:49</td><td>0:49</td></tr>
-<tr><td>12/27</td><td><b>精讲</b> P72–77</td><td>1:15</td><td>0:50</td><td>0:50</td></tr>
-<tr><td>12/28</td><td><b>精讲</b> P78–83</td><td>1:20</td><td>0:53</td><td>0:53</td></tr>
-<tr><td>12/29</td><td><b>精讲</b> P84–88</td><td>1:04</td><td>0:43</td><td>0:43</td></tr>
-<tr><td>12/30</td><td><b>精讲</b> P89–94</td><td>1:06</td><td>0:44</td><td>0:44</td></tr>
-<tr><td>12/31</td><td><b>精讲</b> P95–101</td><td>1:26</td><td>0:57</td><td>0:57</td></tr>
+<b>精讲 79 集 + 其余全天复习</b><span class="tl-tag y">视频 0:57–1:27/天</span>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr>
+<tr><td>12/18</td><td><b>精讲</b> P23–28</td><td>0:57</td><td>0:38</td><td>0:38</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/19</td><td><b>精讲</b> P29–34</td><td>1:27</td><td>0:58</td><td>0:58</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/20</td><td><b>精讲</b> P35–39</td><td>1:03</td><td>0:42</td><td>0:42</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/21</td><td><b>精讲</b> P40–43</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/22</td><td><b>精讲</b> P44–49</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/23</td><td><b>精讲</b> P50–55</td><td>1:16</td><td>0:51</td><td>0:51</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/24</td><td><b>精讲</b> P56–60</td><td>1:05</td><td>0:43</td><td>0:43</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/25</td><td><b>精讲</b> P61–66</td><td>1:10</td><td>0:47</td><td>0:47</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/26</td><td><b>精讲</b> P67–71</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/27</td><td><b>精讲</b> P72–77</td><td>1:15</td><td>0:50</td><td>0:50</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/28</td><td><b>精讲</b> P78–83</td><td>1:20</td><td>0:53</td><td>0:53</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/29</td><td><b>精讲</b> P84–88</td><td>1:04</td><td>0:43</td><td>0:43</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/30</td><td><b>精讲</b> P89–94</td><td>1:06</td><td>0:44</td><td>0:44</td><td>模/光/概 7:30</td></tr>
+<tr><td>12/31</td><td><b>精讲</b> P95–101</td><td>1:26</td><td>0:57</td><td>0:57</td><td>模/光/概 7:30</td></tr>
 </table>
-<div class="tl-extra">表内是<b>看课 + 对应练习</b>（理力按 1∶1）。此外模电 / 光学 / 概统的课本、课后题、真题合计 <b>7:30/天</b>，全天约 <b>8:30</b>。考试顺序没出，四门轮着来；顺序一定，立刻把时间集中到最先考的那门</div>
 </div>
 </div>
 
@@ -422,14 +423,13 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <tr><td>01/09 – 01/11</td><td><span class="ex">第 3 门</span> 考前 3 天</td><td>该门 5:30 · 最后那门 1:00</td><td>6:30</td></tr>
 <tr><td>01/12 – 01/15</td><td><span class="ex">第 4 门</span> 考前 4 天</td><td>该门 6:00（只剩它一门）</td><td>6:00</td></tr>
 </table>
-<div class="tl-extra">顺序无关模板：考试安排一出来，把「第 1 门」换成最先考的那门，配比一个数都不用改</div>
-<div class="tl-note">三条规则：① 考完即删，那门从第二天表里彻底消失；② 越往后越集中，从 4 门分 6 小时到 1 门独占 6 小时；③ 两门间隔不足 3 天，前门考完立刻切换，只保单科冲刺</div>
+<div class="tl-note">顺序一定就替换「第 1 门」；考完即删，越往后越集中。</div>
 </div>
 </div>
 
 </div>
 </div>
-<div class="foot">时长以 B 站为准 · 点课程行勾选进度，点顶部「连接 GitHub 自动同步」后自动保存、跨设备不丢。</div>
+<div class="foot">时长以 B 站为准 · 点行勾选，连 GitHub 自动同步。</div>
 </div>
 
 <script>
