@@ -194,10 +194,10 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="card bgt">
 <h2>⏱ 时间预算<span class="dd-badge" style="color:#8b949e">已扣家教 9h/周</span></h2>
 <div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 学期五门 + 六级总投入 <b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
-<div class="bgt-ctrl">你每周实际能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="38"> 小时（扣掉上课、作业、家教之后；<b>模电做题按看课的 40%</b>，其余 1∶1，六级已算在里面）</div>
+<div class="bgt-ctrl">每周能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="38"> 小时（已扣上课、作业、家教；模电做题按 <b>40%</b>，其余 1∶1）</div>
 <div id="bgt-verdict" class="bgt-verdict"></div>
 <table class="bgt-tab"><thead><tr><th>课程</th><th class="n">视频</th><th class="n">投入 h/周</th><th style="width:34%">占可用时间</th></tr></thead><tbody id="bgt-tab-body"></tbody></table>
-<div class="meta" style="margin:8px 0 0">范围：学期五门 + 六级（高数、蓝桥杯、数竞不计）。「投入」= 视频÷1.5 实际看课 + 做题，<b>模电做题按 40%</b>、其余 1∶1。六级无视频，按安排记 <b>53 h</b>。</div>
+<div class="meta" style="margin:8px 0 0">「视频」为原始时长；六级无视频，按安排记 <b>53 h</b>。</div>
 </div>
 </section>
 <section class="tab-page" id="tab-lilun" data-key="lilun" style="display:none">
@@ -273,22 +273,15 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 </div></section>
 <div class="card" id="cet">
 <h2>🎯 六级冲刺<span class="dd-badge" style="color:#8b949e">12/14 · 目标 520–550</span></h2>
-<div class="meta">按你报的四级分项折：听力 ≈124（对一半）、阅读 212、写作翻译 200，总分 ≈536。六级不是四级加难一点——听力语速快一档、翻译考中国文化，这两块都会掉。想上 540，账得这么算：</div>
-<div class="ok" style="margin:10px 0 12px"><b>优先级：专业课 &gt; 六级</b>　六级<b>算进时间预算表</b>（53 h，占每周额度约 1/4），但每天<b>不超过 1.5 小时</b>，任一阶段都<b>明显少于</b>专业课时长：11/15–11/30 六级 2:00 对专业课 7:46、12/01–12/10 六级 1:30 对 3:10、12/11–12/14 六级 1:30 对 4:00。唯一的整块占用是<b>周六一套真题 2:20</b>，其余全拆进碎片时间。</div>
+<div class="meta">四级折算 ≈536，听力是唯一短板。六级每天 ≤1.5 h，永远排在专业课之后。</div>
 <table>
-<tr><th>分项</th><th style="width:66px">满分</th><th style="width:118px">四级（你）</th><th style="width:112px">六级目标</th><th>关键动作</th></tr>
-<tr><td>听力</td><td>248.5</td><td>≈124 · 50%</td><td><b>175 · 70%</b></td><td>唯一的短板，也是唯一能在 30 天里拉 50 分的</td></tr>
-<tr><td>阅读</td><td>248.5</td><td>212 · 85%</td><td>190 · 76%</td><td>每周 1 套限时；长篇匹配是六级新增的坑</td></tr>
-<tr><td>写作</td><td>106.5</td><td>200 · 94%</td><td>80</td><td>背 3 个能套的框架，每两周写 1 篇</td></tr>
-<tr><td>翻译</td><td>106.5</td><td>（同上合计）</td><td>78</td><td>中国文化 / 社会短语，每周 1 段</td></tr>
+<tr><th>分项</th><th style="width:112px">六级目标</th><th>关键动作</th></tr>
+<tr><td>听力</td><td><b>175 · 70%</b></td><td>唯一能在 30 天拉 50 分的短板</td></tr>
+<tr><td>阅读</td><td>190 · 76%</td><td>每周 1 套限时</td></tr>
+<tr><td>写作</td><td>80</td><td>背 3 个框架，每两周写 1 篇</td></tr>
+<tr><td>翻译</td><td>78</td><td>中国文化短语，每周 1 段</td></tr>
 </table>
-<div class="meta" style="margin-top:12px"><b>每周三件事（不加量，只加准度；标★的才占整块时间）</b></div>
-<table>
-<tr><td style="width:104px"><b>碎片 40 分</b></td><td>走路、排队、吃饭时听：精听一篇 lecture（盲听 → 看文本圈生词 → 跟读），再刷 30 个词。只听六级真题，不碰模拟题。<b>这段时间本来也学不了专业课，等于白赚。</b></td></tr>
-<tr><td><b>★周六 2:20</b></td><td>整套真题限时（作文 30 + 听力 30 + 阅读 40 + 翻译 30），周日 40 分复盘错题。这是唯一挤占专业课时间的项目。</td></tr>
-<tr><td><b>每两周 1 篇</b></td><td>作文放到专业课做完之后的零头时间写，对照范文只记 3 个框架；翻译背 30 条高频短语，够了。</td></tr>
-</table>
-<div class="meta" style="margin-top:12px"><b>12/11–12/14 四天</b>：模电光学 <b>12/10</b> 看完，这四天看课归零但<b>不做纯英语日</b>——专业课做题 <b>4:00</b>（课本 + 课后题 + 期末真题）照常推进，六级只留 <b>1:30</b>（一天一套真题限时或错题回看 + 框架默写）。<b>六级永远在专业课之后</b>；考完当晚连这 1:30 也收掉，全部转回期末。</div>
+<div class="meta" style="margin-top:10px"><b>节奏</b>：每天碎片 40 分（精听 1 篇 lecture + 30 词）· 周六 2:20 整套真题、周日 40 分复盘。<br><b>12/11–12/14</b>：专业课做题 4:00 照常，六级只留 1:30；12/14 考完当晚全转期末。</div>
 </div>
 <div class="card" id="timeline">
 <h2>📅 每天做什么<span class="tl-now" id="tlNow"></span></h2>
