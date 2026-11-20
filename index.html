@@ -2,8 +2,19 @@
 <html lang="zh-CN"><head><meta charset="UTF-8">
 <title>B站课程学习进度表</title>
 <style>
-body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20px 16px 40px;color:#1f2329;background:radial-gradient(1100px 460px at 12% -160px,#e3f3e8 0%,transparent 62%),radial-gradient(900px 420px at 92% -120px,#e8effa 0%,transparent 58%),#f4f5f7;background-attachment:fixed}
-.wrap{max-width:980px;margin:0 auto}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20px 16px 40px;color:#1f2329;background:#f4f5f7;min-height:100vh;overflow-x:hidden}
+.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto}
+/* ===== 动态背景层 ===== */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(135deg,#f7faf8 0%,#f4f6f8 48%,#f6f5fa 100%)}
+.bg i{position:absolute;display:block;border-radius:50%;filter:blur(66px);will-change:transform;opacity:.5}
+.bg i:nth-child(1){width:540px;height:540px;left:-9%;top:-14%;background:radial-gradient(circle,#bfe9cf 0%,rgba(191,233,207,0) 70%);animation:bg-drift-a 24s ease-in-out infinite}
+.bg i:nth-child(2){width:500px;height:500px;right:-7%;top:6%;background:radial-gradient(circle,#c9def8 0%,rgba(201,222,248,0) 70%);animation:bg-drift-b 30s ease-in-out infinite}
+.bg i:nth-child(3){width:600px;height:600px;left:16%;bottom:-26%;background:radial-gradient(circle,#e2daf7 0%,rgba(226,218,247,0) 70%);animation:bg-drift-c 34s ease-in-out infinite}
+.bg .bg-follow{width:460px;height:460px;left:0;top:0;margin:-230px 0 0 -230px;background:radial-gradient(circle,rgba(126,201,155,.20) 0%,rgba(126,201,155,0) 68%);filter:blur(46px);opacity:.75;transform:translate3d(var(--mx,50vw),var(--my,50vh),0)}
+@keyframes bg-drift-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,46px) scale(1.14)}}
+@keyframes bg-drift-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-78px,58px) scale(1.1)}}
+@keyframes bg-drift-c{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(56px,-68px) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.bg i:not(.bg-follow){animation:none}.bg .bg-follow{display:none}}
 h1{font-size:25px;margin:0 0 4px;letter-spacing:-.3px}
 h1::after{content:"";display:block;width:54px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2ea44f,#8fd6a6);margin-top:9px}
 .sub{color:#57606a;font-size:14px;margin-bottom:12px}
@@ -141,7 +152,9 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 .bgt-tab td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .bgt-bar{height:7px;background:#e5e6eb;border-radius:4px;overflow:hidden;margin-top:4px}
 .bgt-bar>div{height:100%;background:#2ea44f}
-</style></head><body><div class="wrap">
+</style></head><body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i class="bg-follow"></i></div>
+<div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
 <div class="sub"><span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
 <div class="nav">
@@ -912,6 +925,25 @@ function injectToolbar(){
     applyFocus(on);
     try{ localStorage.setItem('tl_focus', on?'1':'0'); }catch(e){}
   };
+})();
+</script>
+<script>
+/* 背景光晕跟随鼠标：用 rAF 平滑插值，避免直接跟随的抖动 */
+(function(){
+  var bg=document.querySelector('.bg');
+  if(!bg || !bg.querySelector('.bg-follow')) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(!window.matchMedia('(pointer:fine)').matches) return; /* 触屏设备不启用 */
+  var tx=window.innerWidth/2, ty=window.innerHeight*0.35, cx=tx, cy=ty;
+  window.addEventListener('pointermove',function(e){tx=e.clientX;ty=e.clientY;},{passive:true});
+  window.addEventListener('pointerleave',function(){tx=window.innerWidth/2;ty=window.innerHeight*0.35;});
+  function step(){
+    cx+=(tx-cx)*0.055; cy+=(ty-cy)*0.055;
+    bg.style.setProperty('--mx',cx.toFixed(1)+'px');
+    bg.style.setProperty('--my',cy.toFixed(1)+'px');
+    requestAnimationFrame(step);
+  }
+  step();
 })();
 </script>
 </body></html>
