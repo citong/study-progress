@@ -98,6 +98,11 @@ a{color:#0969da;text-decoration:none}
 .tl-tag.y{background:#fff8e6;color:#8a6100;border:1px solid #f0dfae}
 .tl-tag.r{background:#fff0f0;color:#b42318;border:1px solid #f5c2c0}
 .tl-now{margin-left:8px;font-size:12px;font-weight:normal;color:#1a7f37}
+#timeline h2{display:flex;align-items:center;flex-wrap:wrap;gap:0 8px}
+.tl-toggle{margin-left:auto;border:1px solid #d0d3d8;background:#fff;color:#57606a;padding:4px 12px;border-radius:14px;font-size:12px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s}
+.tl-toggle:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
+.tl-toggle.on{background:#eaf6ee;border-color:#2ea44f;color:#1a7f37;font-weight:bold}
+.tl.focus .tl-item:not(.now){display:none}
 .tl-load{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .tl-load span{background:#fff;border:1px solid #e3e6ea;border-radius:7px;padding:5px 11px;font-size:13px;color:#24292f;font-variant-numeric:tabular-nums}
 .tl-load span i{font-style:normal;color:#6e7781;margin-right:6px;font-size:12.5px}
@@ -288,7 +293,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="meta" style="margin-top:10px"><b>节奏</b>：每天碎片 40 分（精听 1 篇 lecture + 30 词）· 周六 2:20 整套真题、周日 40 分复盘。<br><b>12/11–12/14</b>：专业课做题 4:00 照常，六级只留 1:30；12/14 考完当晚全转期末。</div>
 </div>
 <div class="card" id="timeline">
-<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span></h2>
+<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span><button class="tl-toggle" id="tlToggle" type="button" onclick="toggleTlFocus()">只看当前</button></h2>
 <div class="tl-keys">
 <span><b>视频</b>=原始时长 · <b>实际</b>=1.5 倍速看课用时（视频÷1.5）</span>
 <span><b>练习</b>：模电=实际×40%，光学/概统/理力按 1∶1</span>
@@ -890,6 +895,20 @@ function injectToolbar(){
   }
   var el=document.getElementById('tlNow');
   if(el) el.textContent = cur ? ('现在在：第 '+idx+' 阶段') : '';
+
+  var tg=document.getElementById('tlToggle'), tl=document.querySelector('#timeline .tl');
+  function applyFocus(on){
+    if(tl) tl.classList.toggle('focus',on);
+    if(tg){ tg.textContent=on?'显示全部':'只看当前'; tg.classList.toggle('on',on); }
+  }
+  var saved=false; try{ saved=localStorage.getItem('tl_focus')==='1'; }catch(e){}
+  if(!cur && tg) tg.style.display='none';
+  else applyFocus(saved);
+  window.toggleTlFocus=function(){
+    var on=!(tl && tl.classList.contains('focus'));
+    applyFocus(on);
+    try{ localStorage.setItem('tl_focus', on?'1':'0'); }catch(e){}
+  };
 })();
 </script>
 </body></html>
