@@ -5,16 +5,26 @@
 body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20px 16px 40px;color:#1f2329;background:#f4f5f7;min-height:100vh;overflow-x:hidden}
 .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto}
 /* ===== 动态背景层 ===== */
-.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(135deg,#f7faf8 0%,#f4f6f8 48%,#f6f5fa 100%)}
-.bg i{position:absolute;display:block;border-radius:50%;filter:blur(66px);will-change:transform;opacity:.5}
-.bg i:nth-child(1){width:540px;height:540px;left:-9%;top:-14%;background:radial-gradient(circle,#bfe9cf 0%,rgba(191,233,207,0) 70%);animation:bg-drift-a 24s ease-in-out infinite}
-.bg i:nth-child(2){width:500px;height:500px;right:-7%;top:6%;background:radial-gradient(circle,#c9def8 0%,rgba(201,222,248,0) 70%);animation:bg-drift-b 30s ease-in-out infinite}
-.bg i:nth-child(3){width:600px;height:600px;left:16%;bottom:-26%;background:radial-gradient(circle,#e2daf7 0%,rgba(226,218,247,0) 70%);animation:bg-drift-c 34s ease-in-out infinite}
-.bg .bg-follow{width:460px;height:460px;left:0;top:0;margin:-230px 0 0 -230px;background:radial-gradient(circle,rgba(126,201,155,.20) 0%,rgba(126,201,155,0) 68%);filter:blur(46px);opacity:.75;transform:translate3d(var(--mx,50vw),var(--my,50vh),0)}
-@keyframes bg-drift-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,46px) scale(1.14)}}
-@keyframes bg-drift-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-78px,58px) scale(1.1)}}
-@keyframes bg-drift-c{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(56px,-68px) scale(1.12)}}
-@media(prefers-reduced-motion:reduce){.bg i:not(.bg-follow){animation:none}.bg .bg-follow{display:none}}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:
+ radial-gradient(1200px 720px at 2% 0%,#eef8f1 0%,transparent 58%),
+ radial-gradient(1100px 680px at 100% 6%,#eef3fc 0%,transparent 56%),
+ linear-gradient(160deg,#f8faf9 0%,#f4f6f8 52%,#f7f5fa 100%)}
+.bg-grid{position:absolute;inset:-90px;background-image:linear-gradient(rgba(31,45,61,.030) 1px,transparent 1px),linear-gradient(90deg,rgba(31,45,61,.030) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(ellipse 82% 64% at 50% 26%,#000 18%,transparent 86%);mask-image:radial-gradient(ellipse 82% 64% at 50% 26%,#000 18%,transparent 86%);transform:translate3d(0,var(--sy,0px),0);will-change:transform}
+.bg-grain{position:absolute;inset:0;opacity:.055;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.bg i{position:absolute;display:block;border-radius:50%;filter:blur(70px);will-change:transform;opacity:.55}
+.bg .b1{width:560px;height:560px;left:-10%;top:-16%;background:radial-gradient(circle,#bfe9cf 0%,rgba(191,233,207,0) 70%);animation:bg-drift-a 26s ease-in-out infinite}
+.bg .b2{width:520px;height:520px;right:-8%;top:5%;background:radial-gradient(circle,#c9def8 0%,rgba(201,222,248,0) 70%);animation:bg-drift-b 32s ease-in-out infinite}
+.bg .b3{width:620px;height:620px;left:14%;bottom:-28%;background:radial-gradient(circle,#e2daf7 0%,rgba(226,218,247,0) 70%);animation:bg-drift-c 36s ease-in-out infinite}
+.bg .bg-follow{left:0;top:0;margin:-50% 0 0 -50%;will-change:transform}
+.bg .f-a{width:440px;height:440px;background:radial-gradient(circle,rgba(126,201,155,.26) 0%,rgba(126,201,155,0) 68%);filter:blur(44px);opacity:.8;transform:translate3d(var(--mx,50vw),var(--my,50vh),0)}
+.bg .f-b{width:640px;height:640px;background:radial-gradient(circle,rgba(146,178,240,.18) 0%,rgba(146,178,240,0) 70%);filter:blur(58px);opacity:.7;transform:translate3d(var(--mx2,50vw),var(--my2,50vh),0)}
+.bg .bg-glow{position:absolute;inset:0;background:radial-gradient(560px 560px at var(--mx,50vw) var(--my,50vh),rgba(255,255,255,.62) 0%,rgba(255,255,255,0) 70%);opacity:.7}
+@keyframes bg-drift-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(74px,48px) scale(1.15)}}
+@keyframes bg-drift-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-82px,62px) scale(1.1)}}
+@keyframes bg-drift-c{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,-72px) scale(1.12)}}
+.top-beam{position:fixed;left:0;right:0;top:0;height:2px;z-index:30;pointer-events:none;opacity:.85;background:linear-gradient(90deg,#2ea44f 0%,#8fd6a6 22%,#a5c4f8 48%,#d3b0ec 72%,#2ea44f 100%);background-size:200% 100%;animation:beam-flow 14s linear infinite}
+@keyframes beam-flow{0%{background-position:0% 0}100%{background-position:200% 0}}
+@media(prefers-reduced-motion:reduce){.bg i{animation:none}.bg .bg-follow,.bg-glow,.top-beam{display:none}.bg-grid{transform:none}}
 h1{font-size:25px;margin:0 0 4px;letter-spacing:-.3px}
 h1::after{content:"";display:block;width:54px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2ea44f,#8fd6a6);margin-top:9px}
 .sub{color:#57606a;font-size:14px;margin-bottom:12px}
@@ -80,12 +90,13 @@ a{color:#0969da;text-decoration:none}
 .tl-day td{padding:5px 8px;border-bottom:1px solid #eceef1;font-variant-numeric:tabular-nums;color:#24292f}
 .tl-day tr:last-child td{border-bottom:none}
 .tl-day td:first-child{white-space:nowrap;color:#57606a}
-.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){white-space:nowrap;text-align:right}
+.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5),.tl-day th:nth-child(7){white-space:nowrap;text-align:right}
 .tl-day td:nth-child(3),.tl-day td:nth-child(4),.tl-day td:nth-child(5){white-space:nowrap;text-align:right}
+.tl-day td.tl-total{white-space:nowrap;text-align:right;font-weight:700;color:#1a7f37;font-variant-numeric:tabular-nums}
 .tl-day th:nth-child(6),.tl-day td:nth-child(6){white-space:nowrap}
 .tl-day b{color:#1f6feb;font-weight:600}
 .tl-day tr:nth-child(even) td{background:#fafbfc}
-@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:11%}.tl-day th:nth-child(2){width:36%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:12%}.tl-day th:nth-child(6){width:17%;white-space:normal;line-height:1.35}.tl-day b{font-weight:600}}
+@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:10%}.tl-day th:nth-child(2){width:30%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:17%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day b{font-weight:600}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -153,7 +164,14 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 .bgt-bar{height:7px;background:#e5e6eb;border-radius:4px;overflow:hidden;margin-top:4px}
 .bgt-bar>div{height:100%;background:#2ea44f}
 </style></head><body>
-<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i class="bg-follow"></i></div>
+<div class="bg" aria-hidden="true">
+<div class="bg-grid"></div>
+<i class="b1"></i><i class="b2"></i><i class="b3"></i>
+<i class="bg-follow f-a"></i><i class="bg-follow f-b"></i>
+<div class="bg-glow"></div>
+<div class="bg-grain"></div>
+</div>
+<div class="top-beam" aria-hidden="true"></div>
 <div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
 <div class="sub"><span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
@@ -314,6 +332,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <span><b>视频</b>=原始时长 · <b>实际</b>=1.5 倍速看课用时（视频÷1.5）</span>
 <span><b>练习</b>：模电=实际×40%，光学/概统/理力按 1∶1</span>
 <span><b>复习</b>：看课以外的六级 / 模电·光学·概统复习</span>
+<span><b>全天</b>=实际+练习+复习（周末≥1:30，工作日≥3:00）</span>
 <span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
 </div>
 <div class="tl">
@@ -332,7 +351,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">11/21 – 12/09 · 19 天 · <b style="color:#b42318">概统收尾 + 光学 + 模电</b></div>
 <div class="tl-body">
 <b>今明两天收官概率论，随后光学模电并行</b><span class="tl-tag r">周末减量 · 视频 0:43–5:40/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr><tr><td>11/21</td><td><b>概统</b> P40</td><td>0:43</td><td>0:28</td><td>0:28</td><td>—</td></tr><tr><td>11/22</td><td><b>概统</b> P41 · <b>光学</b> P1–2 · <b>模电</b> P33</td><td>3:09</td><td>2:06</td><td>1:46</td><td>六级 1:30</td></tr><tr><td>11/23</td><td><b>光学</b> P3–6 · <b>模电</b> P34–37</td><td>5:32</td><td>3:41</td><td>2:43</td><td>六级 1:30</td></tr><tr><td>11/24</td><td><b>光学</b> P7–9 · <b>模电</b> P38–41</td><td>4:34</td><td>3:02</td><td>2:09</td><td>六级 1:30</td></tr><tr><td>11/25</td><td><b>光学</b> P10–13 · <b>模电</b> P42、P44–47</td><td>6:26</td><td>4:17</td><td>3:02</td><td>六级 1:30</td></tr><tr><td>11/26</td><td><b>光学</b> P14–17 · <b>模电</b> P48–49</td><td>4:56</td><td>3:17</td><td>2:39</td><td>六级 1:30</td></tr><tr><td>11/27</td><td><b>光学</b> P18–21 · <b>模电</b> P50–52</td><td>5:16</td><td>3:30</td><td>2:29</td><td>六级 1:30</td></tr><tr><td>11/28</td><td><b>光学</b> P22–23 · <b>模电</b> P53–54</td><td>2:59</td><td>1:59</td><td>1:29</td><td>六级 1:30</td></tr><tr><td>11/29</td><td><b>光学</b> P24–25 · <b>模电</b> P55–57</td><td>3:21</td><td>2:14</td><td>1:31</td><td>六级 1:30</td></tr><tr><td>11/30</td><td><b>光学</b> P26–30 · <b>模电</b> P58–64</td><td>5:56</td><td>3:57</td><td>3:02</td><td>六级 1:30</td></tr><tr><td>12/01</td><td><b>光学</b> P31–33 · <b>模电</b> P65–66、P88–89</td><td>4:45</td><td>3:10</td><td>2:22</td><td>六级 1:30</td></tr><tr><td>12/02</td><td><b>光学</b> P34–37 · <b>模电</b> P90–93</td><td>5:01</td><td>3:21</td><td>2:25</td><td>六级 1:30</td></tr><tr><td>12/03</td><td><b>光学</b> P38–41 · <b>模电</b> P94–97</td><td>5:20</td><td>3:33</td><td>2:38</td><td>六级 1:30</td></tr><tr><td>12/04</td><td><b>光学</b> P42–45 · <b>模电</b> P98–102</td><td>5:21</td><td>3:34</td><td>2:37</td><td>六级 1:30</td></tr><tr><td>12/05</td><td><b>光学</b> P46–48 · <b>模电</b> P103–105</td><td>3:59</td><td>2:39</td><td>2:02</td><td>六级 1:30</td></tr><tr><td>12/06</td><td><b>光学</b> P49–50 · <b>模电</b> P106–108</td><td>3:33</td><td>2:22</td><td>1:35</td><td>六级 1:30</td></tr><tr><td>12/07</td><td><b>光学</b> P51–54 · <b>模电</b> P109–111</td><td>4:45</td><td>3:10</td><td>2:29</td><td>六级 1:30</td></tr><tr><td>12/08</td><td><b>光学</b> P55–58 · <b>模电</b> P112–116</td><td>5:30</td><td>3:40</td><td>2:46</td><td>六级 1:30</td></tr><tr><td>12/09</td><td><b>光学</b> P59–61 · <b>模电</b> P117–121</td><td>4:16</td><td>2:50</td><td>1:57</td><td>六级 1:30</td></tr></table>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>11/21</td><td><b>概统</b> P40</td><td>0:43</td><td>0:28</td><td>0:28</td><td>六级 0:40</td><td class="tl-total">1:36</td></tr><tr><td>11/22</td><td><b>概统</b> P41 · <b>光学</b> P1–2 · <b>模电</b> P33</td><td>3:09</td><td>2:06</td><td>1:46</td><td>六级 1:30</td><td class="tl-total">5:22</td></tr><tr><td>11/23</td><td><b>光学</b> P3–6 · <b>模电</b> P34–37</td><td>5:32</td><td>3:41</td><td>2:43</td><td>六级 1:30</td><td class="tl-total">7:54</td></tr><tr><td>11/24</td><td><b>光学</b> P7–9 · <b>模电</b> P38–41</td><td>4:34</td><td>3:02</td><td>2:09</td><td>六级 1:30</td><td class="tl-total">6:41</td></tr><tr><td>11/25</td><td><b>光学</b> P10–13 · <b>模电</b> P42、P44–47</td><td>6:26</td><td>4:17</td><td>3:02</td><td>六级 1:30</td><td class="tl-total">8:49</td></tr><tr><td>11/26</td><td><b>光学</b> P14–17 · <b>模电</b> P48–49</td><td>4:56</td><td>3:17</td><td>2:39</td><td>六级 1:30</td><td class="tl-total">7:26</td></tr><tr><td>11/27</td><td><b>光学</b> P18–21 · <b>模电</b> P50–52</td><td>5:16</td><td>3:30</td><td>2:29</td><td>六级 1:30</td><td class="tl-total">7:29</td></tr><tr><td>11/28</td><td><b>光学</b> P22–23 · <b>模电</b> P53–54</td><td>2:59</td><td>1:59</td><td>1:29</td><td>六级 1:30</td><td class="tl-total">4:58</td></tr><tr><td>11/29</td><td><b>光学</b> P24–25 · <b>模电</b> P55–57</td><td>3:21</td><td>2:14</td><td>1:31</td><td>六级 1:30</td><td class="tl-total">5:15</td></tr><tr><td>11/30</td><td><b>光学</b> P26–30 · <b>模电</b> P58–64</td><td>5:56</td><td>3:57</td><td>3:02</td><td>六级 1:30</td><td class="tl-total">8:29</td></tr><tr><td>12/01</td><td><b>光学</b> P31–33 · <b>模电</b> P65–66、P88–89</td><td>4:45</td><td>3:10</td><td>2:22</td><td>六级 1:30</td><td class="tl-total">7:02</td></tr><tr><td>12/02</td><td><b>光学</b> P34–37 · <b>模电</b> P90–93</td><td>5:01</td><td>3:21</td><td>2:25</td><td>六级 1:30</td><td class="tl-total">7:16</td></tr><tr><td>12/03</td><td><b>光学</b> P38–41 · <b>模电</b> P94–97</td><td>5:20</td><td>3:33</td><td>2:38</td><td>六级 1:30</td><td class="tl-total">7:41</td></tr><tr><td>12/04</td><td><b>光学</b> P42–45 · <b>模电</b> P98–102</td><td>5:21</td><td>3:34</td><td>2:37</td><td>六级 1:30</td><td class="tl-total">7:41</td></tr><tr><td>12/05</td><td><b>光学</b> P46–48 · <b>模电</b> P103–105</td><td>3:59</td><td>2:39</td><td>2:02</td><td>六级 1:30</td><td class="tl-total">6:11</td></tr><tr><td>12/06</td><td><b>光学</b> P49–50 · <b>模电</b> P106–108</td><td>3:33</td><td>2:22</td><td>1:35</td><td>六级 1:30</td><td class="tl-total">5:27</td></tr><tr><td>12/07</td><td><b>光学</b> P51–54 · <b>模电</b> P109–111</td><td>4:45</td><td>3:10</td><td>2:29</td><td>六级 1:30</td><td class="tl-total">7:09</td></tr><tr><td>12/08</td><td><b>光学</b> P55–58 · <b>模电</b> P112–116</td><td>5:30</td><td>3:40</td><td>2:46</td><td>六级 1:30</td><td class="tl-total">7:56</td></tr><tr><td>12/09</td><td><b>光学</b> P59–61 · <b>模电</b> P117–121</td><td>4:16</td><td>2:50</td><td>1:57</td><td>六级 1:30</td><td class="tl-total">6:17</td></tr></table>
 <div class="tl-note">今天(周六)只学概统 P40，明天 P41 收官 🏅。周末有家教减量，工作日承担更多；光学 12/09 收尾（P61）。</div>
 </div>
 </div>
@@ -342,7 +361,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">12/10 – 12/17 · 8 天 · <b style="color:#b42318">光学收尾 → 模电 + 速成</b></div>
 <div class="tl-body">
 <b>光学看完后，模电搭配理力速成，两门同步收尾</b><span class="tl-tag y">视频 3:52–4:58/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr><tr><td>12/10</td><td><b>模电</b> P122–127 · <b>速成</b> P1–6</td><td>4:58</td><td>3:18</td><td>1:48</td><td>六级 1:30</td></tr><tr><td>12/11</td><td><b>模电</b> P128–132 · <b>速成</b> P7–11</td><td>4:34</td><td>3:02</td><td>1:42</td><td>六级 1:30</td></tr><tr><td>12/12</td><td><b>模电</b> P133–138 · <b>速成</b> P12–18</td><td>4:15</td><td>2:50</td><td>1:34</td><td>六级 2:20</td></tr><tr><td>12/13</td><td><b>模电</b> P139–143 · <b>速成</b> P19–22</td><td>4:44</td><td>3:09</td><td>1:46</td><td>六级 1:30</td></tr><tr><td>12/14</td><td><b>模电</b> P144–149 · <b>速成</b> P23–24</td><td>4:19</td><td>2:53</td><td>1:35</td><td>六级 1:30</td></tr><tr><td>12/15</td><td><b>模电</b> P150–154 · <b>速成</b> P25–27</td><td>4:26</td><td>2:57</td><td>1:39</td><td>模/光/概 4:30</td></tr><tr><td>12/16</td><td><b>模电</b> P155–161 · <b>速成</b> P28–32</td><td>4:54</td><td>3:16</td><td>1:46</td><td>模/光/概 4:30</td></tr><tr><td>12/17</td><td><b>模电</b> P162–166 · <b>速成</b> P33–34</td><td>3:52</td><td>2:34</td><td>1:27</td><td>模/光/概 4:30</td></tr></table>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>12/10</td><td><b>模电</b> P122–127 · <b>速成</b> P1–6</td><td>4:58</td><td>3:18</td><td>1:48</td><td>六级 1:30</td><td class="tl-total">6:36</td></tr><tr><td>12/11</td><td><b>模电</b> P128–132 · <b>速成</b> P7–11</td><td>4:34</td><td>3:02</td><td>1:42</td><td>六级 1:30</td><td class="tl-total">6:14</td></tr><tr><td>12/12</td><td><b>模电</b> P133–138 · <b>速成</b> P12–18</td><td>4:15</td><td>2:50</td><td>1:34</td><td>六级 2:20</td><td class="tl-total">6:44</td></tr><tr><td>12/13</td><td><b>模电</b> P139–143 · <b>速成</b> P19–22</td><td>4:44</td><td>3:09</td><td>1:46</td><td>六级 1:30</td><td class="tl-total">6:25</td></tr><tr><td>12/14</td><td><b>模电</b> P144–149 · <b>速成</b> P23–24</td><td>4:19</td><td>2:53</td><td>1:35</td><td>六级 1:30</td><td class="tl-total">5:58</td></tr><tr><td>12/15</td><td><b>模电</b> P150–154 · <b>速成</b> P25–27</td><td>4:26</td><td>2:57</td><td>1:39</td><td>模/光/概 4:30</td><td class="tl-total">9:06</td></tr><tr><td>12/16</td><td><b>模电</b> P155–161 · <b>速成</b> P28–32</td><td>4:54</td><td>3:16</td><td>1:46</td><td>模/光/概 4:30</td><td class="tl-total">9:32</td></tr><tr><td>12/17</td><td><b>模电</b> P162–166 · <b>速成</b> P33–34</td><td>3:52</td><td>2:34</td><td>1:27</td><td>模/光/概 4:30</td><td class="tl-total">8:31</td></tr></table>
 <div class="tl-note">六级 12/14 考完，12/15 起复习列改「模/光/概」。模电 P166、速成 P34 于 12/17 同时结束。</div>
 </div>
 </div>
@@ -352,7 +371,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">12/18 – 12/31 · 14 天 · 理力精讲</div>
 <div class="tl-body">
 <b>精讲 79 集 + 全天复习模/光/概</b><span class="tl-tag y">视频 1:00–1:21/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th></tr><tr><td>12/18</td><td><b>精讲</b> P23–29</td><td>1:14</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td></tr><tr><td>12/19</td><td><b>精讲</b> P30–35</td><td>1:21</td><td>0:54</td><td>0:54</td><td>模/光/概 4:30</td></tr><tr><td>12/20</td><td><b>精讲</b> P36–40</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td></tr><tr><td>12/21</td><td><b>精讲</b> P41–44</td><td>1:01</td><td>0:41</td><td>0:41</td><td>模/光/概 4:30</td></tr><tr><td>12/22</td><td><b>精讲</b> P45–50</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td></tr><tr><td>12/23</td><td><b>精讲</b> P51–56</td><td>1:12</td><td>0:48</td><td>0:48</td><td>模/光/概 4:30</td></tr><tr><td>12/24</td><td><b>精讲</b> P57–61</td><td>1:07</td><td>0:44</td><td>0:44</td><td>模/光/概 4:30</td></tr><tr><td>12/25</td><td><b>精讲</b> P62–67</td><td>1:17</td><td>0:51</td><td>0:51</td><td>模/光/概 4:30</td></tr><tr><td>12/26</td><td><b>精讲</b> P68–72</td><td>1:11</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td></tr><tr><td>12/27</td><td><b>精讲</b> P73–78</td><td>1:10</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td></tr><tr><td>12/28</td><td><b>精讲</b> P79–84</td><td>1:20</td><td>0:53</td><td>0:53</td><td>模/光/概 4:30</td></tr><tr><td>12/29</td><td><b>精讲</b> P85–89</td><td>1:00</td><td>0:40</td><td>0:40</td><td>模/光/概 4:30</td></tr><tr><td>12/30</td><td><b>精讲</b> P90–95</td><td>1:10</td><td>0:46</td><td>0:46</td><td>模/光/概 4:30</td></tr><tr><td>12/31</td><td><b>精讲</b> P96–101</td><td>1:11</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td></tr></table>
+<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>12/18</td><td><b>精讲</b> P23–29</td><td>1:14</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td><td class="tl-total">6:08</td></tr><tr><td>12/19</td><td><b>精讲</b> P30–35</td><td>1:21</td><td>0:54</td><td>0:54</td><td>模/光/概 4:30</td><td class="tl-total">6:18</td></tr><tr><td>12/20</td><td><b>精讲</b> P36–40</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td><td class="tl-total">6:08</td></tr><tr><td>12/21</td><td><b>精讲</b> P41–44</td><td>1:01</td><td>0:41</td><td>0:41</td><td>模/光/概 4:30</td><td class="tl-total">5:52</td></tr><tr><td>12/22</td><td><b>精讲</b> P45–50</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td><td class="tl-total">6:08</td></tr><tr><td>12/23</td><td><b>精讲</b> P51–56</td><td>1:12</td><td>0:48</td><td>0:48</td><td>模/光/概 4:30</td><td class="tl-total">6:06</td></tr><tr><td>12/24</td><td><b>精讲</b> P57–61</td><td>1:07</td><td>0:44</td><td>0:44</td><td>模/光/概 4:30</td><td class="tl-total">5:58</td></tr><tr><td>12/25</td><td><b>精讲</b> P62–67</td><td>1:17</td><td>0:51</td><td>0:51</td><td>模/光/概 4:30</td><td class="tl-total">6:12</td></tr><tr><td>12/26</td><td><b>精讲</b> P68–72</td><td>1:11</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td><td class="tl-total">6:04</td></tr><tr><td>12/27</td><td><b>精讲</b> P73–78</td><td>1:10</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td><td class="tl-total">6:04</td></tr><tr><td>12/28</td><td><b>精讲</b> P79–84</td><td>1:20</td><td>0:53</td><td>0:53</td><td>模/光/概 4:30</td><td class="tl-total">6:16</td></tr><tr><td>12/29</td><td><b>精讲</b> P85–89</td><td>1:00</td><td>0:40</td><td>0:40</td><td>模/光/概 4:30</td><td class="tl-total">5:50</td></tr><tr><td>12/30</td><td><b>精讲</b> P90–95</td><td>1:10</td><td>0:46</td><td>0:46</td><td>模/光/概 4:30</td><td class="tl-total">6:02</td></tr><tr><td>12/31</td><td><b>精讲</b> P96–101</td><td>1:11</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td><td class="tl-total">6:04</td></tr></table>
 </div>
 </div>
 
@@ -849,19 +868,32 @@ function injectToolbar(){
 })();
 </script>
 <script>
-/* 背景光晕跟随鼠标：用 rAF 平滑插值，避免直接跟随的抖动 */
+/* 背景交互：双色光晕差速跟随 + 网格滚动视差 */
 (function(){
   var bg=document.querySelector('.bg');
   if(!bg || !bg.querySelector('.bg-follow')) return;
-  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if(!window.matchMedia('(pointer:fine)').matches) return; /* 触屏设备不启用 */
-  var tx=window.innerWidth/2, ty=window.innerHeight*0.35, cx=tx, cy=ty;
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine=window.matchMedia && window.matchMedia('(pointer:fine)').matches;
+  if(reduce || !fine){ bg.querySelectorAll('.bg-follow,.bg-glow').forEach(function(el){el.style.display='none';}); }
+  /* 网格视差（所有设备） */
+  if(!reduce){
+    var ticking=false;
+    window.addEventListener('scroll',function(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){ bg.style.setProperty('--sy',(window.scrollY*0.035).toFixed(1)+'px'); ticking=false; });
+    },{passive:true});
+  }
+  if(reduce || !fine) return;
+  var tx=window.innerWidth/2, ty=window.innerHeight*0.35, cx=tx, cy=ty, cx2=tx, cy2=ty;
   window.addEventListener('pointermove',function(e){tx=e.clientX;ty=e.clientY;},{passive:true});
-  window.addEventListener('pointerleave',function(){tx=window.innerWidth/2;ty=window.innerHeight*0.35;});
+  document.addEventListener('mouseleave',function(){tx=window.innerWidth/2;ty=window.innerHeight*0.35;});
   function step(){
-    cx+=(tx-cx)*0.055; cy+=(ty-cy)*0.055;
+    cx+=(tx-cx)*0.075; cy+=(ty-cy)*0.075;
+    cx2+=(tx-cx2)*0.028; cy2+=(ty-cy2)*0.028;
     bg.style.setProperty('--mx',cx.toFixed(1)+'px');
     bg.style.setProperty('--my',cy.toFixed(1)+'px');
+    bg.style.setProperty('--mx2',cx2.toFixed(1)+'px');
+    bg.style.setProperty('--my2',cy2.toFixed(1)+'px');
     requestAnimationFrame(step);
   }
   step();
