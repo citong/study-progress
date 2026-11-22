@@ -106,17 +106,34 @@ a{color:#0969da;text-decoration:none}
 .tl-day th:nth-child(6),.tl-day td:nth-child(6){white-space:nowrap}
 .tl-day b{color:#1f6feb;font-weight:600}
 .tl-day tr:nth-child(even) td{background:#fafbfc}
-/* 每日任务：点整行标记完成，完成态与课程进度双向联动 */
+/* 每日任务：点日期展开逐节清单，课程进度双向联动 */
 .tl-day tr.tl-task{cursor:pointer}
 .tl-day tr.tl-task:hover td{background:#eaf6ee}
-.tl-day tr.tl-task::before{content:''}
-.tl-day tr.tl-task td:first-child::before{content:'⬜ ';color:#a8b0ba;font-weight:normal}
+.tl-day tr.tl-task td:first-child::before{content:'▸ ';color:#8b949e;font-weight:normal}
+.tl-day tr.tl-task.open td:first-child::before{content:'▾ '}
 .tl-day tr.tl-task.done td{background:#c6efce}
 .tl-day tr.tl-task.done:hover td{background:#b6e5c0}
 .tl-day tr.tl-task.done td:first-child,.tl-day tr.tl-task.done td.tl-total{color:#006100;font-weight:700}
 .tl-day tr.tl-task.done td:first-child::before{content:'✅ ';color:#006100}
 .tl-day tr.tl-task.part td:first-child::before{content:'◐ ';color:#b8860b}
-@media(max-width:640px){.tl-day tr.tl-task td:first-child::before{display:none}}{.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:10%}.tl-day th:nth-child(2){width:30%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:17%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day b{font-weight:600}}
+.tl-day tr.tl-task.today td{background:#fffbe6}
+.tl-day tr.tl-task.today.open td{background:#f3faf5}
+.tl-day .d-short{display:none}
+.tl-day .d-full{color:#57606a;font-variant-numeric:tabular-nums}
+.tl-detail-row>td{padding:0!important;background:#f7fbf8!important;border-bottom:1px solid #d8e8dd!important}
+.tl-detail{padding:9px 12px 11px;background:linear-gradient(180deg,#f7fbf8,#f2f8f4)}
+.tl-detail-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:12px;color:#57606a}
+.tl-detail-count{white-space:nowrap;font-weight:600;color:#1a7f37;font-variant-numeric:tabular-nums}
+.tl-prog{flex:1;height:6px;background:#e2e6e9;border-radius:3px;overflow:hidden}
+.tl-prog>div{height:100%;background:linear-gradient(90deg,#2ea44f,#4fc06e);transition:width .2s}
+.tl-detail-all{border:1px solid #d0d3d8;background:#fff;color:#57606a;padding:2px 9px;border-radius:12px;font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.tl-detail-all:hover{border-color:#2ea44f;color:#1a7f37}
+.tl-chip{display:inline-block;border:1px solid #d7dce1;background:#fff;border-radius:14px;padding:3px 10px;margin:3px 5px 2px 0;font-size:12px;cursor:pointer;user-select:none;color:#24292f}
+.tl-chip:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
+.tl-chip.done{background:#c6efce;border-color:#86c086;color:#006100;font-weight:600}
+.tl-chip.done::before{content:'✅ '}
+.tl-chip.skip{background:#fff8e1;border-color:#d4a72c;color:#a16207}
+@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:14%}.tl-day th:nth-child(2){width:28%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:16%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:12%}.tl-day b{font-weight:600}.tl-day tr.tl-task td:first-child::before{display:none}.tl-day .d-short{display:inline}.tl-day .d-full{display:none}.tl-chip{font-size:11px;padding:2px 7px}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -355,7 +372,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <span><b>复习</b>：看课以外的六级 / 模电·光学·概统复习</span>
 <span><b>全天</b>=实际+练习+复习（周末≥1:30，工作日≥3:00）</span>
 <span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
-<span>☝️ <b>点任意一天</b>=把当天课时全部标完成 · 再点撤销 · 与课程页进度双向联动</span>
+<span>☝️ <b>点日期展开</b>当天课时，逐节点「学完」并实时看进度 · 与课程页双向联动</span>
 </div>
 <div class="tl">
 
@@ -374,7 +391,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-body">
 <b>今明两天收官概率论，随后光学模电并行</b><span class="tl-tag r">周末减量 · 视频 0:43–5:40/天</span>
 <table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>11/21</td><td><b>概统</b> P40</td><td>0:43</td><td>0:28</td><td>0:28</td><td>六级 0:40</td><td class="tl-total">1:36</td></tr><tr><td>11/22</td><td><b>概统</b> P41 · <b>光学</b> P1–2 · <b>模电</b> P33</td><td>3:09</td><td>2:06</td><td>1:46</td><td>六级 1:30</td><td class="tl-total">5:22</td></tr><tr><td>11/23</td><td><b>光学</b> P3–6 · <b>模电</b> P34–37</td><td>5:32</td><td>3:41</td><td>2:43</td><td>六级 1:30</td><td class="tl-total">7:54</td></tr><tr><td>11/24</td><td><b>光学</b> P7–9 · <b>模电</b> P38–41</td><td>4:34</td><td>3:02</td><td>2:09</td><td>六级 1:30</td><td class="tl-total">6:41</td></tr><tr><td>11/25</td><td><b>光学</b> P10–13 · <b>模电</b> P42、P44–47</td><td>6:26</td><td>4:17</td><td>3:02</td><td>六级 1:30</td><td class="tl-total">8:49</td></tr><tr><td>11/26</td><td><b>光学</b> P14–17 · <b>模电</b> P48–49</td><td>4:56</td><td>3:17</td><td>2:39</td><td>六级 1:30</td><td class="tl-total">7:26</td></tr><tr><td>11/27</td><td><b>光学</b> P18–21 · <b>模电</b> P50–52</td><td>5:16</td><td>3:30</td><td>2:29</td><td>六级 1:30</td><td class="tl-total">7:29</td></tr><tr><td>11/28</td><td><b>光学</b> P22–23 · <b>模电</b> P53–54</td><td>2:59</td><td>1:59</td><td>1:29</td><td>六级 1:30</td><td class="tl-total">4:58</td></tr><tr><td>11/29</td><td><b>光学</b> P24–25 · <b>模电</b> P55–57</td><td>3:21</td><td>2:14</td><td>1:31</td><td>六级 1:30</td><td class="tl-total">5:15</td></tr><tr><td>11/30</td><td><b>光学</b> P26–30 · <b>模电</b> P58–64</td><td>5:56</td><td>3:57</td><td>3:02</td><td>六级 1:30</td><td class="tl-total">8:29</td></tr><tr><td>12/01</td><td><b>光学</b> P31–33 · <b>模电</b> P65–66、P88–89</td><td>4:45</td><td>3:10</td><td>2:22</td><td>六级 1:30</td><td class="tl-total">7:02</td></tr><tr><td>12/02</td><td><b>光学</b> P34–37 · <b>模电</b> P90–93</td><td>5:01</td><td>3:21</td><td>2:25</td><td>六级 1:30</td><td class="tl-total">7:16</td></tr><tr><td>12/03</td><td><b>光学</b> P38–41 · <b>模电</b> P94–97</td><td>5:20</td><td>3:33</td><td>2:38</td><td>六级 1:30</td><td class="tl-total">7:41</td></tr><tr><td>12/04</td><td><b>光学</b> P42–45 · <b>模电</b> P98–102</td><td>5:21</td><td>3:34</td><td>2:37</td><td>六级 1:30</td><td class="tl-total">7:41</td></tr><tr><td>12/05</td><td><b>光学</b> P46–48 · <b>模电</b> P103–105</td><td>3:59</td><td>2:39</td><td>2:02</td><td>六级 1:30</td><td class="tl-total">6:11</td></tr><tr><td>12/06</td><td><b>光学</b> P49–50 · <b>模电</b> P106–108</td><td>3:33</td><td>2:22</td><td>1:35</td><td>六级 1:30</td><td class="tl-total">5:27</td></tr><tr><td>12/07</td><td><b>光学</b> P51–54 · <b>模电</b> P109–111</td><td>4:45</td><td>3:10</td><td>2:29</td><td>六级 1:30</td><td class="tl-total">7:09</td></tr><tr><td>12/08</td><td><b>光学</b> P55–58 · <b>模电</b> P112–116</td><td>5:30</td><td>3:40</td><td>2:46</td><td>六级 1:30</td><td class="tl-total">7:56</td></tr><tr><td>12/09</td><td><b>光学</b> P59–61 · <b>模电</b> P117–121</td><td>4:16</td><td>2:50</td><td>1:57</td><td>六级 1:30</td><td class="tl-total">6:17</td></tr></table>
-<div class="tl-note">今天(周六)只学概统 P40，明天 P41 收官 🏅。周末有家教减量，工作日承担更多；光学 12/09 收尾（P61）。</div>
+<div class="tl-note">11/21 学概统 P40、11/22 P41 收官 🏅。周末有家教减量，工作日承担更多；光学 12/09 收尾（P61）。点日期可展开逐节打卡。</div>
 </div>
 </div>
 
@@ -640,53 +657,95 @@ function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(t
 /* ===== 每日任务 ↔ 课程进度：点一天批量勾/取消当天课时；课程页勾课反向点亮日期 ===== */
 var DAYMAP={'概统':['gaishu','P'],'光学':['optics',''],'模电':['modian',''],'速成':['llsc','m'],'精讲':['lilun','']};
 var dayRows=[];
-function parseDayVids(html){
+/* 解析看课列 → [{v:课时键, label:显示名}]，例如「光学 P3–5」→ optics:3/4/5 */
+function parseDayItems(html){
   var out=[];
   html.split('·').forEach(function(blk){
     var m=/<b>([^<]+)<\/b>\s*([^<]+)/.exec(blk);
     if(!m) return;
-    var mp=DAYMAP[m[1].trim()]; if(!mp) return;
+    var name=m[1].trim(), mp=DAYMAP[name]; if(!mp) return;
     m[2].replace(/[Pp]/g,'').split(/[、,，]/).forEach(function(part){
       part=part.trim();
-      var r=/^(\d+)\s*[–—\-~]\s*(\d+)$/.exec(part);
-      if(r){ for(var i=+r[1];i<=+r[2];i++) out.push(mp[0]+':'+mp[1]+i); }
-      else if(/^\d+$/.test(part)) out.push(mp[0]+':'+mp[1]+part);
+      var r=/^(\d+)\s*[–—\-~]\s*(\d+)$/.exec(part), list=[];
+      if(r){ for(var i=+r[1];i<=+r[2];i++) list.push(i); }
+      else if(/^\d+$/.test(part)) list.push(+part);
+      list.forEach(function(n){ out.push({v:mp[0]+':'+mp[1]+n, label:name+' '+n}); });
     });
   });
   return out;
 }
-function dayStat(vids){
+function dayStat(items){
   var done=0;
-  vids.forEach(function(v){ if(state[v]===true) done++; });
-  return {done:done,total:vids.length};
+  items.forEach(function(x){ if(state[x.v]===true) done++; });
+  return {done:done,total:items.length};
 }
+/* 刷新日期行状态 + 已展开面板的进度条与课时状态 */
 function renderDays(){
   dayRows.forEach(function(tr){
-    var st=dayStat(tr._vids);
+    var st=dayStat(tr._items);
     var all=st.total>0 && st.done===st.total;
     tr.classList.toggle('done',all);
     tr.classList.toggle('part',!all && st.done>0);
-    tr.title=all?('✅ 当天 '+st.total+' 个课时已看完 · 点击撤销'):(st.done>0?('◐ 已完成 '+st.done+'/'+st.total+' · 点击补完剩余'):('⬜ 点击把当天 '+st.total+' 个课时全部标完成'));
+    tr.title=all?'✅ 当天课时全部学完':(st.done>0?('◐ '+st.done+'/'+st.total+' 节已完成'):'点击展开逐节打卡');
+    if(!tr._detail) return;
+    var cnt=tr._detail.querySelector('.tl-detail-count');
+    if(cnt) cnt.textContent='进度 '+st.done+'/'+st.total+' 节 · '+Math.round(st.total?st.done/st.total*100:0)+'%';
+    var bar=tr._detail.querySelector('.tl-prog>div');
+    if(bar) bar.style.width=(st.total?st.done/st.total*100:0).toFixed(1)+'%';
+    tr._detail.querySelectorAll('.tl-chip').forEach(function(b){
+      b.classList.toggle('done',state[b.dataset.v]===true);
+      b.classList.toggle('skip',state[b.dataset.v]==='skip');
+    });
+    var btn=tr._detail.querySelector('.tl-detail-all');
+    if(btn) btn.textContent=all?'↩ 撤销当天':'✓ 全部学完';
   });
 }
 function toggleDay(tr){
-  var vids=tr._vids, st=dayStat(vids), all=st.total>0 && st.done===st.total;
-  vids.forEach(function(v){
-    if(all){ if(state[v]===true) delete state[v]; }
-    else { state[v]=true; }
+  var open=!tr._open; tr._open=open;
+  tr.classList.toggle('open',open);
+  if(tr._detail) tr._detail.style.display=open?'':'none';
+}
+function markAll(tr){
+  var items=tr._items, st=dayStat(items), all=st.total>0&&st.done===st.total;
+  items.forEach(function(x){
+    if(all){ if(state[x.v]===true) delete state[x.v]; }
+    else { state[x.v]=true; }
   });
-  rows.forEach(function(r){ if(vids.indexOf(r.dataset.vid)>=0) applyRow(r, state[r.dataset.vid]||false); });
+  items.forEach(function(x){ rows.forEach(function(r){ if(r.dataset.vid===x.v) applyRow(r,state[x.v]||false); }); });
   recompute(); renderDays(); sv(state); dirty=true; schedulePush();
 }
 function initDays(){
+  var d=new Date(), mm=d.getMonth()+1, dd=d.getDate();
   document.querySelectorAll('.tl-day').forEach(function(tb){
-    Array.prototype.forEach.call(tb.rows,function(tr){
+    var trs=Array.prototype.slice.call(tb.rows);
+    trs.forEach(function(tr){
       if(tr.querySelector('th') || tr.children.length<2) return;
       var label=(tr.children[0].textContent||'').trim();
       if(!/^\d\d\/\d\d$/.test(label)) return;
-      var vids=parseDayVids(tr.children[1].innerHTML);
-      if(!vids.length) return;
-      tr._vids=vids; tr._date=label; tr.classList.add('tl-task');
+      var items=parseDayItems(tr.children[1].innerHTML);
+      if(!items.length) return;
+      var p=label.split('/'), mn=+p[0], dn=+p[1];
+      /* 日期格式：带年份的完整日期 + 星期，窄屏回退短格式 */
+      var dt=new Date(d.getFullYear(),mn-1,dn);
+      var wk=['日','一','二','三','四','五','六'][dt.getDay()];
+      tr.children[0].innerHTML='<span class="d-full">'+d.getFullYear()+'-'+mn+'-'+dn+' 周'+wk+'</span><span class="d-short">'+label+'</span>';
+      tr._items=items; tr._date=label; tr._open=false; tr.classList.add('tl-task');
+      if(mm===mn && dd===dn) tr.classList.add('today');
+      /* 展开面板行 */
+      var dr=document.createElement('tr'); dr.className='tl-detail-row'; dr.style.display='none';
+      var cell=document.createElement('td'); cell.colSpan=tr.children.length;
+      cell.innerHTML='<div class="tl-detail"><div class="tl-detail-head"><span class="tl-detail-count"></span><span class="tl-prog"><div></div></span><button type="button" class="tl-detail-all">✓ 全部学完</button></div><div class="tl-chips"></div></div>';
+      dr.appendChild(cell);
+      tr.parentNode.insertBefore(dr,tr.nextSibling);
+      var box=cell.querySelector('.tl-chips');
+      items.forEach(function(x){
+        var b=document.createElement('span'); b.className='tl-chip'; b.dataset.v=x.v;
+        b.textContent=x.label; b.title='点一下标记学完 / 再点取消';
+        b.addEventListener('click',function(e){ e.stopPropagation(); setStat(x.v, state[x.v]===true?false:true); });
+        box.appendChild(b);
+      });
+      cell.querySelector('.tl-detail-all').addEventListener('click',function(e){ e.stopPropagation(); markAll(tr); });
+      tr._detail=dr;
       dayRows.push(tr);
       tr.addEventListener('click',function(){ toggleDay(tr); });
     });
