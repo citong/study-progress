@@ -33,13 +33,15 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20p
 .bg .g2{width:620px;height:620px;background:radial-gradient(circle,rgba(110,150,205,.13) 0%,rgba(110,150,205,0) 70%);filter:blur(58px);transform:translate3d(var(--mx2,50vw),var(--my2,50vh),0)}
 .top-beam{position:fixed;left:0;right:0;top:0;height:2px;z-index:30;pointer-events:none;opacity:.9;background:linear-gradient(90deg,#2ea44f 0%,#7fd6a4 20%,#8ec5f5 44%,#e6cd94 70%,#2ea44f 100%);background-size:200% 100%;animation:beam-flow 12s linear infinite}
 @keyframes beam-flow{0%{background-position:0% 0}100%{background-position:200% 0}}
-.scroll-progress{position:fixed;left:0;top:0;height:2px;width:0;z-index:31;pointer-events:none;background:linear-gradient(90deg,#1a7f37,#57c97a,#9be0b3);box-shadow:0 0 8px rgba(46,164,79,.45);transition:width .12s linear}
-@media(prefers-reduced-motion:reduce){.aurora i,.bg-scan,.bg-grid,.top-beam{animation:none}.bg i.gl{display:none}.scroll-progress{display:none}}
+/* 滚动进度条下移 2px，避免与顶部流光完全重叠 */
+.scroll-progress{position:fixed;left:0;top:2px;height:2px;width:0;z-index:31;pointer-events:none;background:linear-gradient(90deg,#1a7f37,#57c97a,#9be0b3);box-shadow:0 0 8px rgba(46,164,79,.45);transition:width .12s linear;opacity:.85}
+@media(prefers-reduced-motion:reduce){.aurora i,.bg-scan,.bg-grid,.top-beam{animation:none}.bg i.gl{display:none}.scroll-progress{display:none}*{transition-duration:0s!important;animation-duration:0s!important;scroll-behavior:auto!important}}
 h1{font-size:25px;margin:0 0 4px;letter-spacing:-.3px}
 h1::after{content:"";display:block;width:54px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2ea44f,#8fd6a6);margin-top:9px}
 .sub{color:#57606a;font-size:14px;margin-bottom:12px}
-.nav{position:sticky;top:0;background:rgba(248,250,249,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:10px 0;z-index:10;display:flex;gap:8px;flex-wrap:wrap}
-.tab-btn{border:1px solid #d0d3d8;background:#fff;color:#1f2329;padding:7px 16px;border-radius:18px;font-size:14px;cursor:pointer;font-family:inherit}
+.nav{position:sticky;top:0;background:rgba(248,250,249,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:10px 0;z-index:10;display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.tab-btn{border:1px solid #d0d3d8;background:#fff;color:#1f2329;padding:7px 16px;border-radius:18px;font-size:14px;cursor:pointer;font-family:inherit;white-space:nowrap;flex:none;-webkit-tap-highlight-color:transparent}
 .tab-btn:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
 .tab-btn.active{background:#2ea44f;border-color:#2ea44f;color:#fff;font-weight:bold;box-shadow:0 3px 10px rgba(46,164,79,.28)}
 .card{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:20px 24px;margin:14px 0;box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px rgba(16,24,40,.05)}
@@ -57,7 +59,7 @@ tr.skip i.sk{border-color:#d4a72c;color:#a16207;background:#fff3c4}
 span.out{display:inline-block;margin-left:8px;padding:0 6px;border-radius:3px;background:#f0f1f3;color:#8b949e;font-size:11px;line-height:16px;letter-spacing:.02em}
 tr.done span.out{background:#e8efe9;color:#7d8a7f}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
-th{background:#eef0f3;text-align:left;padding:8px 10px;border-bottom:2px solid #d0d3d8;position:sticky;top:52px;font-size:13px}
+th{background:#eef0f3;text-align:left;padding:8px 10px;border-bottom:2px solid #d0d3d8;position:sticky;top:var(--navh,52px);font-size:13px}
 td{padding:7px 10px;border-bottom:1px solid #eceef1}
 tr.done td{background:#c6efce}
 tr.done td.donecell{color:#006100;font-weight:bold}
@@ -70,6 +72,16 @@ td.status{text-align:center}
 .ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:6px}
 .ov-card{position:relative;background:#fff;border:1px solid #e5e6eb;border-radius:12px;padding:14px 16px;cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
 .ov-card::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:linear-gradient(90deg,#2ea44f,#8fd6a6)}
+/* 学科主题色：每张卡片顶部色条区分科目 */
+.ov-card[data-key="lilun"]::before{background:linear-gradient(90deg,#57606a,#9aa4b2)}
+.ov-card[data-key="llsc"]::before{background:linear-gradient(90deg,#8250df,#b083f0)}
+.ov-card[data-key="modian"]::before{background:linear-gradient(90deg,#0969da,#6cb6f5)}
+.ov-card[data-key="gaoshu"]::before{background:linear-gradient(90deg,#bf8700,#e3b341)}
+.ov-card[data-key="gaishu"]::before{background:linear-gradient(90deg,#cf222e,#f07178)}
+.ov-card[data-key="cmc"]::before{background:linear-gradient(90deg,#bc4c00,#f0883e)}
+.ov-card[data-key="optics"]::before{background:linear-gradient(90deg,#1a7f37,#56d364)}
+.ov-card[data-key="python"]::before{background:linear-gradient(90deg,#0550ae,#54aeff)}
+.ov-card.complete::before{background:linear-gradient(90deg,#e0a912,#f6c445)!important}
 .ov-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(16,24,40,.12);border-color:#2ea44f}
 .ov-head{display:flex;justify-content:space-between;font-size:15px;margin-bottom:2px}
 .ov-pct{color:#2ea44f;font-weight:bold}
@@ -106,10 +118,12 @@ a{color:#0969da;text-decoration:none}
 .tl-day td.tl-total{white-space:nowrap;text-align:right;font-weight:700;color:#1a7f37;font-variant-numeric:tabular-nums}
 .tl-day th:nth-child(6),.tl-day td:nth-child(6){white-space:nowrap}
 .tl-day b{color:#1f6feb;font-weight:600}
-.tl-day tr:nth-child(even) td{background:#fafbfc}
+/* 斑马纹不与完成/过去态叠加，避免颜色打架 */
+.tl-day tr:nth-child(even):not(.done):not(.past):not(.today) td{background:#fafbfc}
 /* 每日任务：点日期展开逐节清单，课程进度双向联动 */
-.tl-day tr.tl-task{cursor:pointer}
+.tl-day tr.tl-task{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .tl-day tr.tl-task:hover td{background:#eaf6ee}
+.tl-day tr.tl-task:active td{background:#d9f0e1}
 .tl-day tr.tl-task td:first-child::before{content:'▸ ';color:#8b949e;font-weight:normal}
 .tl-day tr.tl-task.open td:first-child::before{content:'▾ '}
 .tl-day tr.tl-task.done td{background:#c6efce}
@@ -121,6 +135,7 @@ a{color:#0969da;text-decoration:none}
 .tl-day tr.tl-task.today.open td{background:#f3faf5}
 .tl-day .d-short{display:none}
 .tl-day .d-full{color:#57606a;font-variant-numeric:tabular-nums}
+.tl-day .past-mark{display:inline-block;margin-left:5px;padding:0 4px;border-radius:5px;background:#eef0f2;color:#9aa1a9;font-size:10px;font-weight:normal;letter-spacing:0}
 .tl-detail-row>td{padding:0!important;background:#f7fbf8!important;border-bottom:1px solid #d8e8dd!important}
 .tl-detail{padding:9px 12px 11px;background:linear-gradient(180deg,#f7fbf8,#f2f8f4)}
 .tl-detail-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:12px;color:#57606a}
@@ -133,6 +148,10 @@ a{color:#0969da;text-decoration:none}
 .tl-chip:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
 .tl-chip.done{background:#c6efce;border-color:#86c086;color:#006100;font-weight:600}
 .tl-chip.done::before{content:'✅ '}
+/* 任务类型图标：课时/习题/复习一眼区分 */
+.tl-chip[data-v^="task:"][data-v$=":ex"]::before{content:'✏️ '}
+.tl-chip[data-v^="task:"][data-v$=":rv"]::before{content:'🔁 '}
+.tl-chip.done[data-v^="task:"]::before{content:'✅ '}
 .tl-chip.skip{background:#fff8e1;border-color:#d4a72c;color:#a16207}
 .tl-chip[data-v^="task:"]{border-style:dashed}
 /* 已过去的日期行：整体淡化，若已完成保留浅绿 */
@@ -142,7 +161,7 @@ a{color:#0969da;text-decoration:none}
 .tl-day tr.tl-task.past td:first-child::before{color:#c6cbd1}
 .tl-day tr.tl-task.past.done td{background:#f1f4f6}
 .tl-day tr.tl-task.past.done td:first-child,.tl-day tr.tl-task.past.done .tl-total{color:#6a737d}
-@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:14%}.tl-day th:nth-child(2){width:28%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:16%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:12%}.tl-day b{font-weight:600}.tl-day tr.tl-task td:first-child::before{display:none}.tl-day .d-short{display:inline}.tl-day .d-full{display:none}.tl-chip{font-size:11px;padding:2px 7px}}
+@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:14%}.tl-day th:nth-child(2){width:28%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:16%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day td.tl-total{white-space:nowrap;overflow-wrap:normal;font-size:9.5px;letter-spacing:-.4px}.tl-day b{font-weight:600}.tl-day tr.tl-task td:first-child::before{display:none}.tl-day .d-short{display:inline}.tl-day .d-full{display:none}.tl-chip{font-size:11px;padding:2px 7px}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -240,49 +259,49 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="legend"><span class="sw"></span>绿=已看 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄=暂不学 · 无色=未看 · <b>点行切换「已看 / 未看」，点 ⏸ 标「暂不学」</b></div>
 <div class="ov-grid">
 <div class="ov-card" data-key="lilun" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-lilun')">
-<div class="ov-head"><b>⚙️ 理论力学</b><span class="ov-pct">21.9%</span></div>
+<div class="ov-head"><b>⚙️ 理论力学</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">理论力学（物理类）</div>
 <div class="bar"><div data-bar style="width:21.9%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">22/101 集 · 已看 4:42:27 / 总 21:30:06</div>
 <div class="ov-dl" data-ovdl="lilun">⏳ 01/01 前 · 还剩 61 天 · 待学 16:47:39 · 每天 16:32</div>
 </div><div class="ov-card" data-key="llsc" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-llsc')">
-<div class="ov-head"><b>⚡ 理力速成</b><span class="ov-pct">0.0%</span></div>
+<div class="ov-head"><b>⚡ 理力速成</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">理论力学速成课（凌云师兄 · 全考点 34 集）</div>
 <div class="bar"><div data-bar style="width:0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/34 集 · 已看 0:00 / 需学 9:17:53</div>
 <div class="ov-dl" data-ovdl="llsc">⏳ 01/01 前 · 待学 9:17:53</div>
 </div><div class="ov-card" data-key="modian" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-modian')">
-<div class="ov-head"><b>🔌 模电</b><span class="ov-pct">3.4%</span></div>
+<div class="ov-head"><b>🔌 模电</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">模拟电子技术基础</div>
 <div class="bar"><div data-bar style="width:3.4%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">8/166 集 · 已看 3:10:21 / 总 92:34:00</div>
 <div class="ov-dl" data-ovdl="modian">⏳ 01/01 前 · 还剩 61 天 · 待学 89:23:39 · 每天 1:27:56</div>
 </div><div class="ov-card" data-key="gaoshu" data-dl="" data-mode="dur" onclick="showTab('tab-gaoshu')">
-<div class="ov-head"><b>📐 高数·李天意</b><span class="ov-pct">26.7%</span></div>
+<div class="ov-head"><b>📐 高数·李天意</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">考研数学精讲课（高等数学部分）</div>
 <div class="bar"><div data-bar style="width:26.7%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">11/34 集 · 已看 10:49:31 / 总 40:33:30</div>
 <div class="ov-dl" data-ovdl="gaoshu">⏳ 11/14 前 · 还剩 13 天 · 待学 29:43:59 · 每天 2:17:14</div>
 </div><div class="ov-card" data-key="gaishu" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-gaishu')">
-<div class="ov-head"><b>🎲 概统·李天意</b><span class="ov-pct">0.0%</span></div>
+<div class="ov-head"><b>🎲 概统·李天意</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">概率论与数理统计（李天意）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/10 集 · 已看 0:00 / 总 12:37:33</div>
 <div class="ov-dl" data-ovdl="gaishu">⏳ 11/14 前 · 还剩 13 天 · 待学 12:37:33 · 每天 58:17</div>
 </div><div class="ov-card" data-key="cmc" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-cmc')">
-<div class="ov-head"><b>🏆 数竞速成</b><span class="ov-pct">0.0%</span></div>
+<div class="ov-head"><b>🏆 数竞速成</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">大学生数学竞赛（非数学A类）速成课</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/10 集 · 已看 0:00 / 总 7:30:07</div>
 <div class="ov-dl" data-ovdl="cmc">⏳ 11/14 前 · 还剩 13 天 · 待学 7:30:07 · 每天 34:38</div>
 </div><div class="ov-card" data-key="optics" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-optics')">
-<div class="ov-head"><b>📖 光学·钟锡华</b><span class="ov-pct">0.0%</span></div>
+<div class="ov-head"><b>📖 光学·钟锡华</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">光学（钟锡华 · 北京大学）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">0/61 集 · 已看 0:00 / 总 47:32:30</div>
 <div class="ov-dl" data-ovdl="optics">⏳ 01/01 前 · 还剩 61 天 · 待学 47:32:30 · 每天 46:46</div>
 </div><div class="ov-card" data-key="python" data-dl="" data-mode="dur" onclick="showTab('tab-python')">
-<div class="ov-head"><b>🐍 蓝桥杯Python</b><span class="ov-pct">7.3%</span></div>
+<div class="ov-head"><b>🐍 蓝桥杯Python</b><span class="ov-pct">—</span></div>
 <div class="ov-meta">蓝桥杯Python冲刺课（TsingPig）</div>
 <div class="bar"><div data-bar style="width:7.3%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
 <div class="ov-stats">1/13 集 · 已看 24:05 / 总 5:30:38</div>
@@ -293,11 +312,11 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 
 <div class="card bgt">
 <h2>⏱ 时间预算<span class="dd-badge" style="color:#8b949e">已扣家教 9h/周</span></h2>
-<div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 学期五门 + 六级总投入 <b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
+<div class="bgt-line">距元旦还有 <b id="bgt-days">–</b> 天 · 五门课程总投入 <b id="bgt-need">–</b> · 平均每周要 <b id="bgt-perw">–</b></div>
 <div class="bgt-ctrl">每周能投入 <input id="bgt-avail" type="number" min="1" max="60" step="1" value="38"> 小时（已扣上课、作业、家教；模电做题按 <b>40%</b>，其余 1∶1）</div>
 <div id="bgt-verdict" class="bgt-verdict"></div>
 <table class="bgt-tab"><thead><tr><th>课程</th><th class="n">视频</th><th class="n">投入 h/周</th><th style="width:34%">占可用时间</th></tr></thead><tbody id="bgt-tab-body"></tbody></table>
-<div class="meta" style="margin:8px 0 0">「视频」为原始时长；六级无视频，按安排记 <b>53 h</b>。</div>
+<div class="meta" style="margin:8px 0 0">「视频」为原始时长；投入 = 1.5 倍速看课 + 对应做题。</div>
 </div>
 </section>
 <section class="tab-page" id="tab-lilun" data-key="lilun" style="display:none">
@@ -371,28 +390,12 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <table><tr><th>P/节</th><th>标题</th><th>时长</th><th>状态</th></tr>
 <tr class="sec"><td colspan="4">📁 课时1 基础语法和竞赛快速入门 · <a href="https://www.bilibili.com/video/BV1Zs9VYrEgg/" target="_blank">BV1Zs9VYrEgg</a> · 已看 1/1 集</td></tr><tr class="done clk" data-vid="python:BV1Zs9VYrEgg:1" data-dur="1445"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时1：基础语法和竞赛快速入门</td><td class="dur">24:05</td><td class="donecell status">✅ 已看完<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时2 算法入门 · <a href="https://www.bilibili.com/video/BV12VXRYTEQh/" target="_blank">BV12VXRYTEQh</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV12VXRYTEQh:1" data-dur="1363"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时2：算法入门</td><td class="dur">22:43</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时3 贪心&排序 · <a href="https://www.bilibili.com/video/BV18c9iY4Eyu/" target="_blank">BV18c9iY4Eyu</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV18c9iY4Eyu:1" data-dur="1334"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时3：贪心 &amp; 排序 例题精讲</td><td class="dur">22:14</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时4 哈希&暴力&前缀和 · <a href="https://www.bilibili.com/video/BV1yM9pY5EaW/" target="_blank">BV1yM9pY5EaW</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1yM9pY5EaW:1" data-dur="1803"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时4：哈希 &amp; 暴力 &amp; 前缀和  例题 + 模板</td><td class="dur">30:03</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时5（上）二分查找 · <a href="https://www.bilibili.com/video/BV14ARKYqEb1/" target="_blank">BV14ARKYqEb1</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV14ARKYqEb1:1" data-dur="1762"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时5（上）：二分查找 &amp; bisect库 （吃透二分问题）</td><td class="dur">29:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时5（下）二分答案 · <a href="https://www.bilibili.com/video/BV1U99QYKEj2/" target="_blank">BV1U99QYKEj2</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1U99QYKEj2:1" data-dur="1562"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时5（下）：二分答案</td><td class="dur">26:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 刷题指南 · <a href="https://www.bilibili.com/video/BV1wcR3Y5EMg/" target="_blank">BV1wcR3Y5EMg</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1wcR3Y5EMg:1" data-dur="1052"><td class="num">P1</td><td>【蓝桥杯】Python速成  刷题指南</td><td class="dur">17:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时6（上）BFS · <a href="https://www.bilibili.com/video/BV1zUR3Y3EBE/" target="_blank">BV1zUR3Y3EBE</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1zUR3Y3EBE:1" data-dur="1138"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时6（上） BFS 网格图问题真题讲解</td><td class="dur">18:58</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时6（下）DFS · <a href="https://www.bilibili.com/video/BV1tJRjYiE6r/" target="_blank">BV1tJRjYiE6r</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1tJRjYiE6r:1" data-dur="1342"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时6（下）DFS 国赛 + 省赛真题解析</td><td class="dur">22:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时7 并查集&堆 · <a href="https://www.bilibili.com/video/BV1BkQnYxEuZ/" target="_blank">BV1BkQnYxEuZ</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1BkQnYxEuZ:1" data-dur="1294"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时7 【数据结构】并查集 &amp; 堆</td><td class="dur">21:34</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时8 动态规划 · <a href="https://www.bilibili.com/video/BV1zGQ6YmE6J/" target="_blank">BV1zGQ6YmE6J</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1zGQ6YmE6J:1" data-dur="2132"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时8 动态规划：入门dp、背包dp、网格图dp</td><td class="dur">35:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时9 图论 · <a href="https://www.bilibili.com/video/BV1umQxYtERz/" target="_blank">BV1umQxYtERz</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1umQxYtERz:1" data-dur="1929"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时9 图论：建图、图遍历、Dijkstra、Floyd</td><td class="dur">32:09</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时10 IDLE&日期&数论 · <a href="https://www.bilibili.com/video/BV1AGXzYXEWF/" target="_blank">BV1AGXzYXEWF</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1AGXzYXEWF:1" data-dur="1682"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时10 IDLE使用 &amp; 日期问题（填空题） &amp; 数论入门</td><td class="dur">28:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr></table>
 </div></section>
-<div class="card" id="cet">
-<h2>🎯 六级冲刺<span class="dd-badge" style="color:#8b949e">12/14 · 目标 520–550</span></h2>
-<div class="meta">四级折算 ≈536，听力是唯一短板。六级每天 ≤1.5 h，永远排在专业课之后。</div>
-<table>
-<tr><th>分项</th><th style="width:112px">六级目标</th><th>关键动作</th></tr>
-<tr><td>听力</td><td><b>175 · 70%</b></td><td>唯一能在 30 天拉 50 分的短板</td></tr>
-<tr><td>阅读</td><td>190 · 76%</td><td>每周 1 套限时</td></tr>
-<tr><td>写作</td><td>80</td><td>背 3 个框架，每两周写 1 篇</td></tr>
-<tr><td>翻译</td><td>78</td><td>中国文化短语，每周 1 段</td></tr>
-</table>
-<div class="meta" style="margin-top:10px"><b>节奏</b>：每天碎片 40 分（精听 1 篇 lecture + 30 词）· 周六 2:20 整套真题、周日 40 分复盘。<br><b>12/11–12/14</b>：专业课做题 4:00 照常，六级只留 1:30；12/14 考完当晚全转期末。</div>
-</div>
 <div class="card" id="timeline">
 <h2>📅 每天做什么<span class="tl-now" id="tlNow"></span><button class="tl-toggle" id="tlToggle" type="button" onclick="toggleTlFocus()">全部展开 ▾</button></h2>
 <div class="tl-keys">
-<span><b>视频</b>=原始时长 · <b>实际</b>=1.5 倍速看课用时（视频÷1.5）</span>
-<span><b>练习</b>：模电=实际×40%，光学/概统/理力按 1∶1</span>
-<span><b>复习</b>：看课以外的六级 / 模电·光学·概统复习</span>
-<span><b>全天</b>=实际+练习+复习（周末≥1:30，工作日≥3:00）</span>
-<span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
-<span>☝️ <b>点日期展开</b>当天任务，课时 / 习题 / 复习 / 六级逐项打卡 · 课时与课程页双向联动</span>
-<span>🕒 <b>已过去</b>的日期自动淡化 · 阶段默认只展开当前，点标题栏一行即可折叠 / 展开</span>
+<span>⏱ <b>实际</b>=视频÷1.5 · <b>练习</b>：模电按实际 40%，其余 1∶1 · <b>全天</b>=实际+练习+复习</span>
+<span>家教：周六、日 13:30–18:00 已减量 · <b>底线</b>：周末≥1:30、工作日≥3:00</span>
+<span>☝️ <b>点日期</b>展开逐项打卡（课时与课程页联动）· 默认只展开当前阶段，点标题折叠</span>
 </div>
 <div class="tl">
 
@@ -410,7 +413,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">11/21 – 12/09 · 19 天 · <b style="color:#b42318">概统收尾 + 光学 + 模电</b></div>
 <div class="tl-body">
 <b>今明两天收官概率论，随后光学模电并行</b><span class="tl-tag r">周末减量 · 视频 0:43–5:40/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>11/21</td><td><b>概统</b> P40</td><td>0:43</td><td>0:28</td><td>0:28</td><td>六级 0:40</td><td class="tl-total">1:36</td></tr><tr><td>11/22</td><td><b>概统</b> P41 · <b>光学</b> P1–2 · <b>模电</b> P33</td><td>3:09</td><td>2:06</td><td>1:46</td><td>六级 1:30</td><td class="tl-total">5:22</td></tr><tr><td>11/23</td><td><b>光学</b> P3–6 · <b>模电</b> P34–37</td><td>5:32</td><td>3:41</td><td>2:43</td><td>六级 1:30</td><td class="tl-total">7:54</td></tr><tr><td>11/24</td><td><b>光学</b> P7–9 · <b>模电</b> P38–41</td><td>4:34</td><td>3:02</td><td>2:09</td><td>六级 1:30</td><td class="tl-total">6:41</td></tr><tr><td>11/25</td><td><b>光学</b> P10–13 · <b>模电</b> P42、P44–47</td><td>6:26</td><td>4:17</td><td>3:02</td><td>六级 1:30</td><td class="tl-total">8:49</td></tr><tr><td>11/26</td><td><b>光学</b> P14–17 · <b>模电</b> P48–49</td><td>4:56</td><td>3:17</td><td>2:39</td><td>六级 1:30</td><td class="tl-total">7:26</td></tr><tr><td>11/27</td><td><b>光学</b> P18–21 · <b>模电</b> P50–52</td><td>5:16</td><td>3:30</td><td>2:29</td><td>六级 1:30</td><td class="tl-total">7:29</td></tr><tr><td>11/28</td><td><b>光学</b> P22–23 · <b>模电</b> P53–54</td><td>2:59</td><td>1:59</td><td>1:29</td><td>六级 1:30</td><td class="tl-total">4:58</td></tr><tr><td>11/29</td><td><b>光学</b> P24–25 · <b>模电</b> P55–57</td><td>3:21</td><td>2:14</td><td>1:31</td><td>六级 1:30</td><td class="tl-total">5:15</td></tr><tr><td>11/30</td><td><b>光学</b> P26–30 · <b>模电</b> P58–64</td><td>5:56</td><td>3:57</td><td>3:02</td><td>六级 1:30</td><td class="tl-total">8:29</td></tr><tr><td>12/01</td><td><b>光学</b> P31–33 · <b>模电</b> P65–66、P88–89</td><td>4:45</td><td>3:10</td><td>2:22</td><td>六级 1:30</td><td class="tl-total">7:02</td></tr><tr><td>12/02</td><td><b>光学</b> P34–37 · <b>模电</b> P90–93</td><td>5:01</td><td>3:21</td><td>2:25</td><td>六级 1:30</td><td class="tl-total">7:16</td></tr><tr><td>12/03</td><td><b>光学</b> P38–41 · <b>模电</b> P94–97</td><td>5:20</td><td>3:33</td><td>2:38</td><td>六级 1:30</td><td class="tl-total">7:41</td></tr><tr><td>12/04</td><td><b>光学</b> P42–45 · <b>模电</b> P98–102</td><td>5:21</td><td>3:34</td><td>2:37</td><td>六级 1:30</td><td class="tl-total">7:41</td></tr><tr><td>12/05</td><td><b>光学</b> P46–48 · <b>模电</b> P103–105</td><td>3:59</td><td>2:39</td><td>2:02</td><td>六级 1:30</td><td class="tl-total">6:11</td></tr><tr><td>12/06</td><td><b>光学</b> P49–50 · <b>模电</b> P106–108</td><td>3:33</td><td>2:22</td><td>1:35</td><td>六级 1:30</td><td class="tl-total">5:27</td></tr><tr><td>12/07</td><td><b>光学</b> P51–54 · <b>模电</b> P109–111</td><td>4:45</td><td>3:10</td><td>2:29</td><td>六级 1:30</td><td class="tl-total">7:09</td></tr><tr><td>12/08</td><td><b>光学</b> P55–58 · <b>模电</b> P112–116</td><td>5:30</td><td>3:40</td><td>2:46</td><td>六级 1:30</td><td class="tl-total">7:56</td></tr><tr><td>12/09</td><td><b>光学</b> P59–61 · <b>模电</b> P117–121</td><td>4:16</td><td>2:50</td><td>1:57</td><td>六级 1:30</td><td class="tl-total">6:17</td></tr></table>
+<table class="tl-day" data-tl="s1"></table>
 <div class="tl-note">11/21 学概统 P40、11/22 P41 收官 🏅。周末有家教减量，工作日承担更多；光学 12/09 收尾（P61）。点日期可展开逐节打卡。</div>
 </div>
 </div>
@@ -420,8 +423,8 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">12/10 – 12/17 · 8 天 · <b style="color:#b42318">光学收尾 → 模电 + 速成</b></div>
 <div class="tl-body">
 <b>光学看完后，模电搭配理力速成，两门同步收尾</b><span class="tl-tag y">视频 3:52–4:58/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>12/10</td><td><b>模电</b> P122–127 · <b>速成</b> P1–6</td><td>4:58</td><td>3:18</td><td>1:48</td><td>六级 1:30</td><td class="tl-total">6:36</td></tr><tr><td>12/11</td><td><b>模电</b> P128–132 · <b>速成</b> P7–11</td><td>4:34</td><td>3:02</td><td>1:42</td><td>六级 1:30</td><td class="tl-total">6:14</td></tr><tr><td>12/12</td><td><b>模电</b> P133–138 · <b>速成</b> P12–18</td><td>4:15</td><td>2:50</td><td>1:34</td><td>六级 2:20</td><td class="tl-total">6:44</td></tr><tr><td>12/13</td><td><b>模电</b> P139–143 · <b>速成</b> P19–22</td><td>4:44</td><td>3:09</td><td>1:46</td><td>六级 1:30</td><td class="tl-total">6:25</td></tr><tr><td>12/14</td><td><b>模电</b> P144–149 · <b>速成</b> P23–24</td><td>4:19</td><td>2:53</td><td>1:35</td><td>六级 1:30</td><td class="tl-total">5:58</td></tr><tr><td>12/15</td><td><b>模电</b> P150–154 · <b>速成</b> P25–27</td><td>4:26</td><td>2:57</td><td>1:39</td><td>模/光/概 4:30</td><td class="tl-total">9:06</td></tr><tr><td>12/16</td><td><b>模电</b> P155–161 · <b>速成</b> P28–32</td><td>4:54</td><td>3:16</td><td>1:46</td><td>模/光/概 4:30</td><td class="tl-total">9:32</td></tr><tr><td>12/17</td><td><b>模电</b> P162–166 · <b>速成</b> P33–34</td><td>3:52</td><td>2:34</td><td>1:27</td><td>模/光/概 4:30</td><td class="tl-total">8:31</td></tr></table>
-<div class="tl-note">六级 12/14 考完，12/15 起复习列改「模/光/概」。模电 P166、速成 P34 于 12/17 同时结束。</div>
+<table class="tl-day" data-tl="s2"></table>
+<div class="tl-note">模电 P166、速成 P34 于 12/17 同时结束；复习列全程为模/光/概。</div>
 </div>
 </div>
 
@@ -430,7 +433,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">12/18 – 12/31 · 14 天 · 理力精讲</div>
 <div class="tl-body">
 <b>精讲 79 集 + 全天复习模/光/概</b><span class="tl-tag y">视频 1:00–1:21/天</span>
-<table class="tl-day"><tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr><tr><td>12/18</td><td><b>精讲</b> P23–29</td><td>1:14</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td><td class="tl-total">6:08</td></tr><tr><td>12/19</td><td><b>精讲</b> P30–35</td><td>1:21</td><td>0:54</td><td>0:54</td><td>模/光/概 4:30</td><td class="tl-total">6:18</td></tr><tr><td>12/20</td><td><b>精讲</b> P36–40</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td><td class="tl-total">6:08</td></tr><tr><td>12/21</td><td><b>精讲</b> P41–44</td><td>1:01</td><td>0:41</td><td>0:41</td><td>模/光/概 4:30</td><td class="tl-total">5:52</td></tr><tr><td>12/22</td><td><b>精讲</b> P45–50</td><td>1:13</td><td>0:49</td><td>0:49</td><td>模/光/概 4:30</td><td class="tl-total">6:08</td></tr><tr><td>12/23</td><td><b>精讲</b> P51–56</td><td>1:12</td><td>0:48</td><td>0:48</td><td>模/光/概 4:30</td><td class="tl-total">6:06</td></tr><tr><td>12/24</td><td><b>精讲</b> P57–61</td><td>1:07</td><td>0:44</td><td>0:44</td><td>模/光/概 4:30</td><td class="tl-total">5:58</td></tr><tr><td>12/25</td><td><b>精讲</b> P62–67</td><td>1:17</td><td>0:51</td><td>0:51</td><td>模/光/概 4:30</td><td class="tl-total">6:12</td></tr><tr><td>12/26</td><td><b>精讲</b> P68–72</td><td>1:11</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td><td class="tl-total">6:04</td></tr><tr><td>12/27</td><td><b>精讲</b> P73–78</td><td>1:10</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td><td class="tl-total">6:04</td></tr><tr><td>12/28</td><td><b>精讲</b> P79–84</td><td>1:20</td><td>0:53</td><td>0:53</td><td>模/光/概 4:30</td><td class="tl-total">6:16</td></tr><tr><td>12/29</td><td><b>精讲</b> P85–89</td><td>1:00</td><td>0:40</td><td>0:40</td><td>模/光/概 4:30</td><td class="tl-total">5:50</td></tr><tr><td>12/30</td><td><b>精讲</b> P90–95</td><td>1:10</td><td>0:46</td><td>0:46</td><td>模/光/概 4:30</td><td class="tl-total">6:02</td></tr><tr><td>12/31</td><td><b>精讲</b> P96–101</td><td>1:11</td><td>0:47</td><td>0:47</td><td>模/光/概 4:30</td><td class="tl-total">6:04</td></tr></table>
+<table class="tl-day" data-tl="s3"></table>
 </div>
 </div>
 
@@ -452,7 +455,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 
 </div>
 </div>
-<div class="foot">时长以 B 站为准 · 点行勾选，连 GitHub 自动同步。</div>
+<div class="foot">时长以 B 站为准 · 点行/日期勾选进度 · 连接 GitHub 后多设备自动同步</div>
 </div>
 
 <script>
@@ -562,8 +565,7 @@ function renderDeadlines(){
     el.textContent = x[3] + ' ' + ((!g.m && !g.p) ? '已完成 ✅' : (ddText(n)+' · 待学 '+(parts.join(' + ')||'0')));
   });
 }
-var BGT=[['modian','🔌 模电'],['optics','📖 光学'],['lilun','⚙️ 理论力学'],['llsc','⚡ 理力速成'],['gaishu','🎲 概统'],['cet','🎯 六级',53]];
-/* 六级没有视频，按时间安排的实际排量硬算：11/15–11/30 每天 2:00（32 h）+ 12/01–12/14 每天 1:30（21 h）= 53 h */
+var BGT=[['modian','🔌 模电'],['optics','📖 光学'],['lilun','⚙️ 理论力学'],['llsc','⚡ 理力速成'],['gaishu','🎲 概统']];
 function hm(sec){ sec=Math.max(0,Math.round(sec||0)); var h=Math.floor(sec/3600), m=Math.round(sec%3600/60); if(m===60){h++;m=0;} return h+':'+String(m).padStart(2,'0'); }
 function bgtAvail(){
   var e=document.getElementById('bgt-avail'); var v=parseFloat(e&&e.value);
@@ -573,12 +575,8 @@ function renderBudget(){
   var tb=document.getElementById('bgt-tab-body'); if(!tb) return;
   var days=ddDaysLeft('2027-01-01'); if(days===null) days=0;
   var weeks=Math.max(days/7,1/7), avail=bgtAvail();
-  var data=[], total=0, major=0, cet=0;
+  var data=[], total=0, major=0;
   BGT.forEach(function(x){
-    if(x[2]){                       // 固定时长课（六级）：不折算视频，直接算投入
-      cet=x[2]; total+=cet; data.push({n:x[1],vid:null,work:cet});
-      return;
-    }
     var st=secRemain(x[0]); if(!st) return;
     var vid=st.rem/3600;            // 视频原始时长
     var ratio=(x[0]==='modian')?1.4:2;  // 模电做题只有看课实际的 40%，其余科目 1∶1
@@ -600,7 +598,7 @@ function renderBudget(){
   var gap=needWeek-avail;
   if(gap<=0){
     v.className='bgt-verdict ok';
-    v.innerHTML='✅ <b>可行</b>：每周需要 '+needWeek.toFixed(1)+' h（学期五门 '+(major/weeks).toFixed(1)+' + 六级 '+(cet/weeks).toFixed(1)+'），你能给 '+avail+' h，还剩 '+(-gap).toFixed(1)+' h 缓冲。元旦前五门都能收掉，六级也排在 12/14 之前。';
+    v.innerHTML='✅ <b>可行</b>：每周需要 '+needWeek.toFixed(1)+' h（五门课程），你能给 '+avail+' h，还剩 '+(-gap).toFixed(1)+' h 缓冲。元旦前五门都能收掉。';
   }else if(gap<=3.5){
     v.className='bgt-verdict warn';
     v.innerHTML='⚠️ <b>紧，但做得完</b>：每周还差 '+gap.toFixed(1)+' h。两条路——把光学里标「考纲外」的那部分划掉，或者周六上午再补 3 小时。任选一条就能抹平。';
@@ -666,11 +664,8 @@ function buildMeta(){
     META[tr.dataset.vid]={c:h2?h2.textContent.trim():'', t:td[1]?td[1].textContent.trim():'', d:(+tr.dataset.dur)||0, m:(sec?(sec.dataset.mode||'dur'):'dur')};
   });
 }
-/* daily log removed — no-op stubs kept for legacy call sites */
-function snapToday(){}
-function renderDaily(){}
 var rows=[], state={};
-function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); renderDays(); snapToday(); sv(state); dirty=true; renderDaily(); schedulePush(); }
+function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); renderDays(); sv(state); dirty=true; schedulePush(); }
 function toggleVid(v){ setStat(v, state[v]===true ? false : true); }
 function toggleSkip(v){ setStat(v, state[v]==='skip' ? false : 'skip'); }
 function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(tr, Object.prototype.hasOwnProperty.call(state,v) ? state[v] : false); }); renderDays(); }
@@ -697,12 +692,9 @@ function parseDayItems(cells, iso){
   /* 2) 练习列 → 习题打卡 */
   var ex=(cells[4]?cells[4].textContent:'').replace(/\s+/g,' ').trim();
   if(ex && /\d/.test(ex)) out.push({v:'task:'+iso+':ex', label:'习题 '+ex});
-  /* 3) 复习列 → 六级 / 复习 打卡（六级单独拆出） */
+  /* 3) 复习列 → 复习打卡 */
   var rv=(cells[5]?cells[5].textContent:'').replace(/\s+/g,' ').trim();
-  if(rv && /\d/.test(rv)){
-    if(/六级/.test(rv)) out.push({v:'task:'+iso+':cet6', label:'六级 '+rv.replace(/[^0-9:]/g,'')});
-    else out.push({v:'task:'+iso+':rv', label:'复习 '+rv});
-  }
+  if(rv && /\d/.test(rv)) out.push({v:'task:'+iso+':rv', label:'复习 '+rv});
   return out;
 }
 function dayStat(items){
@@ -730,6 +722,7 @@ function renderDays(){
     var btn=tr._detail.querySelector('.tl-detail-all');
     if(btn) btn.textContent=all?'↩ 撤销当天':'✓ 全部学完';
   });
+  if(window.refreshStageSummary) window.refreshStageSummary();
 }
 function toggleDay(tr){
   var open=!tr._open; tr._open=open;
@@ -744,6 +737,17 @@ function markAll(tr){
   });
   items.forEach(function(x){ rows.forEach(function(r){ if(r.dataset.vid===x.v) applyRow(r,state[x.v]||false); }); });
   recompute(); renderDays(); sv(state); dirty=true; schedulePush();
+}
+/* ===== 时间轴数据：改排期只改这里，页面自动渲染 ===== */
+var TL_DATA={s1:[["11/21","<b>概统</b> P40","0:43","0:28","0:28","模/光/概 0:40","1:36"],["11/22","<b>概统</b> P41 · <b>光学</b> P1–2 · <b>模电</b> P33","3:09","2:06","1:46","模/光/概 1:30","5:22"],["11/23","<b>光学</b> P3–6 · <b>模电</b> P34–37","5:32","3:41","2:43","模/光/概 1:30","7:54"],["11/24","<b>光学</b> P7–9 · <b>模电</b> P38–41","4:34","3:02","2:09","模/光/概 1:30","6:41"],["11/25","<b>光学</b> P10–13 · <b>模电</b> P42、P44–47","6:26","4:17","3:02","模/光/概 1:30","8:49"],["11/26","<b>光学</b> P14–17 · <b>模电</b> P48–49","4:56","3:17","2:39","模/光/概 1:30","7:26"],["11/27","<b>光学</b> P18–21 · <b>模电</b> P50–52","5:16","3:30","2:29","模/光/概 1:30","7:29"],["11/28","<b>光学</b> P22–23 · <b>模电</b> P53–54","2:59","1:59","1:29","模/光/概 1:30","4:58"],["11/29","<b>光学</b> P24–25 · <b>模电</b> P55–57","3:21","2:14","1:31","模/光/概 1:30","5:15"],["11/30","<b>光学</b> P26–30 · <b>模电</b> P58–64","5:56","3:57","3:02","模/光/概 1:30","8:29"],["12/01","<b>光学</b> P31–33 · <b>模电</b> P65–66、P88–89","4:45","3:10","2:22","模/光/概 1:30","7:02"],["12/02","<b>光学</b> P34–37 · <b>模电</b> P90–93","5:01","3:21","2:25","模/光/概 1:30","7:16"],["12/03","<b>光学</b> P38–41 · <b>模电</b> P94–97","5:20","3:33","2:38","模/光/概 1:30","7:41"],["12/04","<b>光学</b> P42–45 · <b>模电</b> P98–102","5:21","3:34","2:37","模/光/概 1:30","7:41"],["12/05","<b>光学</b> P46–48 · <b>模电</b> P103–105","3:59","2:39","2:02","模/光/概 1:30","6:11"],["12/06","<b>光学</b> P49–50 · <b>模电</b> P106–108","3:33","2:22","1:35","模/光/概 1:30","5:27"],["12/07","<b>光学</b> P51–54 · <b>模电</b> P109–111","4:45","3:10","2:29","模/光/概 1:30","7:09"],["12/08","<b>光学</b> P55–58 · <b>模电</b> P112–116","5:30","3:40","2:46","模/光/概 1:30","7:56"],["12/09","<b>光学</b> P59–61 · <b>模电</b> P117–121","4:16","2:50","1:57","模/光/概 1:30","6:17"]],s2:[["12/10","<b>模电</b> P122–127 · <b>速成</b> P1–6","4:58","3:18","1:48","模/光/概 1:30","6:36"],["12/11","<b>模电</b> P128–132 · <b>速成</b> P7–11","4:34","3:02","1:42","模/光/概 1:30","6:14"],["12/12","<b>模电</b> P133–138 · <b>速成</b> P12–18","4:15","2:50","1:34","模/光/概 2:20","6:44"],["12/13","<b>模电</b> P139–143 · <b>速成</b> P19–22","4:44","3:09","1:46","模/光/概 1:30","6:25"],["12/14","<b>模电</b> P144–149 · <b>速成</b> P23–24","4:19","2:53","1:35","模/光/概 1:30","5:58"],["12/15","<b>模电</b> P150–154 · <b>速成</b> P25–27","4:26","2:57","1:39","模/光/概 4:30","9:06"],["12/16","<b>模电</b> P155–161 · <b>速成</b> P28–32","4:54","3:16","1:46","模/光/概 4:30","9:32"],["12/17","<b>模电</b> P162–166 · <b>速成</b> P33–34","3:52","2:34","1:27","模/光/概 4:30","8:31"]],s3:[["12/18","<b>精讲</b> P23–29","1:14","0:49","0:49","模/光/概 4:30","6:08"],["12/19","<b>精讲</b> P30–35","1:21","0:54","0:54","模/光/概 4:30","6:18"],["12/20","<b>精讲</b> P36–40","1:13","0:49","0:49","模/光/概 4:30","6:08"],["12/21","<b>精讲</b> P41–44","1:01","0:41","0:41","模/光/概 4:30","5:52"],["12/22","<b>精讲</b> P45–50","1:13","0:49","0:49","模/光/概 4:30","6:08"],["12/23","<b>精讲</b> P51–56","1:12","0:48","0:48","模/光/概 4:30","6:06"],["12/24","<b>精讲</b> P57–61","1:07","0:44","0:44","模/光/概 4:30","5:58"],["12/25","<b>精讲</b> P62–67","1:17","0:51","0:51","模/光/概 4:30","6:12"],["12/26","<b>精讲</b> P68–72","1:11","0:47","0:47","模/光/概 4:30","6:04"],["12/27","<b>精讲</b> P73–78","1:10","0:47","0:47","模/光/概 4:30","6:04"],["12/28","<b>精讲</b> P79–84","1:20","0:53","0:53","模/光/概 4:30","6:16"],["12/29","<b>精讲</b> P85–89","1:00","0:40","0:40","模/光/概 4:30","5:50"],["12/30","<b>精讲</b> P90–95","1:10","0:46","0:46","模/光/概 4:30","6:02"],["12/31","<b>精讲</b> P96–101","1:11","0:47","0:47","模/光/概 4:30","6:04"]]};
+function renderTimeline(){
+  var head='<tr><th>日期</th><th>看课（从 → 到）</th><th>视频</th><th>实际</th><th>练习</th><th>复习</th><th>全天</th></tr>';
+  document.querySelectorAll('table.tl-day[data-tl]').forEach(function(tb){
+    var rows=TL_DATA[tb.dataset.tl]||[];
+    tb.innerHTML=head+rows.map(function(r){
+      return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td class="tl-total">'+r[6]+'</td></tr>';
+    }).join('');
+  });
 }
 function pad2(n){return n<10?'0'+n:''+n;}
 function initDays(){
@@ -766,9 +770,10 @@ function initDays(){
       /* 日期格式：带年份的完整日期 + 星期，窄屏回退短格式 */
       var dt=new Date(yy,mn-1,dn);
       var wk=['日','一','二','三','四','五','六'][dt.getDay()];
-      tr.children[0].innerHTML='<span class="d-full">'+yy+'-'+pad2(mn)+'-'+pad2(dn)+' 周'+wk+'</span><span class="d-short">'+label+'</span>';
+      var past=iso<todayIso;
+      tr.children[0].innerHTML='<span class="d-full">'+yy+'-'+pad2(mn)+'-'+pad2(dn)+' 周'+wk+'</span><span class="d-short">'+label+'</span>'+(past?'<span class="past-mark">已过</span>':'');
       tr._items=items; tr._date=label; tr._iso=iso; tr._open=false; tr.classList.add('tl-task');
-      if(iso<todayIso) tr.classList.add('past');
+      if(past) tr.classList.add('past');
       if(mm===mn && dd===dn) tr.classList.add('today');
       /* 展开面板行 */
       var dr=document.createElement('tr'); dr.className='tl-detail-row'; dr.style.display='none';
@@ -937,7 +942,7 @@ function loadCloud(){
     var when = fmtCloudTime(g.updated);
     if(hasCloud && !dirty){
       state=g.state; sv(state); dirty=false;
-      applyAll(); recompute(); snapToday(); renderDaily();
+      applyAll(); recompute();
       clearBanner();
       setStatus(TOKEN?'ready':'readonly', when?('数据时间 '+when+(g.src==='raw'?'':' · 缓存')):'');
     } else if(hasCloud && dirty){
@@ -986,6 +991,7 @@ function injectToolbar(){
   state=ls();
   if(!state){ state={}; rows.forEach(function(tr){ state[tr.dataset.vid]=tr.classList.contains('done')?true:(tr.classList.contains('skip')?'skip':false); }); sv(state); }
   Object.keys(state||{}).forEach(function(k){ if(k.indexOf('daily:')===0||k.indexOf('extra:')===0||k.indexOf('snap:')===0) delete state[k]; });
+  renderTimeline();
   buildMeta();
   initDays();
   applyAll();
@@ -999,9 +1005,7 @@ function injectToolbar(){
     });
   });
   recompute();
-  snapToday();
   sv(state);
-  renderDaily();
   injectToolbar();
   var bga=document.getElementById('bgt-avail');
   if(bga){
@@ -1014,6 +1018,12 @@ function injectToolbar(){
 </script>
 <script>
 (function(){
+  /* 表头 sticky 偏移随导航实际高度自适应（导航换行/滚动条变化都不会错位） */
+  var nav=document.querySelector('.nav');
+  function navH(){ if(nav) document.documentElement.style.setProperty('--navh',Math.round(nav.getBoundingClientRect().height)+'px'); }
+  navH();
+  window.addEventListener('resize',navH,{passive:true});
+
   var items=Array.prototype.slice.call(document.querySelectorAll('.tl-item')), cur=null, idx=0;
   var now=new Date(); now.setHours(0,0,0,0);
   items.forEach(function(it,i){
@@ -1029,12 +1039,25 @@ function injectToolbar(){
   var el=document.getElementById('tlNow');
   if(el) el.textContent = cur ? ('现在在：第 '+idx+' 阶段') : '';
 
+  /* 每个折叠阶段在标题行显示「完成 N/M 天」概述，一眼看到进度 */
+  function stageProgress(it){
+    var rows=it.querySelectorAll('tr.tl-task');
+    if(!rows.length) return '';
+    var done=0;
+    rows.forEach(function(r){ if(r.classList.contains('done')) done++; });
+    return '完成 '+done+'/'+rows.length+' 天';
+  }
   /* 为每个阶段标题加折叠箭头 + 按钮，点击即展开/收起一行概述 */
-  function setFold(it,fold){ it.classList.toggle('folded',fold); var btn=it._foldBtn; if(btn) btn.textContent=fold?'展开 ▾':'收起 ▴'; }
+  function setFold(it,fold){
+    it.classList.toggle('folded',fold);
+    var btn=it._foldBtn; if(btn) btn.textContent=fold?'展开 ▾':'收起 ▴';
+    var sm=it._summary; if(sm) sm.textContent=fold?stageProgress(it):'';
+  }
   items.forEach(function(it){
     var date=it.querySelector('.tl-date'); if(!date) return;
     var caret=document.createElement('span'); caret.className='tl-caret'; caret.textContent='▶';
     date.insertBefore(caret,date.firstChild);
+    var summary=document.createElement('span'); summary.className='tl-why'; date.appendChild(summary); it._summary=summary;
     var btn=document.createElement('button'); btn.type='button'; btn.className='tl-fold-btn'; btn.textContent='收起 ▴';
     date.appendChild(btn); it._foldBtn=btn;
     function toggle(e){ if(e) e.stopPropagation(); setFold(it,!it.classList.contains('folded')); }
@@ -1047,6 +1070,13 @@ function injectToolbar(){
   });
   /* 默认：只展开当前阶段，其余折叠成一行 */
   items.forEach(function(it){ setFold(it, it!==cur); });
+
+  /* 进度变化时刷新折叠行的概述 */
+  window.refreshStageSummary=function(){
+    items.forEach(function(it){
+      if(it.classList.contains('folded') && it._summary) it._summary.textContent=stageProgress(it);
+    });
+  };
 
   var tg=document.getElementById('tlToggle');
   function allFolded(){ return items.every(function(it){return it.classList.contains('folded');}); }
@@ -1088,6 +1118,7 @@ function injectToolbar(){
   window.addEventListener('touchmove',function(e){if(e.touches&&e.touches[0])input(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
   window.addEventListener('pointerdown',function(e){input(e.clientX,e.clientY);},{passive:true});
   function step(){
+    if(document.hidden){ requestAnimationFrame(step); return; }  /* 标签页隐藏时不更新画面，省电 */
     var now=Date.now();
     if(now-last>2400){
       var t=now/1000;
