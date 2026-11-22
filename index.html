@@ -99,7 +99,8 @@ a{color:#0969da;text-decoration:none}
 .tl-day th{text-align:left;padding:5px 8px;background:linear-gradient(180deg,#f4f6f9,#edf0f4);color:#57606a;font-weight:600;font-size:12px;border-bottom:1px solid #d8dee4}
 .tl-day td{padding:5px 8px;border-bottom:1px solid #eceef1;font-variant-numeric:tabular-nums;color:#24292f}
 .tl-day tr:last-child td{border-bottom:none}
-.tl-day td:first-child{white-space:nowrap;color:#57606a}
+.tl-day th:first-child,.tl-day td:first-child{white-space:nowrap;color:#57606a;width:122px}
+.tl-day .d-full{font-size:11.5px;letter-spacing:-.2px}
 .tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5),.tl-day th:nth-child(7){white-space:nowrap;text-align:right}
 .tl-day td:nth-child(3),.tl-day td:nth-child(4),.tl-day td:nth-child(5){white-space:nowrap;text-align:right}
 .tl-day td.tl-total{white-space:nowrap;text-align:right;font-weight:700;color:#1a7f37;font-variant-numeric:tabular-nums}
@@ -133,6 +134,14 @@ a{color:#0969da;text-decoration:none}
 .tl-chip.done{background:#c6efce;border-color:#86c086;color:#006100;font-weight:600}
 .tl-chip.done::before{content:'✅ '}
 .tl-chip.skip{background:#fff8e1;border-color:#d4a72c;color:#a16207}
+.tl-chip[data-v^="task:"]{border-style:dashed}
+/* 已过去的日期行：整体淡化，若已完成保留浅绿 */
+.tl-day tr.tl-task.past td,.tl-day tr.tl-task.past td:first-child{color:#a8b0ba}
+.tl-day tr.tl-task.past b{color:#9aa1a9}
+.tl-day tr.tl-task.past .tl-total{color:#a8b0ba}
+.tl-day tr.tl-task.past td:first-child::before{color:#c6cbd1}
+.tl-day tr.tl-task.past.done td{background:#f1f4f6}
+.tl-day tr.tl-task.past.done td:first-child,.tl-day tr.tl-task.past.done .tl-total{color:#6a737d}
 @media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:14%}.tl-day th:nth-child(2){width:28%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:16%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:12%}.tl-day b{font-weight:600}.tl-day tr.tl-task td:first-child::before{display:none}.tl-day .d-short{display:inline}.tl-day .d-full{display:none}.tl-chip{font-size:11px;padding:2px 7px}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
@@ -159,12 +168,22 @@ a{color:#0969da;text-decoration:none}
 .tl-now{margin-left:2px;font-size:12px;font-weight:bold;color:#1a7f37;background:#e8f6ed;border:1px solid #b7e0c2;border-radius:11px;padding:3px 10px}
 #timeline h2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px}
 .tl-toggle{margin-left:auto;border:1px solid #238536;background:linear-gradient(180deg,#3ab85a,#2ea44f);color:#fff;padding:7px 16px;border-radius:18px;font-size:13px;font-weight:bold;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 2px 8px rgba(46,164,79,.32);transition:all .15s}
-.tl-toggle::before{content:'👁 ';}
+.tl-toggle::before{content:'🗂 ';}
 .tl-toggle:hover{background:linear-gradient(180deg,#2ea44f,#228a41);box-shadow:0 4px 13px rgba(46,164,79,.45);transform:translateY(-1px)}
 .tl-toggle:active{transform:translateY(0)}
 .tl-toggle.on{background:linear-gradient(180deg,#57606a,#3f4752);border-color:#3f4752;color:#fff}
 .tl-toggle.on::before{content:'☰ ';}
-.tl.focus .tl-item:not(.now){display:none}
+/* 阶段折叠：默认只展开当前阶段，其他阶段收起为一行概述 */
+.tl-item .tl-date{cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px}
+.tl-item .tl-date .tl-caret{display:inline-block;color:#8b949e;font-size:11px;transition:transform .18s;transform:rotate(90deg)}
+.tl-item.folded .tl-date .tl-caret{transform:rotate(0)}
+.tl-item .tl-why{font-size:11.5px;color:#8b949e;font-weight:normal}
+.tl-item.folded .tl-body{display:none}
+.tl-item.folded .tl-date{color:#57606a}
+.tl-item.folded{margin-bottom:12px}
+.tl-fold-btn{margin-left:auto;flex:none;border:1px solid #d0d7de;background:#fff;color:#57606a;border-radius:11px;padding:1px 9px;font-size:11px;font-family:inherit;cursor:pointer;white-space:nowrap}
+.tl-fold-btn:hover{border-color:#2ea44f;color:#1a7f37}
+.tl-item.folded .tl-body,.tl-item .tl-body{transition:none}
 .tl-load{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .tl-load span{background:#fff;border:1px solid #e3e6ea;border-radius:7px;padding:5px 11px;font-size:13px;color:#24292f;font-variant-numeric:tabular-nums}
 .tl-load span i{font-style:normal;color:#6e7781;margin-right:6px;font-size:12.5px}
@@ -365,14 +384,15 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="meta" style="margin-top:10px"><b>节奏</b>：每天碎片 40 分（精听 1 篇 lecture + 30 词）· 周六 2:20 整套真题、周日 40 分复盘。<br><b>12/11–12/14</b>：专业课做题 4:00 照常，六级只留 1:30；12/14 考完当晚全转期末。</div>
 </div>
 <div class="card" id="timeline">
-<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span><button class="tl-toggle" id="tlToggle" type="button" onclick="toggleTlFocus()">只看当前</button></h2>
+<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span><button class="tl-toggle" id="tlToggle" type="button" onclick="toggleTlFocus()">全部展开 ▾</button></h2>
 <div class="tl-keys">
 <span><b>视频</b>=原始时长 · <b>实际</b>=1.5 倍速看课用时（视频÷1.5）</span>
 <span><b>练习</b>：模电=实际×40%，光学/概统/理力按 1∶1</span>
 <span><b>复习</b>：看课以外的六级 / 模电·光学·概统复习</span>
 <span><b>全天</b>=实际+练习+复习（周末≥1:30，工作日≥3:00）</span>
 <span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
-<span>☝️ <b>点日期展开</b>当天课时，逐节点「学完」并实时看进度 · 与课程页双向联动</span>
+<span>☝️ <b>点日期展开</b>当天任务，课时 / 习题 / 复习 / 六级逐项打卡 · 课时与课程页双向联动</span>
+<span>🕒 <b>已过去</b>的日期自动淡化 · 阶段默认只展开当前，点标题栏一行即可折叠 / 展开</span>
 </div>
 <div class="tl">
 
@@ -657,10 +677,12 @@ function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(t
 /* ===== 每日任务 ↔ 课程进度：点一天批量勾/取消当天课时；课程页勾课反向点亮日期 ===== */
 var DAYMAP={'概统':['gaishu','P'],'光学':['optics',''],'模电':['modian',''],'速成':['llsc','m'],'精讲':['lilun','']};
 var dayRows=[];
-/* 解析看课列 → [{v:课时键, label:显示名}]，例如「光学 P3–5」→ optics:3/4/5 */
-function parseDayItems(html){
+/* 解析一整天的任务：看课列→课时键（与课程联动）；练习/复习列→独立任务键 task:日期:类型 */
+function parseDayItems(cells, iso){
   var out=[];
-  html.split('·').forEach(function(blk){
+  /* 1) 看课列：课时打卡，与课程进度双向联动 */
+  var vhtml=cells[1] ? (cells[1].innerHTML||'') : '';
+  vhtml.split('·').forEach(function(blk){
     var m=/<b>([^<]+)<\/b>\s*([^<]+)/.exec(blk);
     if(!m) return;
     var name=m[1].trim(), mp=DAYMAP[name]; if(!mp) return;
@@ -672,6 +694,15 @@ function parseDayItems(html){
       list.forEach(function(n){ out.push({v:mp[0]+':'+mp[1]+n, label:name+' '+n}); });
     });
   });
+  /* 2) 练习列 → 习题打卡 */
+  var ex=(cells[4]?cells[4].textContent:'').replace(/\s+/g,' ').trim();
+  if(ex && /\d/.test(ex)) out.push({v:'task:'+iso+':ex', label:'习题 '+ex});
+  /* 3) 复习列 → 六级 / 复习 打卡（六级单独拆出） */
+  var rv=(cells[5]?cells[5].textContent:'').replace(/\s+/g,' ').trim();
+  if(rv && /\d/.test(rv)){
+    if(/六级/.test(rv)) out.push({v:'task:'+iso+':cet6', label:'六级 '+rv.replace(/[^0-9:]/g,'')});
+    else out.push({v:'task:'+iso+':rv', label:'复习 '+rv});
+  }
   return out;
 }
 function dayStat(items){
@@ -686,10 +717,10 @@ function renderDays(){
     var all=st.total>0 && st.done===st.total;
     tr.classList.toggle('done',all);
     tr.classList.toggle('part',!all && st.done>0);
-    tr.title=all?'✅ 当天课时全部学完':(st.done>0?('◐ '+st.done+'/'+st.total+' 节已完成'):'点击展开逐节打卡');
+    tr.title=all?'✅ 当天任务全部完成':(st.done>0?('◐ '+st.done+'/'+st.total+' 项已完成'):'点击展开逐项打卡');
     if(!tr._detail) return;
     var cnt=tr._detail.querySelector('.tl-detail-count');
-    if(cnt) cnt.textContent='进度 '+st.done+'/'+st.total+' 节 · '+Math.round(st.total?st.done/st.total*100:0)+'%';
+    if(cnt) cnt.textContent='进度 '+st.done+'/'+st.total+' 项 · '+Math.round(st.total?st.done/st.total*100:0)+'%';
     var bar=tr._detail.querySelector('.tl-prog>div');
     if(bar) bar.style.width=(st.total?st.done/st.total*100:0).toFixed(1)+'%';
     tr._detail.querySelectorAll('.tl-chip').forEach(function(b){
@@ -714,22 +745,30 @@ function markAll(tr){
   items.forEach(function(x){ rows.forEach(function(r){ if(r.dataset.vid===x.v) applyRow(r,state[x.v]||false); }); });
   recompute(); renderDays(); sv(state); dirty=true; schedulePush();
 }
+function pad2(n){return n<10?'0'+n:''+n;}
 function initDays(){
   var d=new Date(), mm=d.getMonth()+1, dd=d.getDate();
+  var todayIso=d.getFullYear()+'-'+pad2(mm)+'-'+pad2(dd);
   document.querySelectorAll('.tl-day').forEach(function(tb){
+    /* 年份取所在阶段的 data-from，跨年也不会错 */
+    var stage=tb.closest('.tl-item');
+    var yy=stage && stage.dataset.from ? +stage.dataset.from.slice(0,4) : d.getFullYear();
     var trs=Array.prototype.slice.call(tb.rows);
     trs.forEach(function(tr){
       if(tr.querySelector('th') || tr.children.length<2) return;
       var label=(tr.children[0].textContent||'').trim();
       if(!/^\d\d\/\d\d$/.test(label)) return;
-      var items=parseDayItems(tr.children[1].innerHTML);
-      if(!items.length) return;
       var p=label.split('/'), mn=+p[0], dn=+p[1];
+      var iso=yy+'-'+pad2(mn)+'-'+pad2(dn);
+      var cells=Array.prototype.slice.call(tr.children);
+      var items=parseDayItems(cells, iso);
+      if(!items.length) return;
       /* 日期格式：带年份的完整日期 + 星期，窄屏回退短格式 */
-      var dt=new Date(d.getFullYear(),mn-1,dn);
+      var dt=new Date(yy,mn-1,dn);
       var wk=['日','一','二','三','四','五','六'][dt.getDay()];
-      tr.children[0].innerHTML='<span class="d-full">'+d.getFullYear()+'-'+mn+'-'+dn+' 周'+wk+'</span><span class="d-short">'+label+'</span>';
-      tr._items=items; tr._date=label; tr._open=false; tr.classList.add('tl-task');
+      tr.children[0].innerHTML='<span class="d-full">'+yy+'-'+pad2(mn)+'-'+pad2(dn)+' 周'+wk+'</span><span class="d-short">'+label+'</span>';
+      tr._items=items; tr._date=label; tr._iso=iso; tr._open=false; tr.classList.add('tl-task');
+      if(iso<todayIso) tr.classList.add('past');
       if(mm===mn && dd===dn) tr.classList.add('today');
       /* 展开面板行 */
       var dr=document.createElement('tr'); dr.className='tl-detail-row'; dr.style.display='none';
@@ -975,33 +1014,49 @@ function injectToolbar(){
 </script>
 <script>
 (function(){
-  var items=document.querySelectorAll('.tl-item'), cur=null, idx=0;
+  var items=Array.prototype.slice.call(document.querySelectorAll('.tl-item')), cur=null, idx=0;
   var now=new Date(); now.setHours(0,0,0,0);
   items.forEach(function(it,i){
     var f=new Date(it.dataset.from+'T00:00:00'), t=new Date(it.dataset.to+'T23:59:59');
-    if(now>t){ it.classList.add('done'); }
+    if(now>t){ it.classList.add('done','past'); }
     else if(now>=f && !cur){ cur=it; idx=i+1; }
   });
   if(cur){
     cur.classList.add('now');
-    var b=cur.querySelector('.tl-body b');
-    if(b && !b.nextElementSibling){ var sp=document.createElement('span'); sp.className='tl-tag g'; sp.textContent='当前阶段'; b.parentNode.insertBefore(sp, b.nextSibling); }
+    var cb=cur.querySelector('.tl-body b');
+    if(cb && !cb.nextElementSibling){ var sp=document.createElement('span'); sp.className='tl-tag g'; sp.textContent='当前阶段'; cb.parentNode.insertBefore(sp, cb.nextSibling); }
   }
   var el=document.getElementById('tlNow');
   if(el) el.textContent = cur ? ('现在在：第 '+idx+' 阶段') : '';
 
-  var tg=document.getElementById('tlToggle'), tl=document.querySelector('#timeline .tl');
-  function applyFocus(on){
-    if(tl) tl.classList.toggle('focus',on);
-    if(tg){ tg.textContent=on?'显示全部':'只看当前'; tg.classList.toggle('on',on); }
-  }
-  var saved=false; try{ saved=localStorage.getItem('tl_focus')==='1'; }catch(e){}
+  /* 为每个阶段标题加折叠箭头 + 按钮，点击即展开/收起一行概述 */
+  function setFold(it,fold){ it.classList.toggle('folded',fold); var btn=it._foldBtn; if(btn) btn.textContent=fold?'展开 ▾':'收起 ▴'; }
+  items.forEach(function(it){
+    var date=it.querySelector('.tl-date'); if(!date) return;
+    var caret=document.createElement('span'); caret.className='tl-caret'; caret.textContent='▶';
+    date.insertBefore(caret,date.firstChild);
+    var btn=document.createElement('button'); btn.type='button'; btn.className='tl-fold-btn'; btn.textContent='收起 ▴';
+    date.appendChild(btn); it._foldBtn=btn;
+    function toggle(e){ if(e) e.stopPropagation(); setFold(it,!it.classList.contains('folded')); }
+    btn.addEventListener('click',toggle);
+    date.addEventListener('click',function(e){ if(e.target===btn) return; toggle(); });
+    /* 已过去的阶段补一个标记，方便一眼识别 */
+    if(it.classList.contains('past') && date.textContent.indexOf('已过去')<0){
+      var tag=document.createElement('span'); tag.className='tl-tag'; tag.textContent='已过去'; date.insertBefore(tag,btn);
+    }
+  });
+  /* 默认：只展开当前阶段，其余折叠成一行 */
+  items.forEach(function(it){ setFold(it, it!==cur); });
+
+  var tg=document.getElementById('tlToggle');
+  function allFolded(){ return items.every(function(it){return it.classList.contains('folded');}); }
+  function applyAll(fold){ items.forEach(function(it){ setFold(it,fold); }); if(tg) tg.textContent=fold?'全部展开 ▾':'全部收起 ▴'; }
   if(!cur && tg) tg.style.display='none';
-  else applyFocus(saved);
+  else if(tg){ tg.textContent='全部展开 ▾'; tg.classList.remove('on'); tg.setAttribute('data-mode','fold'); }
   window.toggleTlFocus=function(){
-    var on=!(tl && tl.classList.contains('focus'));
-    applyFocus(on);
-    try{ localStorage.setItem('tl_focus', on?'1':'0'); }catch(e){}
+    var fold=!allFolded();
+    applyAll(fold);
+    if(tg) tg.classList.toggle('on',fold);
   };
 })();
 </script>
