@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="UTF-8">
 <title>B站课程学习进度表</title>
 <style>
+:root{--r-card:14px;--r-panel:10px;--r-pill:999px;--gap:14px;--muted:#57606a;--faint:#8b949e}
 body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20px 16px 40px;color:#1f2329;background:#f4f5f7;min-height:100vh;overflow-x:hidden}
 .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto}
 /* ===== 动态背景层：柔光极光（自主持续动画，不依赖指针） ===== */
@@ -36,18 +37,18 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20p
 /* 滚动进度条下移 2px，避免与顶部流光完全重叠 */
 .scroll-progress{position:fixed;left:0;top:2px;height:2px;width:0;z-index:31;pointer-events:none;background:linear-gradient(90deg,#1a7f37,#57c97a,#9be0b3);box-shadow:0 0 8px rgba(46,164,79,.45);transition:width .12s linear;opacity:.85}
 @media(prefers-reduced-motion:reduce){.aurora i,.bg-scan,.bg-grid,.top-beam{animation:none}.bg i.gl{display:none}.scroll-progress{display:none}*{transition-duration:0s!important;animation-duration:0s!important;scroll-behavior:auto!important}}
-h1{font-size:25px;margin:0 0 4px;letter-spacing:-.3px}
+h1{font-size:26px;font-weight:800;margin:0 0 4px;letter-spacing:-.5px;line-height:1.25}
 h1::after{content:"";display:block;width:54px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2ea44f,#8fd6a6);margin-top:9px}
-.sub{color:#57606a;font-size:14px;margin-bottom:12px}
+.sub{color:var(--muted);font-size:13.5px;margin-bottom:12px;font-variant-numeric:tabular-nums}
 .nav{position:sticky;top:0;background:rgba(248,250,249,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:10px 0;z-index:10;display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .nav::-webkit-scrollbar{display:none}
-.tab-btn{border:1px solid #d0d3d8;background:#fff;color:#1f2329;padding:7px 16px;border-radius:18px;font-size:14px;cursor:pointer;font-family:inherit;white-space:nowrap;flex:none;-webkit-tap-highlight-color:transparent}
+.tab-btn{border:1px solid #d0d3d8;background:#fff;color:#1f2329;padding:7px 16px;border-radius:var(--r-pill);font-size:14px;cursor:pointer;font-family:inherit;white-space:nowrap;flex:none;-webkit-tap-highlight-color:transparent}
 .tab-btn:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
 .tab-btn.active{background:#2ea44f;border-color:#2ea44f;color:#fff;font-weight:bold;box-shadow:0 3px 10px rgba(46,164,79,.28)}
-.card{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:20px 24px;margin:14px 0;box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px rgba(16,24,40,.05)}
-h2{margin:0 0 6px;font-size:19px}
-.meta{color:#57606a;font-size:13px;margin-bottom:10px}
-.stats{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;margin-bottom:8px}
+.card{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:var(--r-card);padding:20px 24px;margin:var(--gap) 0;box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px rgba(16,24,40,.05)}
+h2{margin:0 0 6px;font-size:19px;font-weight:800;letter-spacing:-.2px;line-height:1.3}
+.meta{color:var(--muted);font-size:13px;margin-bottom:10px}
+.stats{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;margin-bottom:8px;font-variant-numeric:tabular-nums}
 .bar{height:8px;background:#e5e6eb;border-radius:4px;overflow:hidden;margin-bottom:14px;display:flex}
 .bar>div{height:100%;background:linear-gradient(90deg,#2ea44f,#4fc06e)}
 .bar>div.bar-skip{background:linear-gradient(90deg,#f2c744,#f7d977)}
@@ -69,21 +70,19 @@ td.dur{white-space:nowrap;width:74px;text-align:right;color:#57606a;font-variant
 tr.clk{cursor:pointer}
 tr.clk:hover:not(.done) td{background:#eaf6ee}
 td.status{text-align:center}
-.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:6px}
-.ov-card{position:relative;background:#fff;border:1px solid #e5e6eb;border-radius:12px;padding:14px 16px;cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:var(--gap);margin-top:6px}
+.ov-card{position:relative;background:#fff;border:1px solid #e5e6eb;border-radius:var(--r-card);padding:15px 17px;cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
 .ov-card::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:linear-gradient(90deg,#2ea44f,#8fd6a6)}
 .ov-card.complete::before{background:linear-gradient(90deg,#e0a912,#f6c445)!important}
 .ov-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(16,24,40,.12);border-color:#2ea44f}
-.ov-head{display:flex;justify-content:space-between;font-size:15px;margin-bottom:2px}
-.ov-pct{color:#2ea44f;font-weight:bold}
-.ov-meta{color:#57606a;font-size:12.5px;margin-bottom:8px}
-.ov-card .bar{margin-bottom:6px}
-.ov-stats{color:#8b949e;font-size:12.5px}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;margin-bottom:10px}
+.ov-pct{color:#2ea44f;font-weight:800;font-size:17px;font-variant-numeric:tabular-nums}
+.ov-card .bar{margin-bottom:10px}
 .legend{font-size:13px;color:#57606a;margin:6px 0 4px}
 .sw{display:inline-block;width:14px;height:14px;background:#c6efce;border:1px solid #86c086;vertical-align:-2px;margin-right:5px}
 a{color:#0969da;text-decoration:none}
 .foot{color:#8b949e;font-size:12.5px;margin:22px 0 8px;padding-top:12px;border-top:1px solid rgba(16,24,40,.06);text-align:center}
-.d-btn{border:1px solid #2ea44f;background:#2ea44f;color:#fff;padding:6px 14px;border-radius:16px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.d-btn{border:1px solid #2ea44f;background:#2ea44f;color:#fff;padding:6px 14px;border-radius:var(--r-pill);font-size:12.5px;cursor:pointer;font-family:inherit}
 .d-btn:hover{background:#2c974b}
 .ov-dl{font-size:12px;color:#cf222e;margin-top:7px;padding-top:6px;border-top:1px dashed #eceef1;font-variant-numeric:tabular-nums}
 .ov-card.complete{background:linear-gradient(160deg,#fffdf3,#fff 60%);border-color:#e9c76a;box-shadow:0 2px 10px rgba(212,160,23,.15)}
@@ -124,6 +123,8 @@ a{color:#0969da;text-decoration:none}
 .tl-day tr.tl-task.part td:first-child::before{content:'◐ ';color:#b8860b}
 .tl-day tr.tl-task.today td{background:#fffbe6}
 .tl-day tr.tl-task.today.open td{background:#f3faf5}
+@keyframes row-flash{0%,100%{box-shadow:inset 0 0 0 0 transparent}30%,70%{box-shadow:inset 0 0 0 2px rgba(46,164,79,.7)}}
+.tl-day tr.tl-task.flash td{animation:row-flash .5s ease-in-out 3}
 .tl-day .d-short{display:none}
 .tl-day .d-full{color:#57606a;font-variant-numeric:tabular-nums}
 .tl-day .past-mark{display:inline-block;margin-left:5px;padding:0 4px;border-radius:5px;background:#eef0f2;color:#9aa1a9;font-size:10px;font-weight:normal;letter-spacing:0}
@@ -133,9 +134,16 @@ a{color:#0969da;text-decoration:none}
 .tl-detail-count{white-space:nowrap;font-weight:600;color:#1a7f37;font-variant-numeric:tabular-nums}
 .tl-prog{flex:1;height:6px;background:#e2e6e9;border-radius:3px;overflow:hidden}
 .tl-prog>div{height:100%;background:linear-gradient(90deg,#2ea44f,#4fc06e);transition:width .2s}
-.tl-detail-all{border:1px solid #d0d3d8;background:#fff;color:#57606a;padding:2px 9px;border-radius:12px;font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.tl-detail-all{border:1px solid #d0d3d8;background:#fff;color:#57606a;padding:5px 11px;border-radius:var(--r-pill);font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap;min-height:28px}
 .tl-detail-all:hover{border-color:#2ea44f;color:#1a7f37}
-.tl-chip{display:inline-block;border:1px solid #d7dce1;background:#fff;border-radius:14px;padding:3px 10px;margin:3px 5px 2px 0;font-size:12px;cursor:pointer;user-select:none;color:#24292f}
+/* 同类批量勾选按钮：紧凑一行，点面积够手指 */
+.tl-batch{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:0 0 6px}
+.tl-batch-label{font-size:11px;color:#8b949e;font-weight:600;letter-spacing:.5px}
+.tl-batch-btn{border:1px dashed #b8c4cc;background:#fff;color:#57606a;padding:4px 10px;min-height:26px;border-radius:var(--r-pill);font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.tl-batch-btn:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
+.tl-batch-btn.on{border-style:solid;background:#c6efce;border-color:#86c086;color:#006100;font-weight:600}
+.tl-batch-btn.part{border-style:solid;border-color:#e0c060;background:#fff8e1;color:#8a6100}
+.tl-chip{display:inline-block;border:1px solid #d7dce1;background:#fff;border-radius:var(--r-pill);padding:7px 13px;min-height:30px;line-height:16px;margin:4px 6px 3px 0;font-size:12.5px;cursor:pointer;user-select:none;color:#24292f;-webkit-tap-highlight-color:transparent}
 .tl-chip:hover{border-color:#2ea44f;color:#1a7f37;background:#f6fbf8}
 .tl-chip.done{background:#c6efce;border-color:#86c086;color:#006100;font-weight:600}
 .tl-chip.done::before{content:'✅ '}
@@ -152,7 +160,7 @@ a{color:#0969da;text-decoration:none}
 .tl-day tr.tl-task.past td:first-child::before{color:#c6cbd1}
 .tl-day tr.tl-task.past.done td{background:#f1f4f6}
 .tl-day tr.tl-task.past.done td:first-child,.tl-day tr.tl-task.past.done .tl-total{color:#6a737d}
-@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:14%}.tl-day th:nth-child(2){width:28%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:16%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day td.tl-total{white-space:nowrap;overflow-wrap:normal;font-size:9.5px;letter-spacing:-.4px}.tl-day b{font-weight:600}.tl-day tr.tl-task td:first-child::before{display:none}.tl-day .d-short{display:inline}.tl-day .d-full{display:none}.tl-chip{font-size:11px;padding:2px 7px}}
+@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:14%}.tl-day th:nth-child(2){width:28%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:16%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day td.tl-total{white-space:nowrap;overflow-wrap:normal;font-size:9.5px;letter-spacing:-.4px}.tl-day b{font-weight:600}.tl-day tr.tl-task td:first-child::before{display:none}.tl-day .d-short{display:inline}.tl-day .d-full{display:none}.tl-chip{font-size:12px;padding:6px 9px;min-height:30px}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -175,9 +183,13 @@ a{color:#0969da;text-decoration:none}
 .tl-tag.g{background:#e8f5ec;color:#1a7f37;border:1px solid #b7e0c2}
 .tl-tag.y{background:#fff8e6;color:#8a6100;border:1px solid #f0dfae}
 .tl-tag.r{background:#fff0f0;color:#b42318;border:1px solid #f5c2c0}
-.tl-now{margin-left:2px;font-size:12px;font-weight:bold;color:#1a7f37;background:#e8f6ed;border:1px solid #b7e0c2;border-radius:11px;padding:3px 10px}
+.tl-now{margin-left:2px;font-size:12px;font-weight:bold;color:#1a7f37;background:#e8f6ed;border:1px solid #b7e0c2;border-radius:var(--r-pill);padding:3px 10px}
 #timeline h2{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px}
-.tl-toggle{margin-left:auto;border:1px solid #238536;background:linear-gradient(180deg,#3ab85a,#2ea44f);color:#fff;padding:7px 16px;border-radius:18px;font-size:13px;font-weight:bold;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 2px 8px rgba(46,164,79,.32);transition:all .15s}
+.tl-toggle{border:1px solid #238536;background:linear-gradient(180deg,#3ab85a,#2ea44f);color:#fff;padding:7px 16px;border-radius:var(--r-pill);font-size:13px;font-weight:bold;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 2px 8px rgba(46,164,79,.32);transition:all .15s}
+.tl-today-btn{margin-left:auto;border:1px solid #238536;background:#fff;color:#1a7f37;padding:7px 14px;border-radius:var(--r-pill);font-size:13px;font-weight:bold;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s}
+.tl-today-btn:hover{background:#e8f6ed;box-shadow:0 2px 8px rgba(46,164,79,.2);transform:translateY(-1px)}
+.tl-today-btn:active{transform:translateY(0)}
+.tl-today-btn.hidden{display:none}
 .tl-toggle::before{content:'🗂 ';}
 .tl-toggle:hover{background:linear-gradient(180deg,#2ea44f,#228a41);box-shadow:0 4px 13px rgba(46,164,79,.45);transform:translateY(-1px)}
 .tl-toggle:active{transform:translateY(0)}
@@ -247,56 +259,40 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <button class="tab-btn" data-tab="tab-lilun" onclick="showTab('tab-lilun')">⚙️ 理论力学</button><button class="tab-btn" data-tab="tab-llsc" onclick="showTab('tab-llsc')">⚡ 理力速成</button><button class="tab-btn" data-tab="tab-modian" onclick="showTab('tab-modian')">🔌 模电</button><button class="tab-btn" data-tab="tab-gaoshu" onclick="showTab('tab-gaoshu')">📐 高数·李天意</button><button class="tab-btn" data-tab="tab-gaishu" onclick="showTab('tab-gaishu')">🎲 概统·李天意</button><button class="tab-btn" data-tab="tab-cmc" onclick="showTab('tab-cmc')">🏆 数竞速成</button><button class="tab-btn" data-tab="tab-optics" onclick="showTab('tab-optics')">📖 光学·钟锡华</button><button class="tab-btn" data-tab="tab-python" onclick="showTab('tab-python')">🐍 蓝桥杯Python</button>
 </div>
 <section class="tab-page" id="tab-overview">
-<div class="legend"><span class="sw"></span>绿=已看 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>黄=暂不学 · 无色=未看 · <b>点行切换「已看 / 未看」，点 ⏸ 标「暂不学」</b></div>
+<div class="legend"><span class="sw"></span>已看 · <span class="sw" style="background:#fff8e1;border-color:#e0c060"></span>暂不学 · 无色未看 · <b>点行切换，⏸ 标暂不学</b></div>
 <div class="ov-grid">
 <div class="ov-card" data-key="lilun" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-lilun')">
 <div class="ov-head"><b>⚙️ 理论力学</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">理论力学（物理类）</div>
 <div class="bar"><div data-bar style="width:21.9%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">22/101 集 · 已看 4:42:27 / 总 21:30:06</div>
 <div class="ov-dl" data-ovdl="lilun">⏳ 01/01 前 · 还剩 61 天 · 待学 16:47:39 · 每天 16:32</div>
 </div><div class="ov-card" data-key="llsc" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-llsc')">
 <div class="ov-head"><b>⚡ 理力速成</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">理论力学速成课（凌云师兄 · 全考点 34 集）</div>
 <div class="bar"><div data-bar style="width:0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">0/34 集 · 已看 0:00 / 需学 9:17:53</div>
 <div class="ov-dl" data-ovdl="llsc">⏳ 01/01 前 · 待学 9:17:53</div>
 </div><div class="ov-card" data-key="modian" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-modian')">
 <div class="ov-head"><b>🔌 模电</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">模拟电子技术基础</div>
 <div class="bar"><div data-bar style="width:3.4%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">8/166 集 · 已看 3:10:21 / 总 92:34:00</div>
 <div class="ov-dl" data-ovdl="modian">⏳ 01/01 前 · 还剩 61 天 · 待学 89:23:39 · 每天 1:27:56</div>
 </div><div class="ov-card" data-key="gaoshu" data-dl="" data-mode="dur" onclick="showTab('tab-gaoshu')">
 <div class="ov-head"><b>📐 高数·李天意</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">考研数学精讲课（高等数学部分）</div>
 <div class="bar"><div data-bar style="width:26.7%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">11/34 集 · 已看 10:49:31 / 总 40:33:30</div>
 <div class="ov-dl" data-ovdl="gaoshu">⏳ 11/14 前 · 还剩 13 天 · 待学 29:43:59 · 每天 2:17:14</div>
 </div><div class="ov-card" data-key="gaishu" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-gaishu')">
 <div class="ov-head"><b>🎲 概统·李天意</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">概率论与数理统计（李天意）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">0/10 集 · 已看 0:00 / 总 12:37:33</div>
 <div class="ov-dl" data-ovdl="gaishu">⏳ 11/14 前 · 还剩 13 天 · 待学 12:37:33 · 每天 58:17</div>
 </div><div class="ov-card" data-key="cmc" data-dl="2026-11-14" data-mode="dur" onclick="showTab('tab-cmc')">
 <div class="ov-head"><b>🏆 数竞速成</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">大学生数学竞赛（非数学A类）速成课</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">0/10 集 · 已看 0:00 / 总 7:30:07</div>
 <div class="ov-dl" data-ovdl="cmc">⏳ 11/14 前 · 还剩 13 天 · 待学 7:30:07 · 每天 34:38</div>
 </div><div class="ov-card" data-key="optics" data-dl="2027-01-01" data-mode="dur" onclick="showTab('tab-optics')">
 <div class="ov-head"><b>📖 光学·钟锡华</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">光学（钟锡华 · 北京大学）</div>
 <div class="bar"><div data-bar style="width:0.0%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">0/61 集 · 已看 0:00 / 总 47:32:30</div>
 <div class="ov-dl" data-ovdl="optics">⏳ 01/01 前 · 还剩 61 天 · 待学 47:32:30 · 每天 46:46</div>
 </div><div class="ov-card" data-key="python" data-dl="" data-mode="dur" onclick="showTab('tab-python')">
 <div class="ov-head"><b>🐍 蓝桥杯Python</b><span class="ov-pct">—</span></div>
-<div class="ov-meta">蓝桥杯Python冲刺课（TsingPig）</div>
 <div class="bar"><div data-bar style="width:7.3%"></div><div class="bar-skip" data-barskip style="width:0%"></div></div>
-<div class="ov-stats">1/13 集 · 已看 24:05 / 总 5:30:38</div>
-<div class="ov-dl free">⏳ 无时间限制 · 待学 5:06:33</div>
+<div class="ov-dl free" data-ovdl="python">⏳ 不限时 · 待学 5:06:33</div>
 </div>
 
 </div>
@@ -382,11 +378,10 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <tr class="sec"><td colspan="4">📁 课时1 基础语法和竞赛快速入门 · <a href="https://www.bilibili.com/video/BV1Zs9VYrEgg/" target="_blank">BV1Zs9VYrEgg</a> · 已看 1/1 集</td></tr><tr class="done clk" data-vid="python:BV1Zs9VYrEgg:1" data-dur="1445"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时1：基础语法和竞赛快速入门</td><td class="dur">24:05</td><td class="donecell status">✅ 已看完<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时2 算法入门 · <a href="https://www.bilibili.com/video/BV12VXRYTEQh/" target="_blank">BV12VXRYTEQh</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV12VXRYTEQh:1" data-dur="1363"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时2：算法入门</td><td class="dur">22:43</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时3 贪心&排序 · <a href="https://www.bilibili.com/video/BV18c9iY4Eyu/" target="_blank">BV18c9iY4Eyu</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV18c9iY4Eyu:1" data-dur="1334"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时3：贪心 &amp; 排序 例题精讲</td><td class="dur">22:14</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时4 哈希&暴力&前缀和 · <a href="https://www.bilibili.com/video/BV1yM9pY5EaW/" target="_blank">BV1yM9pY5EaW</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1yM9pY5EaW:1" data-dur="1803"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时4：哈希 &amp; 暴力 &amp; 前缀和  例题 + 模板</td><td class="dur">30:03</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时5（上）二分查找 · <a href="https://www.bilibili.com/video/BV14ARKYqEb1/" target="_blank">BV14ARKYqEb1</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV14ARKYqEb1:1" data-dur="1762"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时5（上）：二分查找 &amp; bisect库 （吃透二分问题）</td><td class="dur">29:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时5（下）二分答案 · <a href="https://www.bilibili.com/video/BV1U99QYKEj2/" target="_blank">BV1U99QYKEj2</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1U99QYKEj2:1" data-dur="1562"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时5（下）：二分答案</td><td class="dur">26:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 刷题指南 · <a href="https://www.bilibili.com/video/BV1wcR3Y5EMg/" target="_blank">BV1wcR3Y5EMg</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1wcR3Y5EMg:1" data-dur="1052"><td class="num">P1</td><td>【蓝桥杯】Python速成  刷题指南</td><td class="dur">17:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时6（上）BFS · <a href="https://www.bilibili.com/video/BV1zUR3Y3EBE/" target="_blank">BV1zUR3Y3EBE</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1zUR3Y3EBE:1" data-dur="1138"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时6（上） BFS 网格图问题真题讲解</td><td class="dur">18:58</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时6（下）DFS · <a href="https://www.bilibili.com/video/BV1tJRjYiE6r/" target="_blank">BV1tJRjYiE6r</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1tJRjYiE6r:1" data-dur="1342"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时6（下）DFS 国赛 + 省赛真题解析</td><td class="dur">22:22</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时7 并查集&堆 · <a href="https://www.bilibili.com/video/BV1BkQnYxEuZ/" target="_blank">BV1BkQnYxEuZ</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1BkQnYxEuZ:1" data-dur="1294"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时7 【数据结构】并查集 &amp; 堆</td><td class="dur">21:34</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时8 动态规划 · <a href="https://www.bilibili.com/video/BV1zGQ6YmE6J/" target="_blank">BV1zGQ6YmE6J</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1zGQ6YmE6J:1" data-dur="2132"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时8 动态规划：入门dp、背包dp、网格图dp</td><td class="dur">35:32</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时9 图论 · <a href="https://www.bilibili.com/video/BV1umQxYtERz/" target="_blank">BV1umQxYtERz</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1umQxYtERz:1" data-dur="1929"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时9 图论：建图、图遍历、Dijkstra、Floyd</td><td class="dur">32:09</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr><tr class="sec"><td colspan="4">📁 课时10 IDLE&日期&数论 · <a href="https://www.bilibili.com/video/BV1AGXzYXEWF/" target="_blank">BV1AGXzYXEWF</a> · 已看 0/1 集</td></tr><tr class="clk" data-vid="python:BV1AGXzYXEWF:1" data-dur="1682"><td class="num">P1</td><td>【蓝桥杯】Python速成 课时10 IDLE使用 &amp; 日期问题（填空题） &amp; 数论入门</td><td class="dur">28:02</td><td class="status">未看<i class="sk" title="标记暂不学 / 取消">⏸</i></td></tr></table>
 </div></section>
 <div class="card" id="timeline">
-<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span><button class="tl-toggle" id="tlToggle" type="button" onclick="toggleTlFocus()">全部展开 ▾</button></h2>
+<h2>📅 每天做什么<span class="tl-now" id="tlNow"></span><button class="tl-today-btn" id="tlToday" type="button" onclick="goToday()">🎯 回到今天</button><button class="tl-toggle" id="tlToggle" type="button" onclick="toggleTlFocus()">全部展开 ▾</button></h2>
 <div class="tl-keys">
-<span>⏱ <b>实际</b>=视频÷1.5 · <b>练习</b>：模电按实际 40%，其余 1∶1 · <b>全天</b>=实际+练习+复习</span>
-<span>家教：周六、日 13:30–18:00 已减量 · <b>底线</b>：周末≥1:30、工作日≥3:00</span>
-<span>☝️ <b>点日期</b>展开逐项打卡（课时与课程页联动）· 默认只展开当前阶段，点标题折叠</span>
+<span>⏱ <b>实际</b>=视频÷1.5 · <b>练习</b>：模电 40%、其余 1∶1 · <b>全天</b>=实际+练习+复习</span>
+<span>☝️ <b>点日期</b>展开打卡 · 周末家教已减量 · 默认只展开当前阶段</span>
 </div>
 <div class="tl">
 
@@ -395,7 +390,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-date">11/06 – 11/18 · 已过去</div>
 <div class="tl-body">
 <b>数竞 + 期中冲刺</b><span class="tl-tag g">已完成</span>
-<div class="tl-note">数竞 11/14、概率论期中 11/15 已考；高数、数竞收官 🏅，概率论第四章已学完。剩余按下方安排。</div>
+<div class="tl-note">数竞、概率论期中已考；高数、数竞收官 🏅，概统已学完第四章。</div>
 </div>
 </div>
 
@@ -405,7 +400,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <div class="tl-body">
 <b>今明两天收官概率论，随后光学模电并行</b><span class="tl-tag r">周末减量 · 视频 0:43–5:40/天</span>
 <table class="tl-day" data-tl="s1"></table>
-<div class="tl-note">11/21 学概统 P40、11/22 P41 收官 🏅。周末有家教减量，工作日承担更多；光学 12/09 收尾（P61）。点日期可展开逐节打卡。</div>
+<div class="tl-note">11/21 概统 P40、11/22 P41 收官 🏅；光学 12/09 收尾（P61）。点日期展开打卡。</div>
 </div>
 </div>
 
@@ -528,20 +523,15 @@ function renderDeadlines(){
     if(bd) bd.textContent='⏳ '+ddText(n);
     if(!st) return;
     var remTxt = st.pages ? (st.rem+' 页待读') : ('待学 '+fmt(st.rem));
-    var paceTxt;
-    if(!dl) paceTxt='不限时间';
-    else if(!st.rem) paceTxt='已完成 ✅';
-    else if(n>0) paceTxt = st.pages ? ('每天 '+Math.ceil(st.rem/n)+' 页') : ('每天 '+fmt(Math.round(st.rem/n)));
-    else paceTxt='已超期';
     var el=card.querySelector('[data-ovdl]');
     if(el){
       if(st.valid && !st.rem){
-        el.textContent = dl ? ('✅ '+dl.slice(5).replace('-','/')+' 前已全部学完') : ('✅ 全部学完 · '+(st.pages?(st.done+' 页'):fmt(st.done)));
+        el.textContent = dl ? ('✅ '+dl.slice(5).replace('-','/')+' 前已全部学完') : ('✅ 全部学完');
         el.className='ov-dl doneall';
       }else{
         el.textContent = dl
-          ? ('⏳ '+dl.slice(5).replace('-','/')+' 前 · '+ddText(n)+' · '+remTxt+' · '+paceTxt)
-          : ('⏳ 无时间限制 · '+remTxt);
+          ? ('⏳ '+dl.slice(5).replace('-','/')+' 截止 · '+remTxt)
+          : ('⏳ 不限时 · '+remTxt);
         el.className = 'ov-dl' + (dl?'':' free');
       }
     }
@@ -627,18 +617,6 @@ function recompute(){
       var isDone = (valid>0 && pct>=99.95);
       ov.classList.toggle('complete', isDone);
       var op=ov.querySelector('.ov-pct'); if(op) op.textContent=pct.toFixed(1)+'%';
-      var os=ov.querySelector('.ov-stats');
-      if(os){
-        var base;
-        if(isDone){
-          base = w+'/'+valid+(mode==='pages'?' 节 · ':' 集 · ')+'已看 '+fmt(wsec);
-        }else{
-          base = mode==='pages'
-            ? (w+'/'+valid+' 节 · 已看 '+wsec+' / '+vsec+' 页')
-            : (tsec ? (w+'/'+valid+' 集 · 已看 '+fmt(wsec)+' / 需学 '+fmt(vsec)) : (w+'/'+valid+' 节'));
-        }
-        os.textContent = base + (sk ? ' · ⏸ 跳过 '+sk : '');
-      }
       var ob=ov.querySelector('[data-bar]'); if(ob) ob.style.width=dPct.toFixed(1)+'%';
       var obs=ov.querySelector('[data-barskip]'); if(obs) obs.style.width=sPct.toFixed(1)+'%';
     }
@@ -677,15 +655,15 @@ function parseDayItems(cells, iso){
       var r=/^(\d+)\s*[–—\-~]\s*(\d+)$/.exec(part), list=[];
       if(r){ for(var i=+r[1];i<=+r[2];i++) list.push(i); }
       else if(/^\d+$/.test(part)) list.push(+part);
-      list.forEach(function(n){ out.push({v:mp[0]+':'+mp[1]+n, label:name+' '+n}); });
+      list.forEach(function(n){ out.push({v:mp[0]+':'+mp[1]+n, label:name+' '+n, group:name}); });
     });
   });
   /* 2) 练习列 → 习题打卡 */
   var ex=(cells[4]?cells[4].textContent:'').replace(/\s+/g,' ').trim();
-  if(ex && /\d/.test(ex)) out.push({v:'task:'+iso+':ex', label:'习题 '+ex});
+  if(ex && /\d/.test(ex)) out.push({v:'task:'+iso+':ex', label:'习题 '+ex, group:'习题'});
   /* 3) 复习列 → 复习打卡 */
   var rv=(cells[5]?cells[5].textContent:'').replace(/\s+/g,' ').trim();
-  if(rv && /\d/.test(rv)) out.push({v:'task:'+iso+':rv', label:'复习 '+rv});
+  if(rv && /\d/.test(rv)) out.push({v:'task:'+iso+':rv', label:'复习 '+rv, group:'复习'});
   return out;
 }
 function dayStat(items){
@@ -712,6 +690,15 @@ function renderDays(){
     });
     var btn=tr._detail.querySelector('.tl-detail-all');
     if(btn) btn.textContent=all?'↩ 撤销当天':'✓ 全部学完';
+    /* 批量按钮：同类全勾亮起，部分勾显示半选 */
+    if(tr._detail) tr._detail.querySelectorAll('.tl-batch-btn').forEach(function(bb){
+      var grp=tr._items.filter(function(x){return x.group===bb.dataset.grp;});
+      var gd=grp.filter(function(x){return state[x.v]===true;}).length;
+      var gall=grp.length>0 && gd===grp.length;
+      bb.classList.toggle('on',gall);
+      bb.classList.toggle('part',!gall && gd>0);
+      bb.title=gall?'点一下取消「'+bb.dataset.grp+'」全部':('点一下勾选「'+bb.dataset.grp+'」全部 '+grp.length+' 项');
+    });
   });
   if(window.refreshStageSummary) window.refreshStageSummary();
 }
@@ -722,6 +709,18 @@ function toggleDay(tr){
 }
 function markAll(tr){
   var items=tr._items, st=dayStat(items), all=st.total>0&&st.done===st.total;
+  items.forEach(function(x){
+    if(all){ if(state[x.v]===true) delete state[x.v]; }
+    else { state[x.v]=true; }
+  });
+  items.forEach(function(x){ rows.forEach(function(r){ if(r.dataset.vid===x.v) applyRow(r,state[x.v]||false); }); });
+  recompute(); renderDays(); sv(state); dirty=true; schedulePush();
+}
+/* 按同类批量勾选：点一下把当天某一类（如全部「光学」或全部「习题」）全勾，再点撤销 */
+function markGroup(tr,grp){
+  var items=tr._items.filter(function(x){return x.group===grp;});
+  if(!items.length) return;
+  var all=items.every(function(x){return state[x.v]===true;});
   items.forEach(function(x){
     if(all){ if(state[x.v]===true) delete state[x.v]; }
     else { state[x.v]=true; }
@@ -769,9 +768,21 @@ function initDays(){
       /* 展开面板行 */
       var dr=document.createElement('tr'); dr.className='tl-detail-row'; dr.style.display='none';
       var cell=document.createElement('td'); cell.colSpan=tr.children.length;
-      cell.innerHTML='<div class="tl-detail"><div class="tl-detail-head"><span class="tl-detail-count"></span><span class="tl-prog"><div></div></span><button type="button" class="tl-detail-all">✓ 全部学完</button></div><div class="tl-chips"></div></div>';
+      /* 同类批量按钮：当天出现过的类别才显示，超过 1 项才有意义 */
+      var groups=[], seen={};
+      items.forEach(function(x){ if(x.group && !seen[x.group]){ seen[x.group]=1; groups.push(x.group); } });
+      var batchHtml='';
+      if(groups.length>1){
+        batchHtml='<div class="tl-batch"><span class="tl-batch-label">批量</span>'+groups.map(function(g){
+          return '<button type="button" class="tl-batch-btn" data-grp="'+g+'">+'+g+'</button>';
+        }).join('')+'</div>';
+      }
+      cell.innerHTML='<div class="tl-detail"><div class="tl-detail-head"><span class="tl-detail-count"></span><span class="tl-prog"><div></div></span><button type="button" class="tl-detail-all">✓ 全部学完</button></div>'+batchHtml+'<div class="tl-chips"></div></div>';
       dr.appendChild(cell);
       tr.parentNode.insertBefore(dr,tr.nextSibling);
+      cell.querySelectorAll('.tl-batch-btn').forEach(function(bb){
+        bb.addEventListener('click',function(e){ e.stopPropagation(); markGroup(tr,bb.dataset.grp); });
+      });
       var box=cell.querySelector('.tl-chips');
       items.forEach(function(x){
         var b=document.createElement('span'); b.className='tl-chip'; b.dataset.v=x.v;
@@ -1068,6 +1079,33 @@ function injectToolbar(){
       if(it.classList.contains('folded') && it._summary) it._summary.textContent=stageProgress(it);
     });
   };
+
+  /* 一键回到今天：展开所在阶段 + 当天面板，平滑滚动并高亮 */
+  window.goToday=function(){
+    var todayRow=document.querySelector('tr.tl-task.today');
+    var target=todayRow;
+    if(todayRow){
+      var stage=todayRow.closest('.tl-item');
+      if(stage && stage.classList.contains('folded')) setFold(stage,false);
+      if(typeof toggleDay==='function' && todayRow._open===false) toggleDay(todayRow);
+    }else{
+      /* 今天不在排期范围内：退而求其次定位到当前阶段 */
+      target=cur || items[0];
+      if(target && target.classList.contains('folded')) setFold(target,false);
+    }
+    if(!target) return;
+    setTimeout(function(){
+      target.scrollIntoView({behavior:'smooth',block:'center'});
+      target.classList.add('flash');
+      setTimeout(function(){ target.classList.remove('flash'); },1600);
+    },60);
+  };
+  /* 没有 today 行时隐藏「回到今天」，并让「全部展开」靠右 */
+  var todayBtn=document.getElementById('tlToday');
+  if(!document.querySelector('tr.tl-task.today') && todayBtn){
+    todayBtn.classList.add('hidden');
+    var tg2=document.getElementById('tlToggle'); if(tg2) tg2.style.marginLeft='auto';
+  }
 
   var tg=document.getElementById('tlToggle');
   function allFolded(){ return items.every(function(it){return it.classList.contains('folded');}); }
