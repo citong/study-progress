@@ -4,27 +4,39 @@
 <style>
 body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;margin:0;padding:20px 16px 40px;color:#1f2329;background:#f4f5f7;min-height:100vh;overflow-x:hidden}
 .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto}
-/* ===== 动态背景层 ===== */
-.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:
- radial-gradient(1200px 720px at 2% 0%,#eef8f1 0%,transparent 58%),
- radial-gradient(1100px 680px at 100% 6%,#eef3fc 0%,transparent 56%),
- linear-gradient(160deg,#f8faf9 0%,#f4f6f8 52%,#f7f5fa 100%)}
-.bg-grid{position:absolute;inset:-90px;background-image:linear-gradient(rgba(31,45,61,.030) 1px,transparent 1px),linear-gradient(90deg,rgba(31,45,61,.030) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(ellipse 82% 64% at 50% 26%,#000 18%,transparent 86%);mask-image:radial-gradient(ellipse 82% 64% at 50% 26%,#000 18%,transparent 86%);transform:translate3d(0,var(--sy,0px),0);will-change:transform}
-.bg-grain{position:absolute;inset:0;opacity:.055;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.bg i{position:absolute;display:block;border-radius:50%;filter:blur(70px);will-change:transform;opacity:.55}
-.bg .b1{width:560px;height:560px;left:-10%;top:-16%;background:radial-gradient(circle,#bfe9cf 0%,rgba(191,233,207,0) 70%);animation:bg-drift-a 26s ease-in-out infinite}
-.bg .b2{width:520px;height:520px;right:-8%;top:5%;background:radial-gradient(circle,#c9def8 0%,rgba(201,222,248,0) 70%);animation:bg-drift-b 32s ease-in-out infinite}
-.bg .b3{width:620px;height:620px;left:14%;bottom:-28%;background:radial-gradient(circle,#e2daf7 0%,rgba(226,218,247,0) 70%);animation:bg-drift-c 36s ease-in-out infinite}
-.bg .bg-follow{left:0;top:0;margin:-50% 0 0 -50%;will-change:transform}
-.bg .f-a{width:440px;height:440px;background:radial-gradient(circle,rgba(126,201,155,.26) 0%,rgba(126,201,155,0) 68%);filter:blur(44px);opacity:.8;transform:translate3d(var(--mx,50vw),var(--my,50vh),0)}
-.bg .f-b{width:640px;height:640px;background:radial-gradient(circle,rgba(146,178,240,.18) 0%,rgba(146,178,240,0) 70%);filter:blur(58px);opacity:.7;transform:translate3d(var(--mx2,50vw),var(--my2,50vh),0)}
-.bg .bg-glow{position:absolute;inset:0;background:radial-gradient(560px 560px at var(--mx,50vw) var(--my,50vh),rgba(255,255,255,.62) 0%,rgba(255,255,255,0) 70%);opacity:.7}
-@keyframes bg-drift-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(74px,48px) scale(1.15)}}
-@keyframes bg-drift-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-82px,62px) scale(1.1)}}
-@keyframes bg-drift-c{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,-72px) scale(1.12)}}
-.top-beam{position:fixed;left:0;right:0;top:0;height:2px;z-index:30;pointer-events:none;opacity:.85;background:linear-gradient(90deg,#2ea44f 0%,#8fd6a6 22%,#a5c4f8 48%,#d3b0ec 72%,#2ea44f 100%);background-size:200% 100%;animation:beam-flow 14s linear infinite}
+/* ===== 动态背景层：极光流沙（自主持续动画，不依赖指针） ===== */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(150deg,#f6faf7 0%,#f3f6fa 46%,#f7f4fa 100%)}
+/* 极光色块：blob 形变 + 漂移 + 旋转，多相位错开，手机持续可见 */
+.aurora{position:absolute;inset:-18%;filter:blur(78px) saturate(1.16);mix-blend-mode:multiply;will-change:transform}
+.aurora i{position:absolute;display:block;opacity:.58;will-change:transform,border-radius}
+.aurora .a1{width:46vw;min-width:420px;height:46vw;min-height:420px;left:-8%;top:-12%;background:radial-gradient(circle at 38% 42%,#a9e6c4 0%,#d5f2e0 42%,transparent 72%);animation:aurora-1 28s ease-in-out infinite}
+.aurora .a2{width:44vw;min-width:400px;height:44vw;min-height:400px;right:-10%;top:2%;background:radial-gradient(circle at 60% 40%,#a9d8f2 0%,#d6e9f9 42%,transparent 72%);animation:aurora-2 34s ease-in-out infinite}
+.aurora .a3{width:52vw;min-width:460px;height:52vw;min-height:460px;left:8%;bottom:-24%;background:radial-gradient(circle at 44% 56%,#cfc2f2 0%,#e8dffa 42%,transparent 72%);animation:aurora-3 41s ease-in-out infinite}
+.aurora .a4{width:38vw;min-width:360px;height:38vw;min-height:360px;right:2%;bottom:-10%;background:radial-gradient(circle at 56% 48%,#f2c9df 0%,#fae1ee 42%,transparent 72%);animation:aurora-4 31s ease-in-out infinite;opacity:.48}
+.aurora .a5{width:34vw;min-width:320px;height:34vw;min-height:320px;left:34%;top:22%;background:radial-gradient(circle at 50% 50%,#bfeae6 0%,#dff5f1 45%,transparent 72%);animation:aurora-5 24s ease-in-out infinite;opacity:.45}
+@keyframes aurora-1{0%,100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:42% 58% 63% 37%/46% 42% 58% 54%}33%{transform:translate(120px,84px) rotate(58deg) scale(1.16);border-radius:63% 37% 44% 56%/55% 63% 37% 45%}66%{transform:translate(-54px,146px) rotate(126deg) scale(.92);border-radius:36% 64% 56% 44%/62% 38% 62% 38%}}
+@keyframes aurora-2{0%,100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:56% 44% 38% 62%/48% 56% 44% 52%}40%{transform:translate(-96px,110px) rotate(-72deg) scale(1.12);border-radius:38% 62% 61% 39%/58% 40% 60% 42%}72%{transform:translate(62px,-64px) rotate(-140deg) scale(.95);border-radius:64% 36% 42% 58%/40% 62% 38% 60%}}
+@keyframes aurora-3{0%,100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:48% 52% 64% 36%/55% 45% 55% 45%}35%{transform:translate(88px,-118px) rotate(64deg) scale(1.14);border-radius:64% 36% 40% 60%/42% 58% 42% 58%}70%{transform:translate(-76px,-48px) rotate(132deg) scale(.9);border-radius:38% 62% 58% 42%/60% 38% 62% 40%}}
+@keyframes aurora-4{0%,100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:52% 48% 42% 58%/45% 55% 45% 55%}45%{transform:translate(-108px,-86px) rotate(-82deg) scale(1.18);border-radius:40% 60% 62% 38%/58% 42% 58% 42%}75%{transform:translate(54px,98px) rotate(-150deg) scale(.94);border-radius:62% 38% 44% 56%/40% 60% 40% 60%}}
+@keyframes aurora-5{0%,100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:46% 54% 58% 42%/50% 46% 54% 50%}50%{transform:translate(-120px,96px) rotate(110deg) scale(1.22);border-radius:59% 41% 43% 57%/44% 57% 43% 56%}}
+/* 缓慢扫过的柔光带：周期性照亮画面，手机也能看到流动 */
+.bg-scan{position:absolute;inset:-40%;background:linear-gradient(112deg,transparent 36%,rgba(255,255,255,.62) 49%,transparent 62%);opacity:.5;mix-blend-mode:screen;transform:translateX(-72%);animation:bg-scan 19s ease-in-out infinite;will-change:transform}
+@keyframes bg-scan{0%,16%{transform:translateX(-72%)}72%,100%{transform:translateX(72%)}}
+/* 点阵网格：缓慢自动漂移 + 滚动视差 */
+.bg-grid{position:absolute;inset:-70px;background-image:radial-gradient(rgba(31,45,61,.13) 1px,transparent 1.1px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 80% 66% at 50% 24%,#000 14%,transparent 82%);mask-image:radial-gradient(ellipse 80% 66% at 50% 24%,#000 14%,transparent 82%);animation:grid-float 32s ease-in-out infinite;will-change:transform}
+@keyframes grid-float{0%,100%{transform:translate3d(var(--sx,0px),var(--sy,0px),0)}50%{transform:translate3d(calc(var(--sx,0px) + 14px),calc(var(--sy,0px) - 18px),0)}}
+/* 磨砂噪点：消除渐变的塑料感 */
+.bg-grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* 指针/触摸反馈光晕：无操作时自动漫游，触屏也有交互 */
+.bg i.gl{position:absolute;left:0;top:0;margin:-50% 0 0 -50%;border-radius:50%;will-change:transform}
+.bg .g1{width:420px;height:420px;background:radial-gradient(circle,rgba(112,196,148,.24) 0%,rgba(112,196,148,0) 68%);filter:blur(42px);transform:translate3d(var(--mx,50vw),var(--my,50vh),0)}
+.bg .g2{width:620px;height:620px;background:radial-gradient(circle,rgba(138,172,238,.18) 0%,rgba(138,172,238,0) 70%);filter:blur(58px);transform:translate3d(var(--mx2,50vw),var(--my2,50vh),0)}
+.top-beam{position:fixed;left:0;right:0;top:0;height:2px;z-index:30;pointer-events:none;opacity:.9;background:linear-gradient(90deg,#2ea44f 0%,#7fd6a4 20%,#8ec5f5 44%,#c9a6ec 70%,#2ea44f 100%);background-size:200% 100%;animation:beam-flow 12s linear infinite}
 @keyframes beam-flow{0%{background-position:0% 0}100%{background-position:200% 0}}
-@media(prefers-reduced-motion:reduce){.bg i{animation:none}.bg .bg-follow,.bg-glow,.top-beam{display:none}.bg-grid{transform:none}}
+.scroll-progress{position:fixed;left:0;top:0;height:2px;width:0;z-index:31;pointer-events:none;background:linear-gradient(90deg,#1a7f37,#57c97a,#9be0b3);box-shadow:0 0 8px rgba(46,164,79,.45);transition:width .12s linear}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.aurora i,.bg-scan,.bg-grid,.top-beam{animation:none}.bg i.gl{display:none}.reveal{opacity:1;transform:none;transition:none}.scroll-progress{display:none}}
 h1{font-size:25px;margin:0 0 4px;letter-spacing:-.3px}
 h1::after{content:"";display:block;width:54px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2ea44f,#8fd6a6);margin-top:9px}
 .sub{color:#57606a;font-size:14px;margin-bottom:12px}
@@ -165,13 +177,14 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 .bgt-bar>div{height:100%;background:#2ea44f}
 </style></head><body>
 <div class="bg" aria-hidden="true">
+<div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i><i class="a5"></i></div>
+<div class="bg-scan"></div>
 <div class="bg-grid"></div>
-<i class="b1"></i><i class="b2"></i><i class="b3"></i>
-<i class="bg-follow f-a"></i><i class="bg-follow f-b"></i>
-<div class="bg-glow"></div>
+<i class="gl g1"></i><i class="gl g2"></i>
 <div class="bg-grain"></div>
 </div>
 <div class="top-beam" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <div class="wrap">
 <h1>📚 B站课程学习进度表</h1>
 <div class="sub"><span id="dd-sum-b">🗓 元旦前（1/1）还剩 61 天 · 待学 153:43:48</span></div>
@@ -868,28 +881,40 @@ function injectToolbar(){
 })();
 </script>
 <script>
-/* 背景交互：双色光晕差速跟随 + 网格滚动视差 */
+/* 背景交互：无操作时 autonomously 漫游，触摸/鼠标时跟随；滚动驱动点阵视差 */
 (function(){
   var bg=document.querySelector('.bg');
-  if(!bg || !bg.querySelector('.bg-follow')) return;
+  if(!bg) return;
   var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine=window.matchMedia && window.matchMedia('(pointer:fine)').matches;
-  if(reduce || !fine){ bg.querySelectorAll('.bg-follow,.bg-glow').forEach(function(el){el.style.display='none';}); }
-  /* 网格视差（所有设备） */
-  if(!reduce){
-    var ticking=false;
-    window.addEventListener('scroll',function(){
-      if(ticking) return; ticking=true;
-      requestAnimationFrame(function(){ bg.style.setProperty('--sy',(window.scrollY*0.035).toFixed(1)+'px'); ticking=false; });
-    },{passive:true});
-  }
-  if(reduce || !fine) return;
-  var tx=window.innerWidth/2, ty=window.innerHeight*0.35, cx=tx, cy=ty, cx2=tx, cy2=ty;
-  window.addEventListener('pointermove',function(e){tx=e.clientX;ty=e.clientY;},{passive:true});
-  document.addEventListener('mouseleave',function(){tx=window.innerWidth/2;ty=window.innerHeight*0.35;});
+  if(reduce){ bg.querySelectorAll('.aurora i,.bg-scan,.bg-grid,.top-beam,.gl').forEach(function(el){el.style.animation='none';if(el.classList.contains('gl'))el.style.display='none';}); return; }
+  /* 滚动视差：点阵横竖轻微位移，节流 */
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){
+      var y=window.scrollY;
+      bg.style.setProperty('--sy',(y*0.03).toFixed(1)+'px');
+      bg.style.setProperty('--sx',(y*0.012).toFixed(1)+'px');
+      ticking=false;
+    });
+  },{passive:true});
+
+  /* 双光晕：指针/触摸跟随；无操作 2.4s 后自动漫游（手机平板上持续有交互） */
+  var tx=window.innerWidth/2, ty=window.innerHeight*0.4, cx=tx, cy=ty, cx2=tx, cy2=ty;
+  var last=0;
+  function input(x,y){tx=x;ty=y;last=Date.now();}
+  window.addEventListener('pointermove',function(e){input(e.clientX,e.clientY);},{passive:true});
+  window.addEventListener('touchmove',function(e){if(e.touches&&e.touches[0])input(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+  window.addEventListener('pointerdown',function(e){input(e.clientX,e.clientY);},{passive:true});
   function step(){
-    cx+=(tx-cx)*0.075; cy+=(ty-cy)*0.075;
-    cx2+=(tx-cx2)*0.028; cy2+=(ty-cy2)*0.028;
+    var now=Date.now();
+    if(now-last>2400){
+      var t=now/1000;
+      tx=window.innerWidth*(0.5+0.31*Math.sin(t*0.21));
+      ty=window.innerHeight*(0.42+0.26*Math.cos(t*0.17));
+    }
+    cx+=(tx-cx)*0.06; cy+=(ty-cy)*0.06;
+    cx2+=(tx-cx2)*0.022; cy2+=(ty-cy2)*0.022;
     bg.style.setProperty('--mx',cx.toFixed(1)+'px');
     bg.style.setProperty('--my',cy.toFixed(1)+'px');
     bg.style.setProperty('--mx2',cx2.toFixed(1)+'px');
@@ -897,6 +922,38 @@ function injectToolbar(){
     requestAnimationFrame(step);
   }
   step();
+})();
+</script>
+<script>
+/* 滚动进度条 + 元素渐入：手机/平板滚动即可感知的高级反馈 */
+(function(){
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar=document.getElementById('scrollProgress');
+  if(bar){
+    var tick=false;
+    function upd(){
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      var p=h>0?Math.min(1,window.scrollY/h):0;
+      bar.style.width=(p*100).toFixed(2)+'%';
+      tick=false;
+    }
+    window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});
+    window.addEventListener('resize',upd,{passive:true});
+    upd();
+  }
+  if(reduce || !('IntersectionObserver' in window)) return;
+  var els=document.querySelectorAll('.card,.tl-item,.ov-card');
+  if(!els.length) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+  Array.prototype.forEach.call(els,function(el,idx){
+    el.classList.add('reveal');
+    el.style.transitionDelay=(Math.min(idx%4,3)*60)+'ms';
+    io.observe(el);
+  });
 })();
 </script>
 </body></html>
