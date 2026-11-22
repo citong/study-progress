@@ -106,7 +106,17 @@ a{color:#0969da;text-decoration:none}
 .tl-day th:nth-child(6),.tl-day td:nth-child(6){white-space:nowrap}
 .tl-day b{color:#1f6feb;font-weight:600}
 .tl-day tr:nth-child(even) td{background:#fafbfc}
-@media(max-width:640px){.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:10%}.tl-day th:nth-child(2){width:30%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:17%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day b{font-weight:600}}
+/* 每日任务：点整行标记完成，完成态与课程进度双向联动 */
+.tl-day tr.tl-task{cursor:pointer}
+.tl-day tr.tl-task:hover td{background:#eaf6ee}
+.tl-day tr.tl-task::before{content:''}
+.tl-day tr.tl-task td:first-child::before{content:'⬜ ';color:#a8b0ba;font-weight:normal}
+.tl-day tr.tl-task.done td{background:#c6efce}
+.tl-day tr.tl-task.done:hover td{background:#b6e5c0}
+.tl-day tr.tl-task.done td:first-child,.tl-day tr.tl-task.done td.tl-total{color:#006100;font-weight:700}
+.tl-day tr.tl-task.done td:first-child::before{content:'✅ ';color:#006100}
+.tl-day tr.tl-task.part td:first-child::before{content:'◐ ';color:#b8860b}
+@media(max-width:640px){.tl-day tr.tl-task td:first-child::before{display:none}}{.tl-day{font-size:10px;table-layout:fixed;width:100%}.tl-day th,.tl-day td{padding:3px 2px;overflow-wrap:anywhere}.tl-day th:nth-child(1){width:10%}.tl-day th:nth-child(2){width:30%}.tl-day th:nth-child(3),.tl-day th:nth-child(4),.tl-day th:nth-child(5){width:10%}.tl-day th:nth-child(6){width:17%;white-space:normal;line-height:1.35}.tl-day th:nth-child(7){width:13%}.tl-day b{font-weight:600}}
 .tl-tutor{font-size:12.5px;line-height:1.75;background:#fff8e1;border:1px solid #f0d98c;border-left:3px solid #d4a72c;border-radius:8px;padding:9px 12px;margin:0 0 12px;color:#7a5200}
 .tl-tutor b{color:#8a5a00}
 .tl{position:relative;margin:16px 0 2px;padding-left:24px}
@@ -345,6 +355,7 @@ table.bgt-tab{width:100%;border-collapse:collapse;font-size:13px}
 <span><b>复习</b>：看课以外的六级 / 模电·光学·概统复习</span>
 <span><b>全天</b>=实际+练习+复习（周末≥1:30，工作日≥3:00）</span>
 <span><b>家教</b>：每周六、日 13:30–18:00，表内当天已减量</span>
+<span>☝️ <b>点任意一天</b>=把当天课时全部标完成 · 再点撤销 · 与课程页进度双向联动</span>
 </div>
 <div class="tl">
 
@@ -622,10 +633,66 @@ function buildMeta(){
 function snapToday(){}
 function renderDaily(){}
 var rows=[], state={};
-function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); snapToday(); sv(state); dirty=true; renderDaily(); schedulePush(); }
+function setStat(v,val){ if(val===false||val==null){ delete state[v]; } else { state[v]=val; } rows.forEach(function(tr){ if(tr.dataset.vid===v) applyRow(tr, state[v]); }); recompute(); renderDays(); snapToday(); sv(state); dirty=true; renderDaily(); schedulePush(); }
 function toggleVid(v){ setStat(v, state[v]===true ? false : true); }
 function toggleSkip(v){ setStat(v, state[v]==='skip' ? false : 'skip'); }
-function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(tr, Object.prototype.hasOwnProperty.call(state,v) ? state[v] : false); }); }
+function applyAll(){ rows.forEach(function(tr){ var v=tr.dataset.vid; applyRow(tr, Object.prototype.hasOwnProperty.call(state,v) ? state[v] : false); }); renderDays(); }
+/* ===== 每日任务 ↔ 课程进度：点一天批量勾/取消当天课时；课程页勾课反向点亮日期 ===== */
+var DAYMAP={'概统':['gaishu','P'],'光学':['optics',''],'模电':['modian',''],'速成':['llsc','m'],'精讲':['lilun','']};
+var dayRows=[];
+function parseDayVids(html){
+  var out=[];
+  html.split('·').forEach(function(blk){
+    var m=/<b>([^<]+)<\/b>\s*([^<]+)/.exec(blk);
+    if(!m) return;
+    var mp=DAYMAP[m[1].trim()]; if(!mp) return;
+    m[2].replace(/[Pp]/g,'').split(/[、,，]/).forEach(function(part){
+      part=part.trim();
+      var r=/^(\d+)\s*[–—\-~]\s*(\d+)$/.exec(part);
+      if(r){ for(var i=+r[1];i<=+r[2];i++) out.push(mp[0]+':'+mp[1]+i); }
+      else if(/^\d+$/.test(part)) out.push(mp[0]+':'+mp[1]+part);
+    });
+  });
+  return out;
+}
+function dayStat(vids){
+  var done=0;
+  vids.forEach(function(v){ if(state[v]===true) done++; });
+  return {done:done,total:vids.length};
+}
+function renderDays(){
+  dayRows.forEach(function(tr){
+    var st=dayStat(tr._vids);
+    var all=st.total>0 && st.done===st.total;
+    tr.classList.toggle('done',all);
+    tr.classList.toggle('part',!all && st.done>0);
+    tr.title=all?('✅ 当天 '+st.total+' 个课时已看完 · 点击撤销'):(st.done>0?('◐ 已完成 '+st.done+'/'+st.total+' · 点击补完剩余'):('⬜ 点击把当天 '+st.total+' 个课时全部标完成'));
+  });
+}
+function toggleDay(tr){
+  var vids=tr._vids, st=dayStat(vids), all=st.total>0 && st.done===st.total;
+  vids.forEach(function(v){
+    if(all){ if(state[v]===true) delete state[v]; }
+    else { state[v]=true; }
+  });
+  rows.forEach(function(r){ if(vids.indexOf(r.dataset.vid)>=0) applyRow(r, state[r.dataset.vid]||false); });
+  recompute(); renderDays(); sv(state); dirty=true; schedulePush();
+}
+function initDays(){
+  document.querySelectorAll('.tl-day').forEach(function(tb){
+    Array.prototype.forEach.call(tb.rows,function(tr){
+      if(tr.querySelector('th') || tr.children.length<2) return;
+      var label=(tr.children[0].textContent||'').trim();
+      if(!/^\d\d\/\d\d$/.test(label)) return;
+      var vids=parseDayVids(tr.children[1].innerHTML);
+      if(!vids.length) return;
+      tr._vids=vids; tr._date=label; tr.classList.add('tl-task');
+      dayRows.push(tr);
+      tr.addEventListener('click',function(){ toggleDay(tr); });
+    });
+  });
+  renderDays();
+}
 function b64e(s){var b=new TextEncoder().encode(s),o='';for(var i=0;i<b.length;i++)o+=String.fromCharCode(b[i]);return btoa(o);}
 function b64d(s){var bin=atob(s),b=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return new TextDecoder().decode(b);}
 function api(path,method,body){
@@ -822,6 +889,7 @@ function injectToolbar(){
   if(!state){ state={}; rows.forEach(function(tr){ state[tr.dataset.vid]=tr.classList.contains('done')?true:(tr.classList.contains('skip')?'skip':false); }); sv(state); }
   Object.keys(state||{}).forEach(function(k){ if(k.indexOf('daily:')===0||k.indexOf('extra:')===0||k.indexOf('snap:')===0) delete state[k]; });
   buildMeta();
+  initDays();
   applyAll();
   rows.forEach(function(tr){
     var v=tr.dataset.vid;
